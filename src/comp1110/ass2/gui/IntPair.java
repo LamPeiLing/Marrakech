@@ -9,7 +9,7 @@ public class IntPair {
         this.y = y;
     }
 
-    // Create a new IntPair by adding another IntPair element-wise
+    // Create a new IntPair by adding another IntPair element wise
     public IntPair add(IntPair other) {
         int newX = this.x + other.x;
         int newY = this.y + other.y;
