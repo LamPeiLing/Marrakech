@@ -29,7 +29,8 @@ public class Rug {
      * @return Array of absolute positions
      */
     public IntPair[] getAbsolutePositions(Transform transform) {
-        return Piece.calcNewAbsolutePositions(relativePositions, transform);
+        //return Piece.calcNewAbsolutePositions(relativePositions, transform);
+        return null;
     }
 
     /**
@@ -65,8 +66,9 @@ public class Rug {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Rug rug = (Rug) o;
-        return Objects.equals(color, rug.color) &&
-                Arrays.equals(relativePositions, rug.relativePositions);
+      /* return Objects.equals(color, rug.color) &&
+                Arrays.equals(relativePositions, rug.relativePositions);*/
+        return true;
     }
 
     /**
@@ -75,9 +77,6 @@ public class Rug {
      */
     @Override
     public String toString() {
-        return "Rug{" +
-                "color='" + color + '\'' +
-                ", relativePositions=" + Arrays.toString(relativePositions) +
-                '}';
+        return null;
     }
 }
