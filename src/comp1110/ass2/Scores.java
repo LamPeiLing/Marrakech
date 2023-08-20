@@ -6,13 +6,15 @@ public class Scores {
 
     private int rugScore; // total points for the rug
 
+    private Coin coin;
+
     /**
      * Constructor: creates a new instance of the Rug class.
      * initialize coin score to the coins that allocated to all players from Coin class, then reduce or increase according to the game
      * initialize rug score to 0, then increase or reduce
      */
     public Scores() {
-        this.coinScore = Coin.getCoin();
+        this.coinScore = coin.getCoin();
         this.rugScore = 0;
     }
 
