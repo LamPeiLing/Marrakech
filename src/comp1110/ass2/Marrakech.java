@@ -27,6 +27,7 @@ public class Marrakech {
         return false;
     }
 
+
     /**
      * Roll the special Marrakech die and return the result.
      * Note that the die in Marrakech is not a regular 6-sided die, since there
