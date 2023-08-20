@@ -5,7 +5,13 @@ Use the entries below as an example.
 
 ## Week 4
 
-Everyone: create application skeleton - meeting 14:00 19 Mar
+Everyone: discuss about the possible classes and draft a design - meeting 15:30 15 Aug
+
+Zexin Tang: create skeleton of IntPair, Angle, and Rug classes. Sketch design in details.
+
+Yaohui Hou: create skeleton of Coin, Game, and Players
+
+Pei Ling LAM: create skeleton of Scores, Direction, and Assam. Modified on the design.
 
 ## Week 5
 

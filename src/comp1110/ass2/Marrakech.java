@@ -141,6 +141,7 @@ public class Marrakech {
      */
     public static String moveAssam(String currentAssam, int dieResult){
         // FIXME: Task 13
+        //update position to Assam class at the end
         return "";
     }
 

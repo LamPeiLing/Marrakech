@@ -1,4 +1,4 @@
-package comp1110.ass2.gui;
+package comp1110.ass2;
 
 /**
  * Class that defines a rug in the Marrakech game.
