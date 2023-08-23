@@ -66,10 +66,16 @@ public class Marrakech {
      * @param currentGame A String representation of the current state of the game.
      * @return true if the game is over, or false otherwise.
      */
+    /**
+     * Determine whether a game of Marrakech is over.
+     * @param currentGame A String representation of the current state of the game.
+     * @return true if the game is over, or false otherwise.
+     */
     public static boolean isGameOver(String currentGame) {
 
         // Possible player colors.
         char[] playerColors = {'c', 'r', 'y', 'b', 'g', 'p'};
+        int rugsPerPlayer = 12;  // This is just an example. You need the actual number of rugs each player starts with.
 
         for (char color : playerColors) {
             int count = 0;
@@ -78,15 +84,15 @@ public class Marrakech {
                     count++;
                 }
             }
-            // If any color appears more than once, it means the player of that color hasn't placed all their rugs yet.
-            if (count > 1) {
-                return false;
+
+            // If a player has placed all their rugs, the game is over.
+            if (count == rugsPerPlayer) {
+                return true;
             }
         }
-        return true;  // All players have placed all their rugs.
+        return false;  // No player has placed all their rugs yet.
         // FIXME: Task 8
     }
-
 
     /**
      * Implement Assam's rotation.
