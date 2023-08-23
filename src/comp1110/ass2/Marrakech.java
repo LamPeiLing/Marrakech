@@ -269,6 +269,21 @@ public class Marrakech {
      * @return A char representing the winner of the game as described above.
      */
     public static char getWinner(String gameState) {
+        System.out.println(gameState.length());
+        System.out.println(gameState);
+
+        if(gameState.contains("n00")) {
+            return 'n';
+        } else {
+
+            String p1 = gameState.substring(0, 7);
+            String p2 = gameState.substring(8, 15);
+            if (gameState.charAt(16) == 'P') {
+                String p3 = gameState.substring(16, 23);
+            } else {
+                String assam = gameState.substring(26, 19);
+            }
+        }
         // FIXME: Task 12
         return '\0';
     }

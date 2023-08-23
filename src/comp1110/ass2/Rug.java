@@ -4,13 +4,7 @@ package comp1110.ass2;
  * Class that defines a rug in the Marrakech game.
  */
 public class Rug {
-    // Colors of the rugs
-    public static final String YELLOW = "Yellow";
-    public static final String BLUE = "Blue";
-    public static final String RED = "Red";
-    public static final String PURPLE = "Purple";
-
-    private final String color;  // Color of the rug
+    private final Color color;  // Color of the rug
     private final IntPair[] relativePositions;  // Relative positions of the rug segments
 
     /**
@@ -18,7 +12,7 @@ public class Rug {
      * @param color Color of the rug (one of the color constants)
      * @param relativePositions Relative positions of the rug segments
      */
-    public Rug(String color, IntPair[] relativePositions) {
+    public Rug(Color color, IntPair[] relativePositions) {
         this.color = color;
         this.relativePositions = relativePositions;
     }
@@ -37,7 +31,7 @@ public class Rug {
      * Gets the color of the rug.
      * @return Color of the rug
      */
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 
