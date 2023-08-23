@@ -23,8 +23,16 @@ public class Marrakech {
      * @return true if the rug is valid, and false otherwise.
      */
     public static boolean isRugValid(String gameString, String rug) {
+        String colourAndID = rug.substring(0, 3);
+        if(rug.length() != 7){
+            return false;
+        }else if(gameString.contains(colourAndID)){
+            return false;
+        }else{
+            return true;
+        }
         // FIXME: Task 4
-        return false;
+        //return true;
     }
 
 
@@ -43,8 +51,11 @@ public class Marrakech {
      * @return The result of the roll of the die meeting the criteria above
      */
     public static int rollDie() {
+        int[] die = new int[]{1, 2, 2, 3, 3, 4};
+        int index = (int)(Math.random() * die.length);
+        return die[index];
         // FIXME: Task 6
-        return -1;
+        //return -1;
     }
 
     /**
@@ -56,6 +67,7 @@ public class Marrakech {
      * @return true if the game is over, or false otherwise.
      */
     public static boolean isGameOver(String currentGame) {
+
         // FIXME: Task 8
         return false;
     }
