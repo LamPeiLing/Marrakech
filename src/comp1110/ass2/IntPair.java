@@ -1,8 +1,8 @@
 package comp1110.ass2;
 
 public class IntPair {
-    private final int x;
-    private final int y;
+    private int x;
+    private int y;
 
     public IntPair(int x, int y) {
         this.x = x;
@@ -16,9 +16,17 @@ public class IntPair {
         return new IntPair(newX, newY);
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
     // Get the x coordinate
     public int getX() {
         return x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     // Get the y coordinate
@@ -53,4 +61,20 @@ public class IntPair {
     }
 
     // Other methods can be added here based on your requirements
+
+    /**
+     * convert string to IntPair
+     * @param stringPosition takes a string with length of 2 that represents x and y
+     * @return with the IntPair data type
+     */
+    public IntPair StringToIntPair(String stringPosition) {
+        int x = Integer.parseInt(stringPosition.substring(0, 0));
+        int y = Integer.parseInt(stringPosition.substring(1, 1));
+        IntPair position = new IntPair(x,y);
+        return position;
+    }
+
+    public String IntPairToString(IntPair position) {
+        return String.valueOf(position.getX()) + String.valueOf(position.getY());
+    }
 }

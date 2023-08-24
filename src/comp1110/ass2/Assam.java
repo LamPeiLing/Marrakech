@@ -12,12 +12,20 @@ public class Assam {
 
     }
 
+    public void setAbsolutePosition(IntPair position) {
+        this.absolutePosition = position;
+    }
+
     /**
      * get the current position of Assam
      * @return the absolute position on the board
      */
     public IntPair getAbsolutePosition() {
         return this.absolutePosition;
+    }
+
+    public void setCurrentDirection(Direction direction) {
+        this.currentDirection = direction;
     }
 
     /**
@@ -52,5 +60,31 @@ public class Assam {
      */
     public void updatePosition(IntPair newPosition) {
 
+    }
+
+    public String AssamToString(Assam assam) {
+        String stringAssam = "A";
+        stringAssam += assam.getAbsolutePosition().IntPairToString(getAbsolutePosition());
+        stringAssam += assam.getCurrentDirection().value;
+        return stringAssam;
+    }
+
+    public Assam StringToAssam(String stringAssam) {
+        Assam assam = new Assam();
+
+        IntPair position = null;
+        assam.setAbsolutePosition(position.StringToIntPair(stringAssam.substring(1, 2)));
+
+        // set direction
+        if(stringAssam.charAt(3) == 'N') {
+            assam.setCurrentDirection(Direction.NORTH);
+        } else if(stringAssam.charAt(3) == 'S') {
+            assam.setCurrentDirection(Direction.SOUTH);
+        } else if(stringAssam.charAt(3) == 'W') {
+            assam.setCurrentDirection(Direction.WEST);
+        } else {
+            assam.setCurrentDirection(Direction.EAST);
+        }
+        return assam;
     }
 }

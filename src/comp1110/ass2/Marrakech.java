@@ -66,10 +66,32 @@ public class Marrakech {
      * @param currentGame A String representation of the current state of the game.
      * @return true if the game is over, or false otherwise.
      */
+    /**
+     * Determine whether a game of Marrakech is over.
+     * @param currentGame A String representation of the current state of the game.
+     * @return true if the game is over, or false otherwise.
+     */
     public static boolean isGameOver(String currentGame) {
 
+        // Possible player colors.
+        char[] playerColors = {'c', 'r', 'y', 'b', 'g', 'p'};
+        int rugsPerPlayer = 12;  // This is just an example. You need the actual number of rugs each player starts with.
+
+        for (char color : playerColors) {
+            int count = 0;
+            for (int i = 0; i < currentGame.length(); i++) {
+                if (currentGame.charAt(i) == color) {
+                    count++;
+                }
+            }
+
+            // If a player has placed all their rugs, the game is over.
+            if (count == rugsPerPlayer) {
+                return true;
+            }
+        }
+        return false;  // No player has placed all their rugs yet.
         // FIXME: Task 8
-        return false;
     }
 
     /**
@@ -86,9 +108,54 @@ public class Marrakech {
      * rotation is illegal.
      */
     public static String rotateAssam(String currentAssam, int rotation) {
+        // Assuming the last character in currentAssam represents Assam's facing direction
+        char direction = currentAssam.charAt(currentAssam.length() - 1);
+
+        if (rotation == 0) { // If no rotation
+            return currentAssam;
+        } else if (rotation == 90 || rotation == -270) { // Turn right
+            switch (direction) {
+                case 'N':
+                    direction = 'E';
+                    break;
+                case 'E':
+                    direction = 'S';
+                    break;
+                case 'S':
+                    direction = 'W';
+                    break;
+                case 'W':
+                    direction = 'N';
+                    break;
+                default:
+                    return currentAssam;  // Invalid direction in currentAssam, return unchanged
+            }
+        } else if (rotation == -90 || rotation == 270) { // Turn left
+            switch (direction) {
+                case 'N':
+                    direction = 'W';
+                    break;
+                case 'E':
+                    direction = 'N';
+                    break;
+                case 'S':
+                    direction = 'E';
+                    break;
+                case 'W':
+                    direction = 'S';
+                    break;
+                default:
+                    return currentAssam;  // Invalid direction in currentAssam, return unchanged
+            }
+        } else {
+            return currentAssam;  // Invalid rotation, return unchanged
+        }
+
+        // Return the updated Assam state with the new direction
+        return currentAssam.substring(0, currentAssam.length() - 1) + direction;
         // FIXME: Task 9
-        return "";
     }
+
 
     /**
      * Determine whether a potential new placement is valid (i.e that it describes a legal way to place a rug).
@@ -102,9 +169,33 @@ public class Marrakech {
      * @return true if the placement is valid, and false otherwise.
      */
     public static boolean isPlacementValid(String gameState, String rug) {
+        // Extract information from the rug string
+        String colourAndID = rug.substring(0, 3);
+        String startCoords = rug.substring(3, 5);
+        String endCoords = rug.substring(5, 7);
+
+        // Check if the rug is already in the gameState
+        if (gameState.contains(colourAndID)) {
+            return false;
+        }
+
+        // Check if the rug does not completely cover another rug.
+        for (int i = 0; i < gameState.length(); i += 7) {
+            String existingRugStart = gameState.substring(i+3, i+5);
+            String existingRugEnd = gameState.substring(i+5, i+7);
+
+            if (startCoords.equals(existingRugStart) && endCoords.equals(existingRugEnd)) {
+                return false; // The new rug completely covers an existing rug
+            }
+        }
+
+        // Here you would add logic to check if the rug is adjacent to Assam (not counting diagonals).
+
+        // If all checks pass, return true
+        return true;
         // FIXME: Task 10
-        return false;
     }
+
 
     /**
      * Determine the amount of payment required should another player land on a square.
@@ -117,9 +208,51 @@ public class Marrakech {
      * @return The amount of payment due, as an integer.
      */
     public static int getPaymentAmount(String gameString) {
-        // FIXME: Task 11
-        return -1;
+        // Assuming Assam's position is represented by the last 7 characters of the game string.
+        String assamPosition = gameString.substring(gameString.length() - 7);
+        String rugColor = assamPosition.substring(0, 2); // Assuming the color is represented by the first 2 characters.
+
+        // A boolean array to mark which rugs have been visited.
+        boolean[] visited = new boolean[gameString.length() / 7];
+
+        int count = 0;
+
+        // For every rug in the game string
+        for (int i = 0; i < gameString.length(); i += 7) {
+            if (!visited[i/7]) {
+                String currentRug = gameString.substring(i, i + 7);
+                if (currentRug.startsWith(rugColor)) {
+                    count += dfs(gameString, visited, i);
+                }
+            }
+        }
+
+        return count;
     }
+
+    // Depth First Search to count connected rugs of the same color.
+    private static int dfs(String gameString, boolean[] visited, int index) {
+        if (index < 0 || index >= gameString.length() || visited[index/7]) return 0;
+
+        String currentRug = gameString.substring(index, index + 7);
+        String startCoords = currentRug.substring(3, 5);
+        String endCoords = currentRug.substring(5, 7);
+        // Logic to find neighboring coordinates based on the direction of the rug goes here...
+
+        int count = 1; // Count the current rug
+        visited[index/7] = true;
+
+/*        // Check all neighboring coordinates
+        for (String neighbor : neighbors) {
+            int nextIndex = gameString.indexOf(neighbor);
+            if (nextIndex != -1) {
+                count += dfs(gameString, visited, nextIndex);
+            }
+        }*/
+        // FIXME: Task 11
+        return count;
+    }
+
 
     /**
      * Determine the winner of a game of Marrakech.
@@ -136,6 +269,21 @@ public class Marrakech {
      * @return A char representing the winner of the game as described above.
      */
     public static char getWinner(String gameState) {
+        System.out.println(gameState.length());
+        System.out.println(gameState);
+
+        if(gameState.contains("n00")) {
+            return 'n';
+        } else {
+
+            String p1 = gameState.substring(0, 7);
+            String p2 = gameState.substring(8, 15);
+            if (gameState.charAt(16) == 'P') {
+                String p3 = gameState.substring(16, 23);
+            } else {
+                String assam = gameState.substring(26, 19);
+            }
+        }
         // FIXME: Task 12
         return '\0';
     }

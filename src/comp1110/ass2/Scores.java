@@ -2,7 +2,7 @@ package comp1110.ass2;
 
 public class Scores {
 
-    private int coinScore; // total points for the coin
+    private int dirhamScore; // total points for the coin
 
     private int rugScore; // total points for the rug
 
@@ -14,16 +14,24 @@ public class Scores {
      * initialize rug score to 0, then increase or reduce
      */
     public Scores() {
-        this.coinScore = coin.getCoin();
+        this.dirhamScore = coin.getCoin();
         this.rugScore = 0;
+    }
+
+    public void setDirhamScore(int score) {
+        this.dirhamScore = score;
     }
 
     /**
      * get the coin score
      * @return score of coin itself
      */
-    public int getCoinScore() {
-        return this.coinScore;
+    public int getDirhamScore() {
+        return this.dirhamScore;
+    }
+
+    public void setRugScore(int score) {
+        this.rugScore = score;
     }
 
     /**
@@ -39,7 +47,7 @@ public class Scores {
      * @return the total number of scores the player get in total
      */
     public int getTotalScore() {
-        return getCoinScore() + getRugScore();
+        return getDirhamScore() + getRugScore();
     }
 
 
@@ -48,9 +56,9 @@ public class Scores {
      * @param score the score to update
      * @param isGet true if get from other players, false otherwise
      */
-    public void updateCoinScore(int score, boolean isGet) {
-        if(isGet) this.coinScore += score;
-        else this.coinScore -= score;
+    public void updateDirhamScore(int score, boolean isGet) {
+        if(isGet) this.dirhamScore += score;
+        else this.dirhamScore -= score;
     }
 
     /**

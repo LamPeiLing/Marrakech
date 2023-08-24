@@ -1,14 +1,14 @@
 package comp1110.ass2;
 
 public enum Direction {
-    NORTH(0),
-    SOUTH(1),
-    WEST(2),
-    EAST(3);
+    NORTH('N'),
+    SOUTH('S'),
+    WEST('W'),
+    EAST('E');
 
-    public final int value;
+    public final char value;
 
-    Direction(int value) {
+    Direction(char value) {
         this.value = value;
     }
 }
