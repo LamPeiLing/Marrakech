@@ -13,6 +13,18 @@ import java.util.stream.Stream;
 
 @Timeout(value = 500, unit = TimeUnit.MILLISECONDS)
 public class MakePlacementTest {
+
+    @Test
+    public void malformedTest() {
+        BufferedReader fr;
+        fr = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("testdata/make_placement_invalid_malformed.txt")));
+        Stream<String> testLines = fr.lines();
+        for (String line : testLines.toList()) {
+            String[] splitLine = line.split("@");
+            // For this test, there's two arguments needed to the function
+            Assertions.assertEquals(splitLine[2], Marrakech.makePlacement(splitLine[0], splitLine[1]), splitLine[3]);
+        }
+    }
     @Test
     public void nonAdjacentTest() {
         BufferedReader fr;

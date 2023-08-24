@@ -26,7 +26,7 @@ public class GetWinnerTest {
     @Test
     public void getWinnerOutOfGame() {
         BufferedReader fr;
-        fr = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("testdata/get_winner_out_of_game.txt")));
+        fr = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("testdata/get_winner_complex.txt")));
         Stream<String> testLines = fr.lines();
         for (String line : testLines.toList()) {
             String[] splitLine = line.split("@");

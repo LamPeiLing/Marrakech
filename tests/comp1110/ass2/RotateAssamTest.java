@@ -17,21 +17,9 @@ public class RotateAssamTest {
      * Check that rotations of Assam that are legal according to the rules result in the correct eventual facing
      */
     @Test
-    public void checkLegalLeftRotations() {
+    public void checkLegalRotations() {
         BufferedReader fr;
-        fr = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("testdata/legal_left_rotations.txt")));
-        Stream<String> testLines = fr.lines();
-        for (String line : testLines.toList()) {
-            String[] splitLine = line.split("@");
-            // For this test, there's two arguments needed to the function
-            Assertions.assertEquals(splitLine[2], Marrakech.rotateAssam(splitLine[0], Integer.parseInt(splitLine[1])), splitLine[3]);
-        }
-    }
-
-    @Test
-    public void checkLegalRightRotations() {
-        BufferedReader fr;
-        fr = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("testdata/legal_right_rotations.txt")));
+        fr = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("testdata/assam_rotation_legal.txt")));
         Stream<String> testLines = fr.lines();
         for (String line : testLines.toList()) {
             String[] splitLine = line.split("@");
@@ -46,7 +34,7 @@ public class RotateAssamTest {
     @Test
     public void checkIllegalRotations() {
         BufferedReader fr;
-        fr = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("testdata/illegal_rotations.txt")));
+        fr = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("testdata/assam_rotation_illegal.txt")));
         Stream<String> testLines = fr.lines();
         for (String line : testLines.toList()) {
             String[] splitLine = line.split("@");

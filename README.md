@@ -56,8 +56,11 @@ Once the game is over, it is scored. A player's final score is the number of dir
 
 ### Assam and Payments Between Players
 
-Assam is a key piece in the game of Marrakech, as he defines where players may place their rugs, as well as when players must pay other players.
-At the beginning of a player's turn, they choose to rotate Assam either 90 degrees to the right or left, or not at all (i.e., leave him facing the same direction). 
+Assam is a key piece in the game of Marrakech, as he defines where players may place their rugs, as well as when players must pay other players. 
+
+Assam starts the game in the centre of the board (i.e at position (3,3)), and may be facing in any direction (since the board is a square).
+
+At the beginning of a player's turn, they choose to rotate Assam either 90 degrees to the right or left, or not at all (i.e., leave him facing the same direction).
 
 Then, a special die is rolled to determine how far Assam moves on this turn.
 The die is 6-sided, but the sides are numbered 1-4, with the numbers not equally common.
@@ -71,8 +74,11 @@ This means that the die is twice as likely to show a 2 or 3 as it is to show a 1
 
 After the die has been rolled, Assam is moved in the direction he is currently facing with the number of spaces he moves matching the number shown on the die. If he goes off the board at any time, he follows a pre-defined mosaic track on the edge of the board in order to be placed back on it and continue his movement. These tracks can be seen in the following image of the board:
 ![A top-down view of the Marrakech board](assets/Board%20Image.png)
+
 Note that following one of these tracks does not count as one of the steps in the movement -- Assam must traverse a number of squares equal to the number shown on the die regardless of whether he left the board at any time during his movement. An example taken from the game rules can be seen here:
 ![An example of Assam's movement in a case involving moving off the board](assets/Assam%20Off%20Board%20Movement.png)
+
+Note also that this board image is the canonical one with respect to the mosaic tracks -- that is to say that the three-quarter circles on some of the corners of the board should be in the top-right and bottom left; **not** the top-left and bottom-right. This is important for the unit-tested tasks, which assume this configuration.
 
 If, after his movement ends, Assam lands on an empty square or a rug owned by the player whose turn it is, no payment is made, and the player's turn moves on to the placement phase (described below in the "Turns and Phases" section). If, however, Assam lands on a rug owned by another player then the player who moved him will have to pay the other player. This payment is equal to the size of the connected region of squares that are covered by rugs of the same colour, starting from the square that Assam landed on. Connected here means adjacent in one of the cardinal directions, i.e., sharing an edge; squares that are only diagonally adjacent (sharing only a corner) do not count as connected. The square which Assam landed on does count towards the size of the connected region and thus the payment. If a player is unable to pay the full amount, then they must pay as much as they are able, and then they are out of the game. A player who is out of the game cannot win, nor can they take any further turns. If Assam lands on one of their rugs later in the game, it is as though Assam landed on an empty square, and no payment is required.
 
@@ -239,7 +245,7 @@ We also use a special rug string, `n00`, to denote no rug. This is needed for th
 
 ### Board String
 
-A Board String encodes the visible arrangement of rugs on the board at a given time. The board string is a sequence of 49 abbreviated rug Strings, one for each square on the board, indicating which is the rug that is visible in that square. Thus, the board string is exactly 7 * 49 characters long.
+A Board String encodes the visible arrangement of rugs on the board at a given time. The board string begins with the character `B`, which is followed by a sequence of 49 abbreviated rug Strings, one for each square on the board, indicating which is the rug that is visible in that square. Thus, the board string is exactly 3*49=147 characters long.
 If a particular square is not covered by any rug, the corresponding abbreviated rug string will be the special null string, `n00`.
 The board string is read in column-major order, meaning that it first lists the visible rugs in column 0, then column 1, and so on, and within each column the squares in ascending row order. Thus, the first square in the board String is at position (0,0), the second at position (0,1), then (0,2), etc, up to (0,6), the position (1,0), (1,1), and so on.
 

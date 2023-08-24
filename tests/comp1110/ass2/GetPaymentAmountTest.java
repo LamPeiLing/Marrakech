@@ -13,7 +13,7 @@ public class GetPaymentAmountTest {
     @Test
     public void checkSmallPayments() {
         BufferedReader fr;
-        fr = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("get_payment_small.txt")));
+        fr = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("testdata/get_payment_small.txt")));
         Stream<String> testLines = fr.lines();
         for (String line : testLines.toList()) {
             String[] splitLine = line.split("@");
@@ -25,7 +25,7 @@ public class GetPaymentAmountTest {
     @Test
     public void checkMediumPayments() {
         BufferedReader fr;
-        fr = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("get_payment_medium.txt")));
+        fr = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("testdata/get_payment_medium.txt")));
         Stream<String> testLines = fr.lines();
         for (String line : testLines.toList()) {
             String[] splitLine = line.split("@");
@@ -37,7 +37,7 @@ public class GetPaymentAmountTest {
     @Test
     public void checkLargePayments() {
         BufferedReader fr;
-        fr = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("get_payment_large.txt")));
+        fr = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("testdata/get_payment_large.txt")));
         Stream<String> testLines = fr.lines();
         for (String line : testLines.toList()) {
             String[] splitLine = line.split("@");

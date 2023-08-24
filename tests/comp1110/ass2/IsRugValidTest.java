@@ -12,9 +12,9 @@ import java.util.stream.Stream;
 @Timeout(value = 500, unit = TimeUnit.MILLISECONDS)
 public class IsRugValidTest {
     @Test
-    public void checkRugValidSimple() {
+    public void checkRugValidBadPlayer() {
         BufferedReader fr;
-        fr = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("testdata/is_rug_valid_simple.txt")));
+        fr = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("testdata/is_rug_valid_badplayer.txt")));
         Stream<String> testLines = fr.lines();
         for (String line : testLines.toList()) {
             String[] splitLine = line.split("@");
@@ -23,9 +23,21 @@ public class IsRugValidTest {
         }
     }
     @Test
-    public void checkRugValidComplex() {
+    public void checkRugValidOffboard() {
         BufferedReader fr;
-        fr = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("testdata/is_rug_valid_complex.txt")));
+        fr = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("testdata/is_rug_valid_offboard.txt")));
+        Stream<String> testLines = fr.lines();
+        for (String line : testLines.toList()) {
+            String[] splitLine = line.split("@");
+            // For this test, there's two arguments needed to the function
+            Assertions.assertEquals(splitLine[2], String.valueOf(Marrakech.isRugValid(splitLine[0], splitLine[1])), splitLine[3]);
+        }
+    }
+
+    @Test
+    public void checkRugValid() {
+        BufferedReader fr;
+        fr = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("testdata/is_rug_valid_valid.txt")));
         Stream<String> testLines = fr.lines();
         for (String line : testLines.toList()) {
             String[] splitLine = line.split("@");
