@@ -48,7 +48,39 @@ public class Assam {
      * @return true if already at the border of the board, false otherwise
      */
     public boolean isBorder() {
+        if(absolutePosition.getX() == 0 || absolutePosition.getX() == 6 || absolutePosition.getY() == 0 || absolutePosition.getY() == 6) {
+            return true;
+        }
         return false;
+    }
+
+    public boolean isMovementSafe() {
+        switch (this.currentDirection) {
+            case NORTH:
+                if(this.absolutePosition.getY() == 0 ) {
+                    return false;
+                }
+                break;
+
+            case SOUTH:
+                if(this.absolutePosition.getY() == 6 ) {
+                    return false;
+                }
+                break;
+
+            case WEST:
+                if(this.absolutePosition.getX() == 0 ) {
+                    return false;
+                }
+                break;
+
+            case EAST:
+                if(this.absolutePosition.getX() == 6 ) {
+                    return false;
+                }
+                break;
+        }
+        return true;
     }
 
 
@@ -68,6 +100,11 @@ public class Assam {
 
     }
 
+    /**
+     * Convert Assam class type to String
+     * @param assam Assam class type of assam
+     * @return string value
+     */
     public String AssamToString(Assam assam) {
         String stringAssam = "A";
         stringAssam += assam.getAbsolutePosition().IntPairToString(getAbsolutePosition());
@@ -75,6 +112,11 @@ public class Assam {
         return stringAssam;
     }
 
+    /**
+     * convert String to Assam class type
+     * @param stringAssam string value of assam
+     * @return Assam class type value
+     */
     public Assam StringToAssam(String stringAssam) {
         Assam assam = new Assam();
 

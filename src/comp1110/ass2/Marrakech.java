@@ -374,9 +374,79 @@ public class Marrakech {
      * @return A String representing Assam's state after the movement.
      */
     public static String moveAssam(String currentAssam, int dieResult){
+        Assam assam = new Assam();
+        assam = assam.StringToAssam(currentAssam);
+
+        for (int i = 0; i < dieResult; i++) {
+            if(!assam.isMovementSafe()) {
+                // if the movement requires to turn
+                switch (assam.getCurrentDirection()) {
+                    case NORTH:
+                        if(assam.getAbsolutePosition().getX() % 2 == 0 && (assam.getAbsolutePosition().getX() != 6)) {
+                            assam.setAbsolutePosition(new IntPair(assam.getAbsolutePosition().getX() + 1, assam.getAbsolutePosition().getY()));
+                            assam.setCurrentDirection(Direction.SOUTH);
+                        } else if(assam.getAbsolutePosition().getX() % 2 != 0) {
+                            assam.setAbsolutePosition(new IntPair(assam.getAbsolutePosition().getX() - 1, assam.getAbsolutePosition().getY()));
+                            assam.setCurrentDirection(Direction.SOUTH);
+                        } else {
+                            assam.setCurrentDirection(Direction.WEST);
+                        }
+                        break;
+                    case SOUTH:
+                        if(assam.getAbsolutePosition().getX() % 2 == 0 && (assam.getAbsolutePosition().getX() != 0)) {
+                            assam.setAbsolutePosition(new IntPair(assam.getAbsolutePosition().getX() - 1, assam.getAbsolutePosition().getY()));
+                            assam.setCurrentDirection(Direction.NORTH);
+                        } else if(assam.getAbsolutePosition().getX() % 2 != 0) {
+                            assam.setAbsolutePosition(new IntPair(assam.getAbsolutePosition().getX() + 1, assam.getAbsolutePosition().getY()));
+                            assam.setCurrentDirection(Direction.NORTH);
+                        } else {
+                            assam.setCurrentDirection(Direction.EAST);
+                        }
+                        break;
+                    case EAST:
+                        if(assam.getAbsolutePosition().getY() % 2 == 0 && (assam.getAbsolutePosition().getY() != 0)) {
+                            assam.setAbsolutePosition(new IntPair(assam.getAbsolutePosition().getX(), assam.getAbsolutePosition().getY() - 1));
+                            assam.setCurrentDirection(Direction.WEST);
+                        } else if(assam.getAbsolutePosition().getY() % 2 != 0) {
+                            assam.setAbsolutePosition(new IntPair(assam.getAbsolutePosition().getX(), assam.getAbsolutePosition().getY() + 1));
+                            assam.setCurrentDirection(Direction.WEST);
+                        } else {
+                            assam.setCurrentDirection(Direction.SOUTH);
+                        }
+                        break;
+                    case WEST:
+                        if(assam.getAbsolutePosition().getY() % 2 == 0 && (assam.getAbsolutePosition().getY() != 6)) {
+                            assam.setAbsolutePosition(new IntPair(assam.getAbsolutePosition().getX(), assam.getAbsolutePosition().getY() + 1));
+                            assam.setCurrentDirection(Direction.EAST);
+                        } else if(assam.getAbsolutePosition().getY() % 2 != 0) {
+                            assam.setAbsolutePosition(new IntPair(assam.getAbsolutePosition().getX(), assam.getAbsolutePosition().getY() - 1));
+                            assam.setCurrentDirection(Direction.EAST);
+                        } else {
+                            assam.setCurrentDirection(Direction.NORTH);
+                        }
+                        break;
+                }
+            } else {
+                switch (assam.getCurrentDirection()) {
+                    case NORTH:
+                        assam.setAbsolutePosition(new IntPair(assam.getAbsolutePosition().getX(), assam.getAbsolutePosition().getY() - 1));
+                        break;
+                    case SOUTH:
+                        assam.setAbsolutePosition(new IntPair(assam.getAbsolutePosition().getX(), assam.getAbsolutePosition().getY() + 1));
+                        break;
+                    case EAST:
+                        assam.setAbsolutePosition(new IntPair(assam.getAbsolutePosition().getX() + 1, assam.getAbsolutePosition().getY()));
+                        break;
+                    case WEST:
+                        assam.setAbsolutePosition(new IntPair(assam.getAbsolutePosition().getX() - 1, assam.getAbsolutePosition().getY()));
+                        break;
+                }
+            }
+        }
+
         // FIXME: Task 13
         //update position to Assam class at the end
-        return "";
+        return assam.AssamToString(assam);
     }
 
     /**
