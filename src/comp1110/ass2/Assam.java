@@ -6,11 +6,17 @@ public class Assam {
 
 
     /**
-     * Constructor: initialize assam to the middle of board and facing south
+     * Constructor that initialize the position of Assam when a new game starts
+     * @param position the position of the middle of the board
      */
-    public Assam() {
-
+    public Assam(IntPair position) {
+        this.absolutePosition = position;
     }
+
+    /**
+     * Constructor that does not do anything
+     */
+    public Assam() {}
 
     public void setAbsolutePosition(IntPair position) {
         this.absolutePosition = position;
@@ -72,8 +78,8 @@ public class Assam {
     public Assam StringToAssam(String stringAssam) {
         Assam assam = new Assam();
 
-        IntPair position = null;
-        assam.setAbsolutePosition(position.StringToIntPair(stringAssam.substring(1, 2)));
+        IntPair position = new IntPair();
+        assam.setAbsolutePosition(position.StringToIntPair(stringAssam.substring(1, 3)));
 
         // set direction
         if(stringAssam.charAt(3) == 'N') {

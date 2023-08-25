@@ -1,5 +1,8 @@
 package comp1110.ass2;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Marrakech {
 
     /**
@@ -269,23 +272,94 @@ public class Marrakech {
      * @return A char representing the winner of the game as described above.
      */
     public static char getWinner(String gameState) {
-        System.out.println(gameState.length());
-        System.out.println(gameState);
+        // get string representation
+        String boardRug = gameState.substring(gameState.length()-147);
+        String string_p1 = gameState.substring(0, 8);
+        String string_p2 = gameState.substring(8, 16);
+        String string_p3 = null;
+        String string_p4 = null;
+        String string_assam = "";
 
-        if(gameState.contains("n00")) {
-            return 'n';
-        } else {
-
-            String p1 = gameState.substring(0, 7);
-            String p2 = gameState.substring(8, 15);
-            if (gameState.charAt(16) == 'P') {
-                String p3 = gameState.substring(16, 23);
+        if (gameState.charAt(16) == 'P') {
+            string_p3 = gameState.substring(16, 24);
+            if(gameState.charAt(24) == 'P') {
+                string_p4 = gameState.substring(24, 32);
             } else {
-                String assam = gameState.substring(26, 19);
+                string_assam = gameState.substring(24, 28);
+                System.out.println("assam: "+string_assam);
+            }
+        } else {
+            string_assam = gameState.substring(16, 20);
+            System.out.println("assam: "+string_assam);
+        }
+        if(string_assam.length() == 0) {
+            string_assam = gameState.substring(32, 36);
+        }
+
+        // convert into corresponding data type
+        List<Players> playersList = new ArrayList<Players>();
+
+        Players  p1= new Players();
+        p1.StringToPlayer(string_p1);
+        playersList.add(p1);
+
+        Players p2 = new Players();
+        p2.StringToPlayer(string_p2);
+        playersList.add(p2);
+
+        if(string_p3 != null) {
+            Players p3 = new Players();
+            p3.StringToPlayer(string_p3);
+            playersList.add(p3);
+        }
+
+        if(string_p4 != null) {
+            Players p4 = new Players();
+            p4.StringToPlayer(string_p4);
+            playersList.add(p4);
+        }
+
+        Assam assam = new Assam();
+        assam.StringToAssam(string_assam);
+
+        boolean flag = true;
+
+        for(int i = 0; i < playersList.size(); i++) {
+            if(playersList.get(i).getNumRug() != 0) {
+                flag = false;
             }
         }
+
+        if(!flag && gameState.contains("n00")) {
+            return 'n';
+        } else {
+            //get number of visible rugs of each color
+            //TODO: create a method to count visible rugs on board
+            int[] p_rugScore = new int[playersList.size()];
+            for(int i = 0; i < playersList.size(); i++) {
+                for (int j = 0; j < boardRug.length(); j += 3) {
+                    if (boardRug.charAt(j) == playersList.get(i).getColor().value) {
+                        p_rugScore[i] += 1;
+                    }
+                }
+            }
+
+            Players winner = new Players();
+            int max_score = playersList.get(0).getNumDirham() + p_rugScore[0];
+            winner = p1;
+            // find max score
+            for(int i = 1; i < playersList.size(); i++) {
+                if(playersList.get(i).getNumDirham() + p_rugScore[i] > max_score) {
+                    max_score = playersList.get(i).getNumDirham() + p_rugScore[i];
+                    winner = playersList.get(i);
+                } else if(playersList.get(i).getNumDirham() + p_rugScore[i] == max_score) {
+                    return 't';
+                }
+            }
+            return winner.getColor().value;
+
+        }
         // FIXME: Task 12
-        return '\0';
     }
 
     /**

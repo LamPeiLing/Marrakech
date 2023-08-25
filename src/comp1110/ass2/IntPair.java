@@ -4,6 +4,17 @@ public class IntPair {
     private int x;
     private int y;
 
+
+    /**
+     * Constructor that does not do anything
+     */
+    public IntPair(){}
+
+    /**
+     * Constructor that initialize intPair by x and y coordinate
+     * @param x x coordinate
+     * @param y y coordinate
+     */
     public IntPair(int x, int y) {
         this.x = x;
         this.y = y;
@@ -68,8 +79,8 @@ public class IntPair {
      * @return with the IntPair data type
      */
     public IntPair StringToIntPair(String stringPosition) {
-        int x = Integer.parseInt(stringPosition.substring(0, 0));
-        int y = Integer.parseInt(stringPosition.substring(1, 1));
+        int x = Integer.parseInt(stringPosition.substring(0, 1));
+        int y = Integer.parseInt(stringPosition.substring(1));
         IntPair position = new IntPair(x,y);
         return position;
     }

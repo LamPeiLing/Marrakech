@@ -15,18 +15,28 @@ public class Players {
     // number of dirham player owned
     private int numDirham;
 
-    // number of rugs player owned
+    // number of rugs player left
     private int numRug;
     private boolean isInGame;
 
     private Scores scores = new Scores();
 
-    // Constructor
+    /**
+     * Constructor that initialize a player when a new game starts
+     * @param numDirham initial number of dirham
+     * @param numRug initial number of rugs
+     * @param color color of the rugs
+     */
     public Players(int numDirham, int numRug, Color color) {
         this.color = color;
         this.numDirham = numDirham;
         this.numRug = numRug;
     }
+
+    /**
+     * Constructor that does not initialize anything
+     */
+    public Players() {}
 
     public int getCurrentNumOfCoin_5(){
         return currentNumOfCoin_5;
@@ -69,16 +79,34 @@ public class Players {
         return isInGame;
     }
 
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
     public Color getColor() {
         return color;
+    }
+
+    public void setNumDirham(int n) {
+        this.numDirham = n;
+        scores.setDirhamScore(n);
     }
 
     public int getNumDirham() {
         return numDirham;
     }
 
+    public void setNumRug(int n) {
+        this.numRug = n;
+        scores.setRugScore(n);
+    }
+
     public int getNumRug() {
         return numRug;
+    }
+
+    public Scores getScores() {
+        return scores;
     }
 
 
@@ -116,23 +144,20 @@ public class Players {
     // convert String to Players
     public Players StringToPlayer(String stringPlayer) {
         // get rug color of player
-        Color rugColor;
         if(stringPlayer.charAt(1) == 'c') {
-            rugColor = Color.CYAN;
+            setColor(Color.CYAN);
         } else if(stringPlayer.charAt(1) == 'y') {
-            rugColor = Color.YELLOW;
+            setColor(Color.YELLOW);
         } else if(stringPlayer.charAt(1) == 'r') {
-            rugColor = Color.RED;
+            setColor(Color.RED);
         } else {
-            rugColor = Color.PURPLE;
+            setColor(Color.PURPLE);
         }
 
-        int numDirham = Integer.parseInt(stringPlayer.substring(2,4));
-        scores.setDirhamScore(numDirham);
-        int numRug = Integer.parseInt(stringPlayer.substring(5,6));
-        scores.setRugScore(numRug);
+        setNumDirham(Integer.parseInt(stringPlayer.substring(2,5)));
+        setNumRug(Integer.parseInt(stringPlayer.substring(5,7)));
 
-        Players player = new Players(numDirham, numRug, rugColor);
+        Players player = new Players(getNumDirham(), getNumRug(), getColor());
         player.setIsInGame(stringPlayer.charAt(7));
 
         return player;
