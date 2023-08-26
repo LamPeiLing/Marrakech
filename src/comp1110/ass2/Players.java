@@ -105,18 +105,22 @@ public class Players {
         return numRug;
     }
 
+    public void setScores(Scores scores) {
+        this.scores = scores;
+    }
+
     public Scores getScores() {
         return scores;
     }
 
 
     // convert Players to String
-    public String PlayerToString(Players players) {
+    public String PlayerToString() {
         String stringPlayer = "P";
 
-        stringPlayer += players.getColor().value;
+        stringPlayer += getColor().value;
 
-        String numDirham = String.valueOf(players.getNumDirham());
+        String numDirham = String.valueOf(getNumDirham());
         if(numDirham.length() == 3) {
             stringPlayer += numDirham;
         } else if(numDirham.length() == 2) {
@@ -125,14 +129,14 @@ public class Players {
             stringPlayer += "00" + numDirham;
         }
 
-        String numRug = String.valueOf(players.getNumRug());
+        String numRug = String.valueOf(getNumRug());
         if(numRug.length() == 2) {
             stringPlayer += numRug;
         } else {
             stringPlayer += "0" + numRug;
         }
 
-        if(players.isInGame()){
+        if(isInGame()){
             stringPlayer += "i";
         } else {
             stringPlayer += "o";
@@ -156,11 +160,9 @@ public class Players {
 
         setNumDirham(Integer.parseInt(stringPlayer.substring(2,5)));
         setNumRug(Integer.parseInt(stringPlayer.substring(5,7)));
+        setIsInGame(stringPlayer.charAt(7));
 
-        Players player = new Players(getNumDirham(), getNumRug(), getColor());
-        player.setIsInGame(stringPlayer.charAt(7));
-
-        return player;
+        return this;
     }
 
 }

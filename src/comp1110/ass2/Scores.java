@@ -9,14 +9,9 @@ public class Scores {
     private Coin coin = new Coin();
 
     /**
-     * Constructor: creates a new instance of the Rug class.
-     * initialize coin score to 0
-     * initialize rug score to 0, then increase or reduce
+     * Constructor: count the score of each game state
      */
-    public Scores() {
-        this.dirhamScore = 0;
-        this.rugScore = 0;
-    }
+    public Scores() {}
 
     public void setDirhamScore(int score) {
         this.dirhamScore = score;
@@ -30,8 +25,8 @@ public class Scores {
         return this.dirhamScore;
     }
 
-    public void setRugScore(int numOfRugLeft) {
-        this.rugScore = 15 - numOfRugLeft;
+    public void setRugScore(int score) {
+        this.rugScore = score;
     }
 
     /**
@@ -47,7 +42,7 @@ public class Scores {
      * @return the total number of scores the player get in total
      */
     public int getTotalScore() {
-        return getDirhamScore() + getRugScore();
+        return this.dirhamScore + this.rugScore;
     }
 
 

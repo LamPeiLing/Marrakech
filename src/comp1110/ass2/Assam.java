@@ -102,13 +102,12 @@ public class Assam {
 
     /**
      * Convert Assam class type to String
-     * @param assam Assam class type of assam
      * @return string value
      */
-    public String AssamToString(Assam assam) {
+    public String AssamToString() {
         String stringAssam = "A";
-        stringAssam += assam.getAbsolutePosition().IntPairToString(getAbsolutePosition());
-        stringAssam += assam.getCurrentDirection().value;
+        stringAssam += getAbsolutePosition().IntPairToString(getAbsolutePosition());
+        stringAssam += getCurrentDirection().value;
         return stringAssam;
     }
 

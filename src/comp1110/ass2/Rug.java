@@ -4,18 +4,27 @@ package comp1110.ass2;
  * Class that defines a rug in the Marrakech game.
  */
 public class Rug {
-    private final Color color;  // Color of the rug
-    private final IntPair[] relativePositions;  // Relative positions of the rug segments
+    private Color color;  // Color of the rug
+    private IntPair[] relativePositions;  // Relative positions of the rug segments
+
+    private int rugID;
 
     /**
      * Constructor: creates a new instance of the Rug class.
      * @param color Color of the rug (one of the color constants)
      * @param relativePositions Relative positions of the rug segments
      */
-    public Rug(Color color, IntPair[] relativePositions) {
+    public Rug(Color color, int id, IntPair[] relativePositions) {
         this.color = color;
+        this.rugID = id;
         this.relativePositions = relativePositions;
     }
+
+    /**
+     * Constructor that does nothing
+     * Declare Rug
+     */
+    public Rug(){}
 
     /**
      * Converts relative positions to absolute positions using the given transform.
@@ -27,6 +36,10 @@ public class Rug {
         return null;
     }
 
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
     /**
      * Gets the color of the rug.
      * @return Color of the rug
@@ -34,6 +47,23 @@ public class Rug {
     public Color getColor() {
         return color;
     }
+
+    public void setRugID(int rugID) {
+        this.rugID = rugID;
+    }
+
+    public int getRugID() {
+        return rugID;
+    }
+
+    public void setRelativePositions(IntPair[] relativePositions) {
+        this.relativePositions = relativePositions;
+    }
+
+    public IntPair[] getRelativePositions() {
+        return relativePositions;
+    }
+
 
     /**
      * Get the number of rugs based on the number of players.
@@ -72,5 +102,33 @@ public class Rug {
     @Override
     public String toString() {
         return null;
+    }
+
+    /**
+     * Convert string representation of rug to Rug class type
+     * @param rugString string representation of rug
+     * @return rug as Rug class type
+     */
+    public Rug StringToRug(String rugString) {
+
+        if(rugString.charAt(0) == Color.RED.value) {
+            setColor(Color.RED);
+        } else if(rugString.charAt(0) == Color.CYAN.value) {
+            setColor(Color.CYAN);
+        } else if(rugString.charAt(0) == Color.YELLOW.value) {
+            setColor(Color.YELLOW);
+        } else {
+            setColor(Color.PURPLE);
+        }
+
+        setRugID(Integer.parseInt(rugString.substring(1, 3)));
+
+        IntPair position = new IntPair();
+        IntPair[] positionList = new IntPair[2];
+        positionList[0] = position.StringToIntPair(rugString.substring(3, 5));
+        positionList[1] = position.StringToIntPair(rugString.substring(5));
+        setRelativePositions(positionList);
+
+        return this;
     }
 }
