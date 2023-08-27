@@ -275,15 +275,17 @@ public class Marrakech {
         Game game = new Game();
         game = game.StringToGame(gameState);
 
-        boolean flag = true;
+        //game finished if all players out of rugs
+        boolean isFinished = true;
 
         for(int i = 0; i < game.getPlayersList().size(); i++) {
-            if(game.getPlayersList().get(i).getNumRug() != 0) {
-                flag = false;
+            if(game.getPlayersList().get(i).getNumRug() > 0 && game.getPlayersList().get(i).isInGame()) {
+                isFinished = false;
             }
+
         }
 
-        if(!flag && gameState.contains("n00")) {
+        if(!isFinished) {
             return 'n';
         } else {
             //get number of visible rugs of each color
