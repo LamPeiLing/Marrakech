@@ -34,6 +34,7 @@ method:
   - makeMosaicTrack
   - makeBoard
   - makeRug
+  - makeAssam
   - setPlayersList
   - getPlayersList
   - setBoard

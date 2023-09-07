@@ -1,5 +1,6 @@
 package comp1110.ass2.gui;
 
+import comp1110.ass2.Assam;
 import comp1110.ass2.Board;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -13,6 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 import comp1110.ass2.Game;
 
@@ -62,6 +64,7 @@ public class Viewer extends Application {
         makeMosaicTrack();
         makeBoard();
         makeRug(gameState.getBoard());
+        makeAssam(gameState.getAssam());
 
     }
 
@@ -106,7 +109,7 @@ public class Viewer extends Application {
                 START_Y-BOARD_BORDER+(BOARD_TILE_SHADOW_GAP / 2),
                 boardWidth+(2*BOARD_BORDER)- BOARD_TILE_SHADOW_GAP,
                 boardHeight+(2*BOARD_BORDER)- BOARD_TILE_SHADOW_GAP);
-        boardBack.setFill(Color.web("DAA520"));
+        boardBack.setFill(Color.web("e4d5b7"));
         boardBack.setArcHeight(30.0d);
         boardBack.setArcWidth(30.0d);
         // adding the rectangle to the board group
@@ -169,6 +172,59 @@ public class Viewer extends Application {
                 root.getChildren().add(rugTile);
             }
         }
+
+    }
+
+    private void makeAssam(Assam assam) {
+        double x = assam.getAbsolutePosition().getX();
+        double y = assam.getAbsolutePosition().getY();
+
+        double centreX = START_X + (x * Tile_Size) + Tile_Size / 2;
+        double centreY = START_Y + (y * Tile_Size) + Tile_Size / 2;
+        double radius = Tile_Size / 3;
+        double triangleSide = 10.0;
+
+        Circle assamCircle = new Circle(centreX, centreY, radius);
+        assamCircle.setFill(Color.web("C41E3A"));
+        root.getChildren().add(assamCircle);
+
+        Polygon direction = new Polygon();
+        switch (assam.getCurrentDirection()) {
+            case EAST:
+                direction.getPoints().addAll(
+                        centreX + triangleSide + radius, centreY,
+                        centreX + radius, centreY + triangleSide / 2,
+                        centreX + radius, centreY - triangleSide / 2
+                );
+                break;
+
+            case WEST:
+                direction.getPoints().addAll(
+                        centreX - triangleSide - radius, centreY,
+                        centreX - radius, centreY + triangleSide / 2,
+                        centreX - radius, centreY - triangleSide / 2
+                );
+                break;
+
+            case SOUTH:
+                direction.getPoints().addAll(
+                        centreX, centreY + triangleSide + radius,
+                        centreX + triangleSide / 2, centreY + radius,
+                        centreX - triangleSide / 2, centreY + radius
+                );
+                break;
+
+            case NORTH:
+                direction.getPoints().addAll(
+                        centreX, centreY - triangleSide - radius,
+                        centreX + triangleSide / 2, centreY - radius,
+                        centreX - triangleSide / 2, centreY - radius
+                );
+                break;
+        }
+
+        direction.setFill(Color.web("C41E3A"));
+        root.getChildren().add(direction);
 
     }
 
