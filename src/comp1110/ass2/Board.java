@@ -68,7 +68,7 @@ public class Board {
                     rugPositions.add(null);
                 } else {
                     RugTile rugTile = new RugTile();
-                    rugTile = rugTile.StringToRugTile(subRug);
+                    rugTile = rugTile.StringToRugTile(subRug, i, j);
                     rugPositions.add(rugTile);
                 }
                 k+=3;

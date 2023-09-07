@@ -4,6 +4,8 @@ public class RugTile {
     private Color color;  // Color of the rug
     private IntPair absolutePosition; // absolute position of a rug segment on board
 
+    private int id;
+
     /**
      * Constructor that does nothing
      */
@@ -36,13 +38,27 @@ public class RugTile {
         return absolutePosition;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
     public String RugTileToString() {
         String rugString = "";
         if(this.color == null) {
             rugString += "n00";
         } else {
             rugString += this.color.value;
-            rugString += absolutePosition.IntPairToString(absolutePosition);
+            String idString = String.valueOf(getId());
+            if(idString.length() == 1) {
+                rugString += "0" + idString;
+            } else {
+                rugString += idString;
+            }
+//            rugString += absolutePosition.IntPairToString(absolutePosition);
         }
 
         return rugString;
@@ -54,7 +70,7 @@ public class RugTile {
      * @param rugString string representation of a segment of rug
      * @return rug segment
      */
-    public RugTile StringToRugTile(String rugString) {
+    public RugTile StringToRugTile(String rugString, int x, int y) {
         if(rugString.charAt(0) == Color.RED.value) {
             setColor(Color.RED);
         } else if(rugString.charAt(0) == Color.CYAN.value) {
@@ -66,8 +82,11 @@ public class RugTile {
         } else {
             setColor(null);
         }
-        IntPair position = new IntPair();
-        setAbsolutePosition(position.StringToIntPair(rugString.substring(1)));
+        IntPair position = new IntPair(x, y);
+        setAbsolutePosition(position);
+
+        setId(Integer.parseInt(rugString.substring(1)));
+//        setAbsolutePosition(position.StringToIntPair(rugString.substring(1)));
 
         return this;
     }
