@@ -15,17 +15,32 @@ Pei Ling LAM: create skeleton of Scores, Direction, and Assam. Modified on the d
 
 ## Week 5
 
-Zhang San: Task 3 isPlayerStateWellFormed - 23 Mar
+Everyone: discuss about the tasks distribution in Marrakech.java, and complete the methods in other classes for whichever tasks needed
+Task Distribution:Zexin Tang: Task 8 - Task 11
+                  Yaohui Hou: Task 4, Task 6, Task 7, Task 15
+                  Pei Ling LAM: Task 5, Task 12 - Task 14
 
-Jane Bloggs: Task 5 drawTileFromBag - 23 Mar
+Zexin Tang: Working on Task 8 - Task 11 - 23 Aug
 
-Erika Mustermann: Task 6 refillFactories - 25 Mar (depends on Task 5)
+Yaohui Hou: Completed Task 4 and Task 6 - 23 Aug
+
+Pei Ling LAM: Constructed method that convert string to equivalent class type in Assam, Players, Rug, Scores, and vice versa - 24 Aug
 
 ## Week 6
 
-...
+Zexin Tang: 
+
+Yaohui Hou:
+
+Pei Ling LAM: completed task 12 - 14 and amended some other classes - 25-27 Aug
 
 ## Mid-Semester Break
+
+Zexin Tang: 
+
+Yaohui Hou: 
+
+Pei Ling LAM: Completed Task 5 - 7 Sep
 
 ## Week 7
 
