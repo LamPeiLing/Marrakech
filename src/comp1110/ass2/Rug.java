@@ -117,8 +117,10 @@ public class Rug {
             setColor(Color.CYAN);
         } else if(rugString.charAt(0) == Color.YELLOW.value) {
             setColor(Color.YELLOW);
-        } else {
+        } else if(rugString.charAt(0) == Color.PURPLE.value) {
             setColor(Color.PURPLE);
+        } else {
+            setColor(null);
         }
 
         setRugID(Integer.parseInt(rugString.substring(1, 3)));

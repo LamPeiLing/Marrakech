@@ -154,8 +154,10 @@ public class Players {
             setColor(Color.YELLOW);
         } else if(stringPlayer.charAt(1) == 'r') {
             setColor(Color.RED);
-        } else {
+        } else if(stringPlayer.charAt(1) == 'p'){
             setColor(Color.PURPLE);
+        } else {
+            setColor(null);
         }
 
         setNumDirham(Integer.parseInt(stringPlayer.substring(2,5)));
