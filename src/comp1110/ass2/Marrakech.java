@@ -75,27 +75,23 @@ public class Marrakech {
      * @return true if the game is over, or false otherwise.
      */
     public static boolean isGameOver(String currentGame) {
+        Game game = new Game();
+        game = game.StringToGame(currentGame);
 
-        // Possible player colors.
-        char[] playerColors = {'c', 'r', 'y', 'b', 'g', 'p'};
-        int rugsPerPlayer = 12;  // This is just an example. You need the actual number of rugs each player starts with.
+        // Game is finished if all players are out of rugs
+        boolean isFinished = true;
 
-        for (char color : playerColors) {
-            int count = 0;
-            for (int i = 0; i < currentGame.length(); i++) {
-                if (currentGame.charAt(i) == color) {
-                    count++;
-                }
-            }
-
-            // If a player has placed all their rugs, the game is over.
-            if (count == rugsPerPlayer) {
-                return true;
+        for(int i = 0; i < game.getPlayersList().size(); i++) {
+            if(game.getPlayersList().get(i).getNumRug() > 0 && game.getPlayersList().get(i).isInGame()) {
+                isFinished = false;
+                break; // Exit the loop once we find a player who is still in game with rugs
             }
         }
-        return false;  // No player has placed all their rugs yet.
-        // FIXME: Task 8
+
+        return isFinished;
     }
+
+    // FIXME: Task 8
 
     /**
      * Implement Assam's rotation.
@@ -171,33 +167,129 @@ public class Marrakech {
      * @param rug A rug string representing the candidate rug which you must check the validity of.
      * @return true if the placement is valid, and false otherwise.
      */
+
     public static boolean isPlacementValid(String gameState, String rug) {
+        if (gameState.length() < 7 || rug.length() != 7) {
+            return false; // Invalid input lengths
+        }
+
         // Extract information from the rug string
         String colourAndID = rug.substring(0, 3);
         String startCoords = rug.substring(3, 5);
         String endCoords = rug.substring(5, 7);
 
         // Check if the rug is already in the gameState
-        if (gameState.contains(colourAndID)) {
+        if (containsRug(gameState, colourAndID)) {
             return false;
         }
 
         // Check if the rug does not completely cover another rug.
         for (int i = 0; i < gameState.length(); i += 7) {
-            String existingRugStart = gameState.substring(i+3, i+5);
-            String existingRugEnd = gameState.substring(i+5, i+7);
-
-            if (startCoords.equals(existingRugStart) && endCoords.equals(existingRugEnd)) {
-                return false; // The new rug completely covers an existing rug
+            if (i + 7 <= gameState.length()) {
+                String existingRugID = gameState.substring(i, i + 3);
+                if (isRugID(existingRugID)) { // Ensure this segment is a rug
+                    String existingRugStart = gameState.substring(i + 3, i + 5);
+                    String existingRugEnd = gameState.substring(i + 5, i + 7);
+                    if (completelyCovers(rug, existingRugStart, existingRugEnd)) {
+                        return false; // The new rug completely covers an existing rug
+                    }
+                }
             }
         }
 
-        // Here you would add logic to check if the rug is adjacent to Assam (not counting diagonals).
+        // Check adjacency with Assam
+        int assamPositionIndex = gameState.indexOf('A');
+        if (assamPositionIndex != -1 && assamPositionIndex + 3 <= gameState.length()) {
+            String assamPosition = gameState.substring(assamPositionIndex + 1, assamPositionIndex + 3);
+
+            // Ensure rug does not overlap with Assam's position
+            if (coordinatesOverlap(startCoords, assamPosition) || coordinatesOverlap(endCoords, assamPosition)) {
+                return false; // The rug overlaps with Assam's position
+            }
+
+            if (!(coordinatesAdjacent(startCoords, assamPosition) || coordinatesAdjacent(endCoords, assamPosition))) {
+                return false; // The rug is not adjacent to Assam
+            }
+        } else {
+            return false; // Assam's position is missing or invalid
+        }
 
         // If all checks pass, return true
         return true;
-        // FIXME: Task 10
     }
+    private static boolean coordinatesAdjacent(String coords1, String coords2) {
+        if (coords1.length() != 2 || coords2.length() != 2) {
+            return false; // Invalid input
+        }
+
+        int x1 = Character.getNumericValue(coords1.charAt(0));
+        int y1 = Character.getNumericValue(coords1.charAt(1));
+        int x2 = Character.getNumericValue(coords2.charAt(0));
+        int y2 = Character.getNumericValue(coords2.charAt(1));
+
+        return (x1 == x2 && Math.abs(y1 - y2) == 1) || // Horizontal adjacency
+                (y1 == y2 && Math.abs(x1 - x2) == 1);   // Vertical adjacency
+    }
+
+    private static boolean containsRug(String gameState, String rugID) {
+        for (int i = 0; i <= gameState.length() - 7; i += 7) {
+            String existingRugID = gameState.substring(i, i + 3);
+            if (existingRugID.equals(rugID)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean isRugID(String str) {
+        return str.matches("^[a-zA-Z]{3}$");  // Ensure all three characters are alphabets
+    }
+
+
+    private static boolean completelyCovers(String newRug, String existingRugStart, String existingRugEnd) {
+        String newRugStart = newRug.substring(3, 5);
+        String newRugEnd = newRug.substring(5, 7);
+
+        // For each coordinate string, check if it's numeric before parsing
+        if (!isNumeric(newRugStart.substring(0,1)) || !isNumeric(newRugStart.substring(1,2)) ||
+                !isNumeric(newRugEnd.substring(0,1)) || !isNumeric(newRugEnd.substring(1,2)) ||
+                !isNumeric(existingRugStart.substring(0,1)) || !isNumeric(existingRugStart.substring(1,2)) ||
+                !isNumeric(existingRugEnd.substring(0,1)) || !isNumeric(existingRugEnd.substring(1,2))) {
+            // One or more of the coordinate strings is not numeric, so return false or handle accordingly
+            return false;
+        }
+
+        // Convert the coordinate strings to integer values for comparison
+        int newRugStartX = Integer.parseInt(newRugStart.substring(0,1));
+        int newRugStartY = Integer.parseInt(newRugStart.substring(1,2));
+        int newRugEndX = Integer.parseInt(newRugEnd.substring(0,1));
+        int newRugEndY = Integer.parseInt(newRugEnd.substring(1,2));
+
+        int existingRugStartX = Integer.parseInt(existingRugStart.substring(0,1));
+        int existingRugStartY = Integer.parseInt(existingRugStart.substring(1,2));
+        int existingRugEndX = Integer.parseInt(existingRugEnd.substring(0,1));
+        int existingRugEndY = Integer.parseInt(existingRugEnd.substring(1,2));
+
+        // Check if the new rug completely covers the existing rug
+        return newRugStartX <= existingRugStartX && newRugStartY <= existingRugStartY &&
+                newRugEndX >= existingRugEndX && newRugEndY >= existingRugEndY;
+    }
+
+
+    private static boolean isNumeric(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch(NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private static boolean coordinatesOverlap(String coords1, String coords2) {
+        return coords1.equals(coords2);
+    }
+
+    // FIXME: Task 10
 
 
     /**
