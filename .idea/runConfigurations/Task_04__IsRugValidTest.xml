@@ -1,0 +1,18 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Task 04: IsRugValidTest" type="JUnit" factoryName="JUnit">
+    <module name="comp1110-ass2" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="comp1110.ass2.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <option name="PACKAGE_NAME" value="comp1110.ass2" />
+    <option name="MAIN_CLASS_NAME" value="comp1110.ass2.IsRugValidTest" />
+    <option name="METHOD_NAME" value="" />
+    <option name="TEST_OBJECT" value="class" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
