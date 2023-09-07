@@ -13,56 +13,20 @@ declaration: >-
   I submit the work below for assessment as my best work. I declare that this
   is entirely my own work, with the following documented exceptions:
 
-# Use this to list names of people who you collaborated with, and a
-# comment about what you collaborated on.
-#
-
 # I wish to submit the following classes as entirely my own (remove this if
 # you want to just submit methods):
 class:
-  - Assam.java
-  - Board.java
-  - Color.java
-  - Direction.java
-  - RugTile.java
-  - Scores.java
+  - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/Board.java
+  - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/RugTile.java
 
     # I wish to submit the following methods as entirely my own (remove this if
   # you want to just submit classes):
 method:
-  - displayState
-  - makeMosaicTrack
-  - makeBoard
-  - makeRug
-  - makeAssam
-  - setPlayersList
-  - getPlayersList
-  - setBoard
-  - getBoard
-  - setAssam
-  - getAssam
-  - GameToString
-  - StringToGame
-  - setX
-  - setY
-  - getWinner
-  - moveAssam
-  - makePlacement
-  - Players
-  - setIsInGame
-  - isInGame
-  - setColor
-  - getColor
-  - setNumDirham
-  - getNumDirham
-  - setNumRug
-  - getNumRug
-  - getScores
-  - PlayerToString
-  - StringToPlayer
-  - Rug
-  - setRugID
-  - StringToRug
+  - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/Marrakech.java#L274-324
+  - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/Marrakech.java#L337-411
+  - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/Marrakech.java#L424-444
+  - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Viewer.java#L178-229
+  - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/Game.java#L78-135
 
   # sign *your* name and uid here
 name: Pei Ling LAM
