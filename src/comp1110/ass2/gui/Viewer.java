@@ -163,9 +163,9 @@ public class Viewer extends Application {
                     default:
                         rugTile.setFill(Color.TRANSPARENT);
                 }
-//                rugTile.setStrokeWidth(4);
-//                rugTile.setStroke(Color.GREY);
-//                rugTile.setOpacity(0.5);
+                rugTile.setStrokeWidth(4);
+                rugTile.setStroke(Color.GREY);
+                rugTile.setOpacity(0.5);
                 root.getChildren().add(rugTile);
             }
         }
