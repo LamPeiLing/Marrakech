@@ -17,9 +17,10 @@ public class RugTile {
      * @param color color of rug
      * @param absolutePosition position of rug on the board
      */
-    public RugTile(Color color, IntPair absolutePosition) {
+    public RugTile(Color color, IntPair absolutePosition, int id) {
         this.color = color;
         this.absolutePosition = absolutePosition;
+        this.id = id;
     }
 
     public void setColor(Color color) {

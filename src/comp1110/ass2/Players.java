@@ -113,6 +113,10 @@ public class Players {
         return scores;
     }
 
+    public void updateNumRug() {
+        this.numRug--;
+    }
+
 
     // convert Players to String
     public String PlayerToString() {
