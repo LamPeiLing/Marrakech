@@ -2,6 +2,7 @@ package comp1110.ass2.gui;
 
 import comp1110.ass2.Assam;
 import comp1110.ass2.Board;
+import comp1110.ass2.Players;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,6 +19,8 @@ import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 import comp1110.ass2.Game;
 
+import java.util.List;
+
 public class Viewer extends Application {
 
     private static final int VIEWER_WIDTH = 1200;
@@ -29,7 +32,7 @@ public class Viewer extends Application {
     // The height of the board (top to bottom)
     public final static int BOARD_HEIGHT = 7;
     // Height and width of each tile
-    private static final double Tile_Size = 70;
+    private static final double Tile_Size = 50;
 
     // Pixel gap between the grey rectangles that indicates where the tiles are on the board
     private static final double BOARD_TILE_SHADOW_GAP = 0.5;
@@ -65,6 +68,7 @@ public class Viewer extends Application {
         makeBoard();
         makeRug(gameState.getBoard());
         makeAssam(gameState.getAssam());
+        makePlayers(gameState.getPlayersList());
 
     }
 
@@ -75,23 +79,23 @@ public class Viewer extends Application {
         for (int x=0; x < BOARD_WIDTH; x++) {
             for (int y = 0; y < BOARD_HEIGHT; y++) {
                 if (x % 2 == 0 && y == 0) {
-                    Circle mosaic = new Circle(START_X-BOARD_BORDER+(BOARD_TILE_SHADOW_GAP / 2) + (x * Tile_Size) + Tile_Size - BOARD_TILE_SHADOW_GAP,
-                            START_Y-BOARD_BORDER*3 - (BOARD_TILE_SHADOW_GAP*2) + (y * Tile_Size) + Tile_Size/2, Tile_Size - BOARD_BORDER);
+                    Circle mosaic = new Circle(START_X + BOARD_BORDER + BOARD_TILE_SHADOW_GAP + (x * Tile_Size) + Tile_Size / 1.5,
+                            START_Y - BOARD_BORDER * 2 - BOARD_TILE_SHADOW_GAP * 2 + (y * Tile_Size) + Tile_Size / 2, Tile_Size - BOARD_BORDER);
                     mosaic.setFill(Color.web("FFBF00"));
                     root.getChildren().add(mosaic);
                 }else if (x % 2 == 0 && y == 6) {
-                    Circle mosaic = new Circle(START_X+BOARD_BORDER+(BOARD_TILE_SHADOW_GAP/2) + (x * Tile_Size),
-                            START_Y+BOARD_BORDER*3 + (BOARD_TILE_SHADOW_GAP*2) + (y * Tile_Size) + Tile_Size/2, Tile_Size - BOARD_BORDER);
+                    Circle mosaic = new Circle(START_X + BOARD_BORDER + BOARD_TILE_SHADOW_GAP + (x * Tile_Size) - Tile_Size / 4,
+                            START_Y + BOARD_BORDER * 2 + BOARD_TILE_SHADOW_GAP * 2 + (y * Tile_Size) + Tile_Size / 2, Tile_Size - BOARD_BORDER);
                     mosaic.setFill(Color.web("FFBF00"));
                     root.getChildren().add(mosaic);
                 } else if (y % 2 != 0 && x == 0) {
-                    Circle mosaic = new Circle(START_X+BOARD_BORDER+(BOARD_TILE_SHADOW_GAP/2) + (x * Tile_Size),
-                            START_Y-BOARD_BORDER*3 - (BOARD_TILE_SHADOW_GAP*2) + (y * Tile_Size) + Tile_Size/2, Tile_Size - BOARD_BORDER);
+                    Circle mosaic = new Circle(START_X + BOARD_BORDER + BOARD_TILE_SHADOW_GAP + (x * Tile_Size) - Tile_Size / 4,
+                            START_Y - BOARD_BORDER * 2 - BOARD_TILE_SHADOW_GAP * 2 + (y * Tile_Size) + Tile_Size / 2, Tile_Size - BOARD_BORDER);
                     mosaic.setFill(Color.web("FFBF00"));
                     root.getChildren().add(mosaic);
                 } else if (y % 2 != 0 && x == 6) {
-                    Circle mosaic = new Circle(START_X-BOARD_BORDER+(BOARD_TILE_SHADOW_GAP/2) + (x * Tile_Size) + Tile_Size - BOARD_TILE_SHADOW_GAP,
-                            START_Y+ BOARD_BORDER*3 + (BOARD_TILE_SHADOW_GAP*2) + (y * Tile_Size) + Tile_Size/2, Tile_Size - BOARD_BORDER);
+                    Circle mosaic = new Circle(START_X + BOARD_BORDER + BOARD_TILE_SHADOW_GAP + (x * Tile_Size) + Tile_Size / 1.5,
+                            START_Y + BOARD_BORDER * 2 + BOARD_TILE_SHADOW_GAP * 2 + (y * Tile_Size) + Tile_Size / 2, Tile_Size - BOARD_BORDER);
                     mosaic.setFill(Color.web("FFBF00"));
                     root.getChildren().add(mosaic);
                 }
@@ -123,7 +127,7 @@ public class Viewer extends Application {
                         Tile_Size - BOARD_TILE_SHADOW_GAP,
                         Tile_Size - BOARD_TILE_SHADOW_GAP);
                 tileShadow.setFill(Color.TRANSPARENT);
-                tileShadow.setStrokeWidth(4);
+                tileShadow.setStrokeWidth(2);
                 tileShadow.setStroke(Color.GREY);
                 tileShadow.setOpacity(0.5);
                 root.getChildren().add(tileShadow);
@@ -137,7 +141,7 @@ public class Viewer extends Application {
      */
     private void makeRug(Board board) {
         for(int i = 0; i < board.getBoardPosition().size(); i++) {
-            if(board.getBoardPosition().get(i) != null) {
+            if(board.getBoardPosition().get(i).getAbsolutePosition() != null) {
                 double x = board.getBoardPosition().get(i).getAbsolutePosition().getX();
                 double y = board.getBoardPosition().get(i).getAbsolutePosition().getY();
                 Rectangle rugTile = new Rectangle(
@@ -166,7 +170,7 @@ public class Viewer extends Application {
                     default:
                         rugTile.setFill(Color.TRANSPARENT);
                 }
-                rugTile.setStrokeWidth(4);
+                rugTile.setStrokeWidth(2);
                 rugTile.setStroke(Color.GREY);
                 rugTile.setOpacity(0.5);
                 root.getChildren().add(rugTile);
@@ -182,7 +186,7 @@ public class Viewer extends Application {
         double centreX = START_X + (x * Tile_Size) + Tile_Size / 2;
         double centreY = START_Y + (y * Tile_Size) + Tile_Size / 2;
         double radius = Tile_Size / 3;
-        double triangleSide = 10.0;
+        double triangleSide = 5.0;
 
         Circle assamCircle = new Circle(centreX, centreY, radius);
         assamCircle.setFill(Color.web("C41E3A"));
@@ -226,6 +230,130 @@ public class Viewer extends Application {
         direction.setFill(Color.web("C41E3A"));
         root.getChildren().add(direction);
 
+    }
+
+    private void makePlayers(List<Players> playersList) {
+
+        for (int i = 0; i < playersList.size(); i++) {
+            if(i == 0 || i == 1) {
+                double x = START_X - BOARD_TILE_SHADOW_GAP;
+                double y = START_Y + (Tile_Size * 7 / 2) - Tile_Size;
+                switch (i) {
+                    case 0:
+                        x -= Tile_Size * 3;
+                        break;
+
+                    case 1:
+                        x += Tile_Size * 8;
+                        break;
+                }
+                // create rug
+                for (int j = 0; j < playersList.get(i).getNumRug(); j++) {
+                    Rectangle rug = new Rectangle(
+                             x + j,
+                            y,
+                            Tile_Size - BOARD_TILE_SHADOW_GAP,
+                            (Tile_Size * 2) - BOARD_TILE_SHADOW_GAP);
+                    switch (playersList.get(i).getColor()) {
+                        case RED:
+                            rug.setFill(Color.RED);
+                            break;
+
+                        case PURPLE:
+                            rug.setFill(Color.PURPLE);
+                            break;
+
+                        case CYAN:
+                            rug.setFill(Color.CYAN);
+                            break;
+
+                        case YELLOW:
+                            rug.setFill(Color.YELLOW);
+                            break;
+
+                    }
+                    rug.setStrokeWidth(0.5);
+                    rug.setStroke(Color.BLACK);
+                    root.getChildren().add(rug);
+                }
+
+                // create dirham
+                for (int j = 0; j < playersList.get(i).getNumDirham(); j++) {
+                    Circle dirham = new Circle(
+                            x + j,
+                            y - Tile_Size / 2,
+                            Tile_Size / 5);
+                    dirham.setFill(Color.web("D4AF37"));
+                    dirham.setStrokeWidth(0.5);
+                    dirham.setStroke(Color.BLACK);
+                    root.getChildren().add(dirham);
+                }
+            } else {
+                double x = START_X + (Tile_Size * 7 / 2) - Tile_Size;
+                double y = START_Y - BOARD_TILE_SHADOW_GAP;
+                switch (i) {
+                    case 2:
+                        y -= Tile_Size * 2.5;
+                        break;
+
+                    case 3:
+                        y += Tile_Size * 8;
+                        break;
+                }
+                // create rug
+                for (int j = 0; j < playersList.get(i).getNumRug(); j++) {
+                    Rectangle rug = new Rectangle(
+                            x,
+                            y + j,
+                            Tile_Size * 2 - BOARD_TILE_SHADOW_GAP,
+                            Tile_Size - BOARD_TILE_SHADOW_GAP);
+                    switch (playersList.get(i).getColor()) {
+                        case RED:
+                            rug.setFill(Color.RED);
+                            break;
+
+                        case PURPLE:
+                            rug.setFill(Color.PURPLE);
+                            break;
+
+                        case CYAN:
+                            rug.setFill(Color.CYAN);
+                            break;
+
+                        case YELLOW:
+                            rug.setFill(Color.YELLOW);
+                            break;
+
+                    }
+                    rug.setStrokeWidth(0.5);
+                    rug.setStroke(Color.BLACK);
+                    root.getChildren().add(rug);
+                }
+
+                // create dirham
+                for (int j = 0; j < playersList.get(i).getNumDirham(); j++) {
+                    Circle dirham = new Circle(
+                            x + Tile_Size / 2,
+                            y + j,
+                            Tile_Size / 5);
+                    dirham.setFill(Color.web("D4AF37"));
+                    dirham.setStrokeWidth(0.5);
+                    dirham.setStroke(Color.BLACK);
+                    root.getChildren().add(dirham);
+                }
+            }
+        }
+
+//        for (int i = 0; i < playersList.size(); i++) {
+//            // create rugs
+//            for (int j = 0; j < playersList.get(i).getNumRug(); j++) {
+//                Rectangle rug = new Rectangle(
+//                        START_X + (j * Tile_Size) + (BOARD_TILE_SHADOW_GAP / 2) - 50,
+//                        START_Y + (Tile_Size * 7 / 2),
+//                        Tile_Size - BOARD_TILE_SHADOW_GAP,
+//                        (Tile_Size * 2) - BOARD_TILE_SHADOW_GAP);
+//            }
+//        }
     }
 
     /**
