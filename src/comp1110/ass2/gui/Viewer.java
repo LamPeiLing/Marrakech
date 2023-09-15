@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
@@ -318,6 +319,15 @@ public class Viewer extends Application {
             Circle playerColour = new Circle(labelX + labelStrokeWidth, labelY + labelStrokeWidth * 1.5 + (i * 15), radius);
             playerColour.setFill(setPlayerColour(playersList.get(i).getColor()));
             root.getChildren().add(playerColour);
+
+            // cross out the players if they are out of the game
+            if(!playersList.get(i).isInGame()) {
+                Line line = new Line(labelX + labelStrokeWidth - radius * 2, labelY + labelStrokeWidth * 1.5 + (i * 15), labelX + 190, labelY + labelStrokeWidth * 1.5 + (i * 15));
+                line.setStroke(Color.RED);
+                line.setStrokeWidth(2);
+                line.setFill(Color.RED);
+                root.getChildren().add(line);
+            }
 
             Text playerDetails = new Text(labelX + labelStrokeWidth + radius, labelY + labelStrokeWidth * 2 + (i * 15), "Player " + (i + 1) + "  | Rugs: " + playersList.get(i).getNumRug() + "  | Dirhams: " + playersList.get(i).getNumDirham());
             playerDetails.setFont(Font.font(12));
