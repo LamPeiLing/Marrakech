@@ -16,6 +16,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Polygon;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import comp1110.ass2.Game;
 
@@ -69,6 +71,7 @@ public class Viewer extends Application {
         makeRug(gameState.getBoard());
         makeAssam(gameState.getAssam());
         makePlayers(gameState.getPlayersList());
+        makePlayerLabel(gameState.getPlayersList());
 
     }
 
@@ -150,26 +153,7 @@ public class Viewer extends Application {
                         Tile_Size - BOARD_TILE_SHADOW_GAP,
                         Tile_Size - BOARD_TILE_SHADOW_GAP);
 
-                switch (board.getBoardPosition().get(i).getColor()) {
-                    case RED:
-                        rugTile.setFill(Color.RED);
-                        break;
-
-                    case PURPLE:
-                        rugTile.setFill(Color.PURPLE);
-                        break;
-
-                    case CYAN:
-                        rugTile.setFill(Color.CYAN);
-                        break;
-
-                    case YELLOW:
-                        rugTile.setFill(Color.YELLOW);
-                        break;
-
-                    default:
-                        rugTile.setFill(Color.TRANSPARENT);
-                }
+                rugTile.setFill(setPlayerColour(board.getBoardPosition().get(i).getColor()));
                 rugTile.setStrokeWidth(2);
                 rugTile.setStroke(Color.GREY);
                 rugTile.setOpacity(0.5);
@@ -232,6 +216,10 @@ public class Viewer extends Application {
 
     }
 
+    /**
+     * method that show the view of rugs and dirhams of each player
+     * @param playersList list of the players
+     */
     private void makePlayers(List<Players> playersList) {
 
         for (int i = 0; i < playersList.size(); i++) {
@@ -247,6 +235,19 @@ public class Viewer extends Application {
                         x += Tile_Size * 8;
                         break;
                 }
+
+                // create dirham
+                for (int j = 0; j < playersList.get(i).getNumDirham(); j++) {
+                    Circle dirham = new Circle(
+                            x + j + 2,
+                            y - Tile_Size / 2,
+                            Tile_Size / 5);
+                    dirham.setFill(Color.web("D4AF37"));
+                    dirham.setStrokeWidth(0.5);
+                    dirham.setStroke(Color.BLACK);
+                    root.getChildren().add(dirham);
+                }
+
                 // create rug
                 for (int j = 0; j < playersList.get(i).getNumRug(); j++) {
                     Rectangle rug = new Rectangle(
@@ -254,39 +255,10 @@ public class Viewer extends Application {
                             y,
                             Tile_Size - BOARD_TILE_SHADOW_GAP,
                             (Tile_Size * 2) - BOARD_TILE_SHADOW_GAP);
-                    switch (playersList.get(i).getColor()) {
-                        case RED:
-                            rug.setFill(Color.RED);
-                            break;
-
-                        case PURPLE:
-                            rug.setFill(Color.PURPLE);
-                            break;
-
-                        case CYAN:
-                            rug.setFill(Color.CYAN);
-                            break;
-
-                        case YELLOW:
-                            rug.setFill(Color.YELLOW);
-                            break;
-
-                    }
+                    rug.setFill(setPlayerColour(playersList.get(i).getColor()));
                     rug.setStrokeWidth(0.5);
                     rug.setStroke(Color.BLACK);
                     root.getChildren().add(rug);
-                }
-
-                // create dirham
-                for (int j = 0; j < playersList.get(i).getNumDirham(); j++) {
-                    Circle dirham = new Circle(
-                            x + j,
-                            y - Tile_Size / 2,
-                            Tile_Size / 5);
-                    dirham.setFill(Color.web("D4AF37"));
-                    dirham.setStrokeWidth(0.5);
-                    dirham.setStroke(Color.BLACK);
-                    root.getChildren().add(dirham);
                 }
             } else {
                 double x = START_X + (Tile_Size * 7 / 2) - Tile_Size;
@@ -300,6 +272,19 @@ public class Viewer extends Application {
                         y += Tile_Size * 8;
                         break;
                 }
+
+                // create dirham
+                for (int j = 0; j < playersList.get(i).getNumDirham(); j++) {
+                    Circle dirham = new Circle(
+                            x + j + Tile_Size * 2.5,
+                            y + Tile_Size / 2,
+                            Tile_Size / 5);
+                    dirham.setFill(Color.web("D4AF37"));
+                    dirham.setStrokeWidth(0.5);
+                    dirham.setStroke(Color.BLACK);
+                    root.getChildren().add(dirham);
+                }
+
                 // create rug
                 for (int j = 0; j < playersList.get(i).getNumRug(); j++) {
                     Rectangle rug = new Rectangle(
@@ -307,53 +292,60 @@ public class Viewer extends Application {
                             y + j,
                             Tile_Size * 2 - BOARD_TILE_SHADOW_GAP,
                             Tile_Size - BOARD_TILE_SHADOW_GAP);
-                    switch (playersList.get(i).getColor()) {
-                        case RED:
-                            rug.setFill(Color.RED);
-                            break;
-
-                        case PURPLE:
-                            rug.setFill(Color.PURPLE);
-                            break;
-
-                        case CYAN:
-                            rug.setFill(Color.CYAN);
-                            break;
-
-                        case YELLOW:
-                            rug.setFill(Color.YELLOW);
-                            break;
-
-                    }
+                    rug.setFill(setPlayerColour(playersList.get(i).getColor()));
                     rug.setStrokeWidth(0.5);
                     rug.setStroke(Color.BLACK);
                     root.getChildren().add(rug);
                 }
-
-                // create dirham
-                for (int j = 0; j < playersList.get(i).getNumDirham(); j++) {
-                    Circle dirham = new Circle(
-                            x + Tile_Size / 2,
-                            y + j,
-                            Tile_Size / 5);
-                    dirham.setFill(Color.web("D4AF37"));
-                    dirham.setStrokeWidth(0.5);
-                    dirham.setStroke(Color.BLACK);
-                    root.getChildren().add(dirham);
-                }
             }
         }
+    }
 
-//        for (int i = 0; i < playersList.size(); i++) {
-//            // create rugs
-//            for (int j = 0; j < playersList.get(i).getNumRug(); j++) {
-//                Rectangle rug = new Rectangle(
-//                        START_X + (j * Tile_Size) + (BOARD_TILE_SHADOW_GAP / 2) - 50,
-//                        START_Y + (Tile_Size * 7 / 2),
-//                        Tile_Size - BOARD_TILE_SHADOW_GAP,
-//                        (Tile_Size * 2) - BOARD_TILE_SHADOW_GAP);
-//            }
-//        }
+    /**
+     * method that labels the number of rugs and dirhams of each player
+     * @param playersList list of the players
+     */
+    private void makePlayerLabel(List<Players> playersList) {
+        double labelX = VIEWER_WIDTH - 200;
+        double labelY = 10;
+        double labelStrokeWidth = 10;
+        double radius = 5;
+        Rectangle labelBox = new Rectangle(labelX, labelY, 190, 80);
+        labelBox.setFill(Color.BLACK);
+        root.getChildren().add(labelBox);
+
+        for (int i = 0; i < playersList.size(); i++) {
+            Circle playerColour = new Circle(labelX + labelStrokeWidth, labelY + labelStrokeWidth * 1.5 + (i * 15), radius);
+            playerColour.setFill(setPlayerColour(playersList.get(i).getColor()));
+            root.getChildren().add(playerColour);
+
+            Text playerDetails = new Text(labelX + labelStrokeWidth + radius, labelY + labelStrokeWidth * 2 + (i * 15), "Player " + (i + 1) + "  | Rugs: " + playersList.get(i).getNumRug() + "  | Dirhams: " + playersList.get(i).getNumDirham());
+            playerDetails.setFont(Font.font(12));
+            playerDetails.setFill(Color.WHITE);
+            root.getChildren().add(playerDetails);
+        }
+    }
+
+    /**
+     * method that set the colour of the node from players color
+     * @param color color of the players from enum created in ass2 package
+     * @return color type from JavaFx.scene.paint
+     */
+    private Color setPlayerColour(comp1110.ass2.Color color) {
+        switch (color) {
+            case RED:
+                return Color.RED;
+
+            case PURPLE:
+                return Color.PURPLE;
+
+            case CYAN:
+                return Color.CYAN;
+
+            case YELLOW:
+                return Color.YELLOW;
+        }
+        return Color.TRANSPARENT;
     }
 
     /**
