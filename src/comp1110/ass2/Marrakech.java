@@ -28,16 +28,17 @@ public class Marrakech {
      * @return true if the rug is valid, and false otherwise.
      */
     public static boolean isRugValid(String gameString, String rug) {
-        String colourAndID = rug.substring(0, 3);
+        char colour = rug.charAt(0);
+        int position1 = Character.getNumericValue(rug.charAt(3));
+        int position2 = Character.getNumericValue(rug.charAt(4));
+        int position3 = Character.getNumericValue(rug.charAt(5));
+        int position4 = Character.getNumericValue(rug.charAt(6));
         if(rug.length() != 7){
             return false;
-        }else if(gameString.contains(colourAndID)){
+        }else if(colour != 'r' && colour != 'c' && colour != 'p' && colour != 'y'){
             return false;
-        }else{
-            return true;
-        }
+        }else return position1 <= 6 && position2 <= 6 && position3 <= 6 && position4 <= 6;
         // FIXME: Task 4
-        //return true;
     }
 
 
