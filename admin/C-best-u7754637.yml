@@ -22,10 +22,14 @@ class:
     # I wish to submit the following methods as entirely my own (remove this if
   # you want to just submit classes):
 method:
-  - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/Marrakech.java#L274-324
-  - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/Marrakech.java#L337-411
-  - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/Marrakech.java#L424-444
-  - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Viewer.java#L178-229
+  - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/Marrakech.java#L369-409
+  - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/Marrakech.java#L422-496
+  - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/Marrakech.java#L509-536
+  - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Viewer.java#L64-77
+  - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Viewer.java#L82-108
+  - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Viewer.java#L82-108
+  - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Viewer.java#L82-108
+  - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Viewer.java#L82-108
   - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/Game.java#L78-135
 
   # sign *your* name and uid here
