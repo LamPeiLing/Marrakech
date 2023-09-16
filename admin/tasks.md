@@ -40,7 +40,9 @@ Zexin Tang:
 
 Yaohui Hou: 
 
-Pei Ling LAM: Completed Task 5 - 7 Sep
+Pei Ling LAM: Constructed view for the board (Task 5) - 7 Sep
+              Fixed task 14 and some other affected classes, updated Task 5 to add players in the view - 15 Sep
+              Completed task 5 by implementing a label box and a line to handle the players that are out of game - 16 Sep
 
 ## Week 7
 

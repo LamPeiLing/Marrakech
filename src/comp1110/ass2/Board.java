@@ -28,6 +28,7 @@ public class Board {
             for (int j = 0; j < BOARD_WIDTH; j++) {
                 if(i == rugTile.getAbsolutePosition().getX() && j == rugTile.getAbsolutePosition().getY()) {
                     getBoardPosition().get((i * 7) + j).setAbsolutePosition(rugTile.getAbsolutePosition());
+                    getBoardPosition().get((i * 7) + j).setId(rugTile.getId());
                     getBoardPosition().get((i * 7) + j).setColor(rugTile.getColor());
                 }
             }
@@ -65,7 +66,7 @@ public class Board {
                 String subRug = boardString.substring(k, k+3);
 
                 if(subRug.charAt(0) == 'n'){
-                    rugPositions.add(null);
+                    rugPositions.add(new RugTile());
                 } else {
                     RugTile rugTile = new RugTile();
                     rugTile = rugTile.StringToRugTile(subRug, i, j);
