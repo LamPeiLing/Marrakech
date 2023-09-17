@@ -17,13 +17,7 @@ declaration: >-
 # you want to just submit methods):
 class:
   - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/Angle.java
-  -
 
-    # I wish to submit the following methods as entirely my own (remove this if
-  # you want to just submit classes):
-method:
-  -
-  -
 
   # sign *your* name and uid here
 name: Zexin TANG
