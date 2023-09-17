@@ -29,23 +29,23 @@ collaboration:
 #
 # Add as many "url+licence+comment" entries as necessary
 # (or remove it altogether if you haven't used any external code)
-code:
-  - comment:
-    url:
-    licence:
+#code:
+#  - comment:
+#    url:
+#    licence:
 
 # I wish to submit the following classes as entirely my own (remove this if
 # you want to just submit methods):
 class:
-   - 
-   - 
+   - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/Coin.java
+
 
 # I wish to submit the following methods as entirely my own (remove this if
 # you want to just submit classes):
 method:
-   - 
-   - 
+   - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/Marrakech.java#30-42
+   - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/Marrakech.java#59-65
 
 # sign *your* name and uid here
-name:
-uid:
+name: Yaohui HOU
+uid: u7754892

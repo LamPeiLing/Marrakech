@@ -47,25 +47,7 @@ public class Players {
     }
 
 
-    /**
-     * Check if the player who moves the Assam has enough changes to pay the fee
-     * @return true if the changes are enough, otherwise false
-     */
-    public boolean needGiveChange(){
-        return false;
-    }
 
-    /**
-     * Calculate how much change does the player need
-     * @return the amount of change
-     */
-    public int giveChange(){
-        if(needGiveChange()){
-            return 0;
-        }else{
-            return 0;
-        }
-    }
 
     public void setIsInGame(char representation) {
         if(representation == 'i') {
