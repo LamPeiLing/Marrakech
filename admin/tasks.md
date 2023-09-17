@@ -47,6 +47,11 @@ Pei Ling LAM: Constructed view for the board (Task 5) - 7 Sep
 
 ## Week 7
 
+Everyone: discuss and distribution the classes for D2D test plan. - 18 Sep 
+Task Distribution: ZeXin Tang: Rug, IntPair, Scores, Angle
+                   Yaohui Hou: Coin, Game, Players, Direction
+                   Pei Ling Lam: Assam, Board, RugTile, Color
+
 ## Week 8
 
 ## Week 9
