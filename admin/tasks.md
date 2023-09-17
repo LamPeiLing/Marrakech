@@ -22,7 +22,7 @@ Task Distribution:Zexin Tang: Task 8 - Task 11
 
 Zexin Tang: Working on Task 8 - Task 11 - 23 Aug
 
-Yaohui Hou: Completed Task 4 and Task 6 - 23 Aug
+Yaohui Hou: Worked on Task 4 and Task 6  - 23 Aug
 
 Pei Ling LAM: Constructed method that convert string to equivalent class type in Assam, Players, Rug, Scores, and vice versa - 24 Aug
 
@@ -30,7 +30,7 @@ Pei Ling LAM: Constructed method that convert string to equivalent class type in
 
 Zexin Tang: 
 
-Yaohui Hou:
+Yaohui Hou: Worked on Task 7 and Task 15 - 29-31 Aug
 
 Pei Ling LAM: completed task 12 - 14 and amended some other classes - 25-27 Aug
 
@@ -38,7 +38,8 @@ Pei Ling LAM: completed task 12 - 14 and amended some other classes - 25-27 Aug
 
 Zexin Tang: 
 
-Yaohui Hou: 
+Yaohui Hou: Worked on Task 7(not commit yet) - 10 Sep
+            Amended Task 4 - 16 Sep
 
 Pei Ling LAM: Constructed view for the board (Task 5) - 7 Sep
               Fixed task 14 and some other affected classes, updated Task 5 to add players in the view - 15 Sep
