@@ -83,15 +83,6 @@ public class Assam {
         return true;
     }
 
-
-    /**
-     * update Assam's direction when players are rotating Assam
-     * @param transform new transformation from players
-     */
-    public void updateDirection(Transform transform) {
-
-    }
-
     /**
      * update Assam's absolute position after moving Assam
      * @param newPosition new absolute position

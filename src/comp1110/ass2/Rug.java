@@ -26,16 +26,6 @@ public class Rug {
      */
     public Rug(){}
 
-    /**
-     * Converts relative positions to absolute positions using the given transform.
-     * @param transform Transformation to be applied
-     * @return Array of absolute positions
-     */
-    public IntPair[] getAbsolutePositions(Transform transform) {
-        //return Piece.calcNewAbsolutePositions(relativePositions, transform);
-        return null;
-    }
-
     public void setColor(Color color) {
         this.color = color;
     }
