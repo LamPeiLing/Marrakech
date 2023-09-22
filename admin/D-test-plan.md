@@ -43,7 +43,7 @@ Employing assertions to validate that the method correctly maps angle values to 
 This test case assesses the add method of the Angle enum, which adds two angle values together and returns the corresponding enum value. 
 It ensures that angle addition is correctly handled by the enum.
 
-*Scenario*
+**Scenario**
 
 1. Creating Angle enum values representing angles such as Angle.DEG_0, Angle.DEG_90, and Angle.DEG_180.
 2. Using the add method to add these enum values together.
@@ -322,84 +322,58 @@ covering various aspects of score calculation and update.
 
 ## Assam
 
-### TestSetAndGetAbsolutePosition - Testing the setter and getter to get absolute position works fine
+### StringToAssamTest - Testing the conversion from String to Assam works fine
 **Description**
 
-This test will test on setting a value to the setter, and verified by using getter.
-If we get the same value as input from getter, it means that both methods work.
-
-**Scenario**
-
-1. The input of `IntPair` object: (3,5)
-2. set Assam's absolute position to the input by calling `setAbsolutePosition(IntPair(3,5))`
-3. verified by calling `getAbsolutePosition()`
-
-**Expected output**
-
-The expected output of `getAbsolutePosition()` is an object `IntPair` with value (3,5)
-
-**Assertions**
-
-Employing assertions to validate the correctness of the absolute position of assam:
-- `assertEquals(IntPair expectedPosition, assam.getAbsolutePosition())`: verify that the absolute position we get is the position that we first set into it using the expected position
-- Examples:
-  - `assertEquals((3,5), (3,5))` returns true
-  - `assertEquals((3,5), (0,0))` returns false
-  - `assertEquals((3,5), (6,3))` returns false
-
-### TestSetAndGetCurrentDirection - Testing the setter and getter to get direction works fine
-**Description**
-
-This test will test on setting a value to the setter, and verified by using getter.
-If we get the same value as input from getter, it means that both methods work.
-
-**Scenario**
-
-1. The input of `Direction` : Direction.NORTH
-2. set Assam's absolute position to the input by calling `setCurrentDirection(Direction.NORTH)`
-3. verified by calling `getCurrentDirection`
-
-**Expected output**
-
-The expected output of `getCurrentDirection` is enum of Direction.NORTH
-
-**Assertions**
-
-Employing assertions to validate the correctness of the direction of assam:
-- `assertEquals(Direction expectedDirection, assam.getCurrentDirection())`: verify that the direction we get is the position that we first set into it using the expected position
-- Examples:
-  - `assertEquals(Direction.NORTH, Direction.NORTH)` returns true
-  - `assertEquals(Direction.NORTH, Direction.SOUTH)` returns false
-  - `assertEquals(Direction.NORTH, Direction.WEST)` returns false
-  - `assertEquals(Direction.NORTH, Direction.EAST)` returns false
-
-### TestStringAndAssamConversion - Testing the conversion between String and Assam works fine
-**Description**
-
-This test will test on converting Assam's string representation to its class type, and verified by converting it back to string representation.
-If the string representation after converting back is same as the string given initially, it means that both methods works well.
+This test will test on converting Assam's string representation to its class type, 
+and verified by comparing the direction and position.
 
 **Scenario**
 
 1. The input of string representation: A31N
 2. Convert to `Assam` type by calling `StringToAssam("A31N")`
-3. verified by calling `AssamToString()`
+3. verified by comparing `assam.getAbsolutePosition()` and `assam.getCurrentDirection()`
 
 **Expected output**
 
-The expected output of `AssamToString()` is "A31N"
+The expected output of `assam.getAbsolutePosition()` after calling `StringToAssam()` is 31 (IntPair(3,1) in string format)
+The expected output of `assam.getCurrentDirection()` after calling `StringToAssam()` is N
 
 **Assertions**
 
 Employing assertions to validate the correctness of the conversion of string representation of assam:
-- `assertEquals(String stringRepresentation, assam.AssamToString())`: verify that the string we get is the string representation that we first used to convert into `Assam`
+- `assertEquals(String position, String IntPairToString(assam.StringToAssam(stringAssam).getAbsolutePosition()))`: verify that the string we get is the string of position that we first used to convert into `Assam`
+- `assertEquals(String direction, String String.valueOf(assam.StringToAssam(stringAssam).getCurrentDirection().value))`: verify that the string we get is the string of direction that we first used to convert into `Assam`
 - Examples:
-  - `assertEquals("A31N", "A31N")` returns true
-  - `assertEquals("A31N", "A31S")` returns false
-  - `assertEquals("A31N", "A31")` returns false
-  - `assertEquals("A31N", "P01N")` returns false
+  - A31N `assertEquals("31", "31")` returns true
+  - A31N `assertEquals("N", "N")` returns true
 
-### TestIsBorder - Testing the judgement on whether the position is a border
+### AssamToStringTest - Testing the conversion from Assam to String works fine
+**Description**
+
+This test will test on converting `Assam` to its string representation by inputting position and direction
+and verified by comparing to the expected string representation.
+
+**Scenario**
+
+1. The input of direction and position: (3,1), N
+2. set the direction and position of assam using setter
+3. Convert to string type by calling `assam.AssamToString()`
+4. verified by comparing the expected string representation `A31N`
+
+**Expected output**
+
+The expected output of Assam with position of (3,1) and direction North after calling `AssamToString` is `A31N`
+
+**Assertions**
+
+Employing assertions to validate the correctness of the conversion of string representation of assam:
+- `assertEquals(String stringRepresentation, String assam.AssamToString())`: verify that the string we get is same as the expected output
+- Examples:
+  - (3,1) N `assertEquals("A31N", "A31N")` returns true
+  - (3,1) N `assertEquals("A31N", "A00N")` returns false
+
+### IsBorderTest - Testing the judgement on whether the position is a border
 **Description**
 
 This test will test on whether Assam is at the border of the board.
@@ -424,7 +398,7 @@ Employing assertions to validate the correctness of whether the position is bord
   - position (0,0) `assertEquals(true, true)` returns true
   - position (0,0) `assertEquals(true, false)` returns false
 
-### TestIsMovementSafe - Testing whether Assam is safe to move forward
+### IsMovementSafeTest - Testing whether Assam is safe to move forward
 **Description**
 
 This test will test on whether Assam is safe to move forward given position and direction.
@@ -451,65 +425,14 @@ Employing assertions to validate the correctness of whether Assam is safe to mov
   - position (0,0) with Direction.WEST `assertEquals(false, true)` returns false
   - position (0,0) with Direction.NORTH `assertEquals(false, false)` returns true
 
-### TestAdjacentEdge - Testing whether the method returns all adjacent positions of Assam are correct
-**Description**
-
-This test will test on whether the list of positions are the adjacent positions of Assam.
-The adjacent positions contain the top, bottom, left, and right position of Assam.
-There might be cases where the adjacent positions have only two or three given Assam is at border or corner.
-
-**Scenario**
-
-1. The input of Assam's position `IntPair`: (3,3)
-2. call the method `adjacentEdge()`
-
-**Expected output**
-
-The expected output of `adjacentEdge()` is (3,2),(3,4),(2,3),(4,3)
-
-**Assertions**
-
-Employing assertions to validate the correctness of all adjacent positions of Assam:
-- `assertEquals(List<IntPair> expectedPositions, assam.adjacentEdge())`: verify that the return list are same as expected adjacent position (without considering the order of sequence)
-- Examples:
-  - position (0,0) `assertEquals([(1,0),(0,1)], [(1,0),(0,1)])` returns true
-  - position (0,0) `assertEquals([(1,0),(0,1)], [(-1,0),(1,0),(0,1),(0,-1)])` returns false
-  - position (2,6) `assertEquals([(1,6),(3,6),(2,5)], [(1,6),(3,6),(2,5)])` returns true
-  - position (2,6) `assertEquals([(1,6),(3,6),(2,5)], [(1,6),(3,6),(2,5),(2,7)])` returns false
-  - position (1,2) `assertEquals([(0,2),(2,2),(1,1),(1,3)], [(0,2),(2,2),(1,1),(1,3)])` returns true
-
 
 ## Board
 
-### TestSetAndGetBoardPosition - Testing the setter and getter to get list of rug tiles on the board works fine
+### StringToBoardTest - Testing the conversion from String to Board works fine
 **Description**
 
-This test will test on setting a value to the setter, and verified by using getter.
-If we get the same value as input from getter, it means that both methods work.
-
-**Scenario**
-
-1. The input of `List<RugTile>` object: RugTile(Color.YELLOW, (0,0), 1), RugTile(Color.RED, (0,1), 2)
-2. set Assam's absolute position to the input by calling `setBoardPosition(RugTile(Color.YELLOW, (0,0), 1), RugTile(Color.RED, (0,1), 2))`
-3. verified by calling `getBoardPosition`
-
-**Expected output**
-
-The expected output of `getBoardPosition` is an object `IntPair` with the list RugTile(Color.YELLOW, (0,0), 1), RugTile(Color.RED, (0,1), 2)
-
-**Assertions**
-
-Employing assertions to validate the correctness of the RugTile on the board:
-- `assertEquals(List<RugTile> expectedResult, board.getBoardPosition())`: verify that the list of rug tiles we get are the rug tiles that we first set into it using the input
-- Examples:
-  - `assertEquals([RugTile(Color.YELLOW, (0,0), 1), RugTile(Color.RED, (0,1), 2)], [RugTile(Color.YELLOW, (0,0), 1), RugTile(Color.RED, (0,1), 2)])` returns true
-  - `assertEquals(RugTile(Color.YELLOW, (0,0), 1), RugTile(Color.RED, (0,1), 2), null)` returns false
-
-### TestStringAndBoardConversion - Testing the conversion between String and Board works fine
-**Description**
-
-This test will test on converting Board's string representation to its class type, and verified by converting it back to string representation.
-If the string representation after converting back is same as the string given initially, it means that both methods works well.
+This test will test on converting Board's string representation to its class type,
+and verified by comparing the direction and position.
 
 **Scenario**
 
@@ -684,7 +607,7 @@ Employing assertions to validate the correctness of the conversion of string rep
 
 ## Color (Enum)
 
-### TestColor - Testing whether the colors are valid
+### ColorTest - Testing whether the colors are valid
 **Description**
 
 This test will test on whether the colors are valid
@@ -692,43 +615,21 @@ The valid colors are red, purple, yellow, cyan
 
 **Scenario**
 
-1. set for color `Color`: Color.YELLOW
+1. input of a color: p
+2. set for color `Color` with `Color.Purple` for `p`, `Color.YELLOW` for `y`, `Color.CYAN` for `c`, and `Color.RED` for `r`, `null` otherwise
+3. compare with expected string
 
 **Expected output**
 
-The expected output is the color is a valid color
+The expected output is the color `p`
 
 **Assertions**
 
 Employing assertions to validate the correctness of the conversion of string representation of assam:
-- `assertContains(List<Color> allValidColors, Color testingColor)`: verify that the testingColor is valid if exists in the list of Colors
+- `assertEquals(String expectedResult, String String.valueOf(color.value))`: verify that the testingColor is valid if it is not null
+- `assertEquals(String "null", String String.valueOf(color))`: verify that the testingColor is invalid if it is null
 - Examples:
-  - `assertContains([Color.YELLOW, Color.RED, Color.PUEPLE, Color.CYAN], Color.PURPLE)` returns true
-  - `assertContains([Color.YELLOW, Color.RED, Color.PUEPLE, Color.CYAN], Color.BLACK)` returns false
-  - `assertContains([Color.YELLOW, Color.RED, Color.PUEPLE, Color.CYAN], Color.WHITE)` returns false
-
-### TestColorValue - Testing whether the method returns the correct value of color
-**Description**
-
-This test will test on whether the valid colors return the correct value
-The values of each color is a `char` value of the lower case of the first character of each color
-
-**Scenario**
-
-1. input for the `Color`: Color.YELLOW
-2. get the value by calling `Color.YELLOW.value`
-
-**Expected output**
-
-The expected output is char 'y'
-
-**Assertions**
-
-Employing assertions to validate the correctness of the conversion of string representation of assam:
-- `assertEquals(char expectedResult, Color color)`: verify that the color returns its correct value
-- Examples:
-  - `assertEquals('y', Color.YELLOW.value)` returns true if  Color.YELLOW.value is 'y', false otherwise
-  - `assertEquals('c', Color.CYAN.value)` returns true if  Color.CYAN.value is 'c', false otherwise
-  - `assertEquals('r', Color.RED.value)` returns true if  Color.RED.value is 'r', false otherwise
-  - `assertEquals('p', Color.PURPLE.value)` returns true if  Color.PURPLE.value is 'p', false otherwise
+  - y `assertContains("y", String String.valueOf(Color.YELLOW.value))` returns true
+  - a `assertContains("null", String.valueOf(null))` returns true
+  - a `assertContains("null", String.valueOf(Color.YELLOW.value))` returns false
 
