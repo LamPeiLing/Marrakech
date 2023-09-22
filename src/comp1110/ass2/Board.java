@@ -22,6 +22,10 @@ public class Board {
         return boardPosition;
     }
 
+    /**
+     * update the rug tile at a specific position
+     * @param rugTile new rug tile that is going to replace the old one
+     */
     public void updateRugTile(RugTile rugTile) {
 
         for (int i = 0; i < BOARD_HEIGHT; i++) {

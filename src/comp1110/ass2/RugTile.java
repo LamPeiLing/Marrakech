@@ -47,6 +47,10 @@ public class RugTile {
         return this.id;
     }
 
+    /**
+     * Convert RugTile type to its string representation
+     * @return String of rug tile
+     */
     public String RugTileToString() {
         String rugString = "";
         if(this.color == null) {

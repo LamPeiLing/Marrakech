@@ -54,6 +54,10 @@ public class Assam {
         return false;
     }
 
+    /**
+     * check if Assam is safe to move forward a step according to its direction
+     * @return false if his next step is out of the board, true otherwise
+     */
     public boolean isMovementSafe() {
         switch (this.currentDirection) {
             case NORTH:
@@ -81,14 +85,6 @@ public class Assam {
                 break;
         }
         return true;
-    }
-
-    /**
-     * update Assam's absolute position after moving Assam
-     * @param newPosition new absolute position
-     */
-    public void updatePosition(IntPair newPosition) {
-
     }
 
     /**
