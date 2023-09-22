@@ -1,5 +1,8 @@
 package comp1110.ass2;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Assam {
     private IntPair absolutePosition; // current position of Assam on the board
     private Direction currentDirection; // current direction of Assam is facing
@@ -85,6 +88,65 @@ public class Assam {
                 break;
         }
         return true;
+    }
+
+    /**
+     * method to find the adjacent position of Assam
+     * @return a list of adjacent position IntPair
+     */
+    public List<IntPair> adjacentEdge () {
+        List<IntPair> adjacents = new ArrayList<>();
+
+        if(!isBorder()) {
+            adjacents.add(new IntPair(absolutePosition.getX() - 1, absolutePosition.getY()));
+            adjacents.add(new IntPair(absolutePosition.getX() + 1, absolutePosition.getY()));
+            adjacents.add(new IntPair(absolutePosition.getX(), absolutePosition.getY() - 1));
+            adjacents.add(new IntPair(absolutePosition.getX(), absolutePosition.getY() + 1));
+        } else {
+            if(getAbsolutePosition().getY() == 0) {
+                if(getAbsolutePosition().getX() == 0) {
+                    adjacents.add(new IntPair(absolutePosition.getX() + 1, absolutePosition.getY()));
+                } else if (getAbsolutePosition().getX() == 6) {
+                    adjacents.add(new IntPair(absolutePosition.getX() - 1, absolutePosition.getY()));
+                } else {
+                    adjacents.add(new IntPair(absolutePosition.getX() - 1, absolutePosition.getY()));
+                    adjacents.add(new IntPair(absolutePosition.getX() + 1, absolutePosition.getY()));
+                }
+                adjacents.add(new IntPair(absolutePosition.getX(), absolutePosition.getY() + 1));
+            } else if(getAbsolutePosition().getY() == 6) {
+                if(getAbsolutePosition().getX() == 0) {
+                    adjacents.add(new IntPair(absolutePosition.getX() + 1, absolutePosition.getY()));
+                } else if (getAbsolutePosition().getX() == 6) {
+                    adjacents.add(new IntPair(absolutePosition.getX() - 1, absolutePosition.getY()));
+                } else {
+                    adjacents.add(new IntPair(absolutePosition.getX() - 1, absolutePosition.getY()));
+                    adjacents.add(new IntPair(absolutePosition.getX() + 1, absolutePosition.getY()));
+                }
+                adjacents.add(new IntPair(absolutePosition.getX(), absolutePosition.getY() - 1));
+            } else if (getAbsolutePosition().getX() == 0) {
+                if(getAbsolutePosition().getY() == 0) {
+                    adjacents.add(new IntPair(absolutePosition.getX(), absolutePosition.getY() + 1));
+                } else if (getAbsolutePosition().getY() == 6) {
+                    adjacents.add(new IntPair(absolutePosition.getX(), absolutePosition.getY() - 1));
+                } else {
+                    adjacents.add(new IntPair(absolutePosition.getX(), absolutePosition.getY() - 1));
+                    adjacents.add(new IntPair(absolutePosition.getX(), absolutePosition.getY() + 1));
+                }
+                adjacents.add(new IntPair(absolutePosition.getX() + 1, absolutePosition.getY()));
+            } else {
+                if(getAbsolutePosition().getY() == 0) {
+                    adjacents.add(new IntPair(absolutePosition.getX(), absolutePosition.getY() + 1));
+                } else if (getAbsolutePosition().getY() == 6) {
+                    adjacents.add(new IntPair(absolutePosition.getX(), absolutePosition.getY() - 1));
+                } else {
+                    adjacents.add(new IntPair(absolutePosition.getX(), absolutePosition.getY() - 1));
+                    adjacents.add(new IntPair(absolutePosition.getX(), absolutePosition.getY() + 1));
+                }
+                adjacents.add(new IntPair(absolutePosition.getX() - 1, absolutePosition.getY()));
+            }
+        }
+
+        return adjacents;
     }
 
     /**

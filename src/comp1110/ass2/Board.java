@@ -41,6 +41,21 @@ public class Board {
     }
 
     /**
+     * method that find the rug tile given a specific position
+     * @param position the position that we need for the rug tile
+     * @return target rug tile
+     */
+    public RugTile getRugTileOnPosition (IntPair position) {
+        for (RugTile rugTile: boardPosition) {
+            if(rugTile.getAbsolutePosition() != null) {
+                if (rugTile.getAbsolutePosition().getX() == position.getX() && rugTile.getAbsolutePosition().getY() == position.getY())
+                    return rugTile;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Convert Board type to its string representation
      * @return string representation of Board class
      */

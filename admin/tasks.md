@@ -15,10 +15,12 @@ Pei Ling LAM: create skeleton of Scores, Direction, and Assam. Modified on the d
 
 ## Week 5
 
-Everyone: discuss about the tasks distribution in Marrakech.java, and complete the methods in other classes for whichever tasks needed
-Task Distribution:Zexin Tang: Task 8 - Task 11
-                  Yaohui Hou: Task 4, Task 6, Task 7, Task 15
-                  Pei Ling LAM: Task 5, Task 12 - Task 14
+Everyone: discuss about the tasks distribution in Marrakech.java, and complete the methods in other classes for whichever tasks needed 
+
+Task Distribution:
+* Zexin Tang: Task 8 - Task 11
+* Yaohui Hou: Task 4, Task 6, Task 7, Task 15
+* Pei Ling LAM: Task 5, Task 12 - Task 14
 
 Zexin Tang: Working on Task 8 - Task 11 - 23 Aug
 
@@ -41,16 +43,24 @@ Zexin Tang:
 Yaohui Hou: Worked on Task 7(not commit yet) - 10 Sep
             Amended Task 4 - 16 Sep
 
-Pei Ling LAM: Constructed view for the board (Task 5) - 7 Sep
-              Fixed task 14 and some other affected classes, updated Task 5 to add players in the view - 15 Sep
-              Completed task 5 by implementing a label box and a line to handle the players that are out of game - 16 Sep
+Pei Ling LAM: 
+* Constructed view for the board (Task 5) - 7 Sep
+* Fixed task 14 and some other affected classes, updated Task 5 to add players in the view - 15 Sep
+* Completed task 5 by implementing a label box and a line to handle the players that are out of game - 16 Sep
 
 ## Week 7
 
 Everyone: discuss and distribution the classes for D2D test plan. - 18 Sep 
-Task Distribution: ZeXin Tang: Rug, IntPair, Scores, Angle
-                   Yaohui Hou: Coin, Game, Players, Direction
-                   Pei Ling Lam: Assam, Board, RugTile, Color
+
+Task Distribution: 
+* ZeXin Tang: Rug, IntPair, Scores, Angle
+* Yaohui Hou: Coin, Game, Players, Direction
+* Pei Ling Lam: Assam, Board, RugTile, Color
+
+Pei Ling LAM: 
+* Work on test plan of the classes Assam, Board, RugTile, and Color - 20 Sep
+* Modify on test plan of the classes Assam, Board, RugTile, and Color - 22 Sep
+* Create the unit tests for the methods in Assam, Board, RugTile, and Color - 22 Sep
 
 ## Week 8
 
