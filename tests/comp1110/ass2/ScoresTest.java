@@ -1,4 +1,4 @@
-package comp1110.ass2.testdata;
+package comp1110.ass2;
 
 import comp1110.ass2.Scores;
 import org.junit.jupiter.api.Test;
