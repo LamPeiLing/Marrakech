@@ -706,7 +706,8 @@ It checks whether a player is in game.
   2. Calling the `setIsInGame(char representation)` and `isInGame()` method
 
 **Expected output**
-  The expected output is true.
+
+The expected output is true.
 
 **Assertions**
   - `assertEquals(true, player.isInGame())`: Ensures the player is in game.
@@ -753,10 +754,10 @@ and verified by comparing the color, number of dirhams, number of rugs, and its 
 **Assertions**
 
   Employing assertions to validate the correctness of the conversion of string representation of player:
-  - `assertEquals(String color, String String.valueOf(player.StringToPlayer(stringPlayer).getColor().value))`: verify that the string we get is the string of color that we first used to convert into Player
-  - `assertEquals(int numDirham, player.StringToPlayer(String playerString).getNumDirham())`: verify that the string we get is the number of dirhams that we first used to convert into Assam
-  - `assertEquals(int numRug, player.StringToPlayer(String playerString).getNumRug())`: verify that the string we get is the number of rugs that we first used to convert into Assam
-  - `assertEquals(boolean isInGame, player.StringToPlayer(String playerString).isInGame())`: verify that the game state we get is the game state that we first used to convert into Assam
+  - `assertEquals("r", String String.valueOf(player.StringToPlayer(stringPlayer).getColor().value))`: verify that the string we get is the string of color that we first used to convert into Player
+  - `assertEquals(10, player.StringToPlayer(String playerString).getNumDirham())`: verify that the string we get is the number of dirhams that we first used to convert into Assam
+  - `assertEquals(6, player.StringToPlayer(String playerString).getNumRug())`: verify that the string we get is the number of rugs that we first used to convert into Assam
+  - `assertEquals(true, player.StringToPlayer(String playerString).isInGame())`: verify that the game state we get is the game state that we first used to convert into Assam
 
 
 ## Game
