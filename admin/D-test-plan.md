@@ -641,3 +641,163 @@ Employing assertions to validate the correctness of the conversion of string rep
   - a `assertContains("null", String.valueOf(null))` returns true
   - a `assertContains("null", String.valueOf(Color.YELLOW.value))` returns false
 
+
+## Coin
+
+### UpdateNumOfCoin_5Test - Testing 5-dirham Coins Update
+**Description**
+
+This test case assesses the updateNumOfCoin_5 method of the Coin class.
+It evaluates how the number of 5-dirham coins is updated.
+
+**Scenario**
+
+  Creating a Coin object
+  - Calling the `updateNumOfCoin_5` method to get 6 connected rug score. 
+  - Calling the `updateNumOfCoin_5` method to lose 6 connected rug score.
+
+**Expected output**
+
+  - The expected output is 6.
+  - The expected output is 4.
+
+**Assertions**
+
+Employing assertions to validate that the method returns the expected 5-dirham coins numbers
+- `asserEquals(6, coin.getCurrentNumOfCoin_5())`: Checks the updated number of 5-dirham coins matches the expected value (6).
+- `assertEqual(4, coin.getCurrentNumOfCoin_5())`: Checks the updated number of 5-dirham coins matches the expected value (4).
+
+
+### UpdateNumOfCoin_1Test - Testing 1-dirham Coins Update
+**Description**
+
+This test case assesses the updateNumOfCoin_1 method of the Coin class.
+It evaluates how the number of 1-dirham coins is updated.
+
+**Scenario**
+
+  Creating a Coin object
+  - Calling the `updateNumOfCoin_1` method to get 3 connected rug score.
+  - Calling the `updateNumOfCoin_1` method to lose 6 connected rug score.
+
+**Expected output**
+
+  - The expected output is 8.
+  - The expected output is 4.
+
+**Assertions**
+
+Employing assertions to validate that the method returns the expected 5-dirham coins numbers
+- `asserEquals(3, coin.getCurrentNumOfCoin_1())`: Checks the updated number of 5-dirham coins matches the expected value (3).
+- `assertEqual(6, coin.getCurrentNumOfCoin_1())`: Checks the updated number of 5-dirham coins matches the expected value (6).
+
+
+## Players
+
+### SetIsInGameTest - Testing whether the player is in game
+**Description**
+
+This test case assesses the setIsInGame method of the Players class.
+It checks whether a player is in game.
+
+**Scenario**
+
+  1. The input of char representation: i
+  2. Calling the `setIsInGame(char representation)` and `isInGame()` method
+
+**Expected output**
+  The expected output is true.
+
+**Assertions**
+  - `assertEquals(true, player.isInGame())`: Ensures the player is in game.
+
+### PlayerToStringTest
+**Description**
+
+This test will test on converting Player to its string representation by inputting color, number of rugs, number of dirhams, and the player's game state('i' or 'o').
+and verified by comparing to the expected string representation.
+
+**Scenario**
+
+  1. The input of color, number of dirhams, number of rugs, and game state: r, 10, 6, i
+  2. Convert to String type by calling PlayerToString() 
+  3. verified by comparing with the expected string representation `Pr01006i`
+
+**Expected output**
+
+  The expected output of Player with color 'r', 10 dirhams, 6 rugs, and true after calling AssamToString is `Pr01006i`
+  
+**Assertions**
+
+  Employing assertions to validate the correctness of the conversion of string representation of player:
+  - `assertEquals(String stringRepresentation, String player.PlayerToString())`: verify that the string we get is same as the expected output
+  
+
+### StringToPlayerTest
+**Description**
+
+This test will test on converting Player's string representation to its class type,
+and verified by comparing the color, number of dirhams, number of rugs, and its game state('i' or 'o').
+
+**Scenario**
+
+  1. The input of string representation: Pr01006i
+  2. Convert to Player type by calling `StringToPlayer("Pr01006i")`
+  3. verified by comparing `player.getColor()` , `player.getNumDirham()`, `player.getNumRug()`and `player.isInGame()` to the string representation 
+
+**Expected output**
+
+  The expected output of `player.getColor()` is r. The expected output of `player.getNumDirham()` is 010. 
+  The expected output of `player.getNumRug()` is 06. The expect output of `player.isInGame()` is true.
+
+**Assertions**
+
+  Employing assertions to validate the correctness of the conversion of string representation of player:
+  - `assertEquals(String color, String String.valueOf(player.StringToPlayer(stringPlayer).getColor().value))`: verify that the string we get is the string of color that we first used to convert into Player
+  - `assertEquals(int numDirham, player.StringToPlayer(String playerString).getNumDirham())`: verify that the string we get is the number of dirhams that we first used to convert into Assam
+  - `assertEquals(int numRug, player.StringToPlayer(String playerString).getNumRug())`: verify that the string we get is the number of rugs that we first used to convert into Assam
+  - `assertEquals(boolean isInGame, player.StringToPlayer(String playerString).isInGame())`: verify that the game state we get is the game state that we first used to convert into Assam
+
+
+## Game
+
+### GameToStringTest - Testing the conversion from String to gameState works fine
+**Description**
+
+This test will test on converting Game object to string, and verified by comparing the playerLists, assam string, and board string.
+
+**Scenario**
+
+  1. The input of `Game` object: c04403i-y05403i-p00003o-r02203i-41N-n00-y00-y00-n00-y19-y19-c04-y18-p02-y28-y28-r14-y20-y20-y18-y29-p19-c23-r19-r19-c03-n00-y29-p19-c29-c29-r10-c03-n00-r27-c24-c14-c14-r10-r16-y26-r27-r23-y22-y22-y14-r16-n00-y13-p23-c07-p13-r20-r20
+  2. Convert to String type by calling `GameToString()`
+  3. verified by comparing with the string representation
+
+**Expected output**
+
+  The expected output of `GameToString()` is "Pc04403iPy05403iPp00003oPr02203iA41NBn00y00y00n00y19y19c04y18p02y28y28r14y20y20y18y29p19c23r19r19c03n00y29p19c29c29r10c03n00r27c24c14c14r10r16y26r27r23y22y22y14r16n00y13p23c07p13r20r20"
+
+**Assertions**
+
+Employing assertions to validate the correctness of the conversion of string representation of game:
+  - `assertEquals(String stringRepresentation, game.GameToString())`: verify that the string we get is the same with expected string representation
+
+### StringToGameTest - Testing the conversion from String to Game works fine
+**Description**
+
+This test will test on converting Game's string representation to its class type.
+
+**Scenario**
+  1. The input of string representation: Pc04403iPy05403iPp00003oPr02203iA41NBn00y00y00n00y19y19c04y18p02y28y28r14y20y20y18y29p19c23r19r19c03n00y29p19c29c29r10c03n00r27c24c14c14r10r16y26r27r23y22y22y14r16n00y13p23c07p13r20r20
+  2. Convert to `Game` type by calling `StringToGame("Pc04403iPy05403iPp00003oPr02203iA41NBn00y00y00n00y19y19c04y18p02y28y28r14y20y20y18y29p19c23r19r19c03n00y29p19c29c29r10c03n00r27c24c14c14r10r16y26r27r23y22y22y14r16n00y13p23c07p13r20r20")`
+  3. verified by comparing with the expected output
+
+**Expected output**
+
+The expected output of `StringToGame()` is: c04403iy05403ip00003or02203i-41N-y00y00n00y19y19c04y18p02y28y28r14y20y20y18y29p19c23r19r19c03y29p19c29c29r10c03r27c24c14c14r10r16y26r27r23y22y22y14r16y13p23c07p13r20r20
+
+**Assertions**
+
+Employing assertions to validate the correctness of the conversion of string representation of game:
+  - `assertEquals(String stringRepresentation, game.StringToGame())`: verify the result we get is correct.
+
+
