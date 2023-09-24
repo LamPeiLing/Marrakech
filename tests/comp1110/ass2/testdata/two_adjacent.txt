@@ -1,0 +1,4 @@
+00@1001@Expected has two adjacent edges for (0,0): (1,0), (0,1)
+06@1605@Expected has two adjacent edges for (0,6): (1,6), (0,5)
+60@5061@Expected has two adjacent edges for (6,0): (5,0), (6,1)
+66@5665@Expected has two adjacent edges for (6,6): (5,6), (6,5)

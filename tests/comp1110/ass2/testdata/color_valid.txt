@@ -1,0 +1,4 @@
+r@Expected color with string r is red color and is valid
+y@Expected color with string y is yellow color and is valid
+p@Expected color with string p is purple color and is valid
+c@Expected color with string c is cyan color and is valid

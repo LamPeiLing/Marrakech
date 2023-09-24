@@ -1,0 +1,4 @@
+y11@y@Expected RugTile y11 with color yellow
+r11@r@Expected RugTile r11 with color red
+p11@p@Expected RugTile p11 with color purple
+c11@c@Expected RugTile c11 with color cyan
