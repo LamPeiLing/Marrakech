@@ -4,6 +4,22 @@ public class IntPair {
     private int x;
     private int y;
 
+    @Override
+    public boolean equals(Object obj) {
+        // If the passed-in object is a reference to the current object, return true, indicating that they are equal.
+        if (this == obj) {
+            return true;
+        }
+        // If the passed-in object is null or its class is not the same as the current object's class, return false, indicating that they are not equal.
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        // Convert incoming objects to IntPair types
+        IntPair other = (IntPair) obj;
+        // Check if the x and y coordinates of the current object are equal to the x and y coordinates of the incoming object,
+        // and return true if they are, indicating that they are equal.
+        return this.x == other.x && this.y == other.y;
+    }
 
     /**
      * Constructor that does not do anything
