@@ -688,8 +688,8 @@ It evaluates how the number of 1-dirham coins is updated.
 **Assertions**
 
 Employing assertions to validate that the method returns the expected 5-dirham coins numbers
-- `asserEquals(3, coin.getCurrentNumOfCoin_1())`: Checks the updated number of 5-dirham coins matches the expected value (3).
-- `assertEqual(6, coin.getCurrentNumOfCoin_1())`: Checks the updated number of 5-dirham coins matches the expected value (6).
+- `asserEquals(8, coin.getCurrentNumOfCoin_1())`: Checks the updated number of 5-dirham coins matches the expected value (8).
+- `assertEqual(4, coin.getCurrentNumOfCoin_1())`: Checks the updated number of 5-dirham coins matches the expected value (4).
 
 
 ## Players
