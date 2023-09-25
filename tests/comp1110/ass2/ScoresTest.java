@@ -72,16 +72,15 @@ public class ScoresTest {
 
     @Test
     public void testGetTotalScore() {
-        // 测试获取总分数的方法
 
-        // 创建一个Scores对象
+        // create a score object
         Scores scores = new Scores();
-        // 设置硬币分数为15
+        // set coin score to 15
         scores.setDirhamScore(15);
-        // 设置地毯分数为8
+        // set rug score to 8
         scores.setRugScore(8);
 
-        // 验证总分计算是否正确，期望总分为23
+        // verify the calculation
         assertEquals(23, scores.getTotalScore());
     }
 }

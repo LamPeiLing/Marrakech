@@ -11,11 +11,16 @@ public class Game {
 
     private Assam assam = new Assam();
 
+
+
+
     /**
      * Constructor
      * do nothing at this moment
      */
-    public Game() {}
+    public Game() {
+
+    }
 
     public void setPlayersList(List<Players> playersList) {
         this.playersList = playersList;
@@ -44,6 +49,8 @@ public class Game {
     public void Start(){
 
     }
+
+
 
     public String Over(){
         String currentGame = null;
