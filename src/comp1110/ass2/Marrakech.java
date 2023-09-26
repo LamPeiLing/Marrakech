@@ -259,15 +259,9 @@ public class Marrakech {
         int[] dx = { -1, 1, 0, 0 };
         int[] dy = { 0, 0, -1, 1 };
 
-        // Iterate through the board to find connected squares of the same color
-        for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize; j++) {
-                if (!visited[i][j] && board.get(i * boardSize + j).getColor() == rugColor) {
-                    int connectedSquares = dfs(board, rugColor, i, j, visited, boardSize);
-                    payment += connectedSquares > 1 ? 1 : 0; // Increment payment only if more than one connected square
-                }
-            }
-        }
+        // Perform a depth-first search to find connected squares of the same color
+        payment = dfs(board, rugColor, assam.getAbsolutePosition().getX(), assam.getAbsolutePosition().getY(), visited, boardSize);
+
         return payment;
     }
 
@@ -280,7 +274,7 @@ public class Marrakech {
         visited[x][y] = true;
         int connectedSquares = 1; // Count the current square
 
-        // Explore all four directions (up, down, left, right)
+        // Define four possible directions (up, down, left, right)
         int[] dx = { -1, 1, 0, 0 };
         int[] dy = { 0, 0, -1, 1 };
 
@@ -292,8 +286,6 @@ public class Marrakech {
 
         return connectedSquares;
     }
-
-
 
 
 
