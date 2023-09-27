@@ -26,6 +26,7 @@ import java.util.List;
 
 public class Viewer extends Application {
 
+    // The width and height of the window
     private static final int VIEWER_WIDTH = 1200;
     private static final int VIEWER_HEIGHT = 700;
 
@@ -34,6 +35,7 @@ public class Viewer extends Application {
 
     // The height of the board (top to bottom)
     public final static int BOARD_HEIGHT = 7;
+
     // Height and width of each tile
     private static final double Tile_Size = 50;
 
@@ -47,9 +49,11 @@ public class Viewer extends Application {
     private final Group controls = new Group();
     private TextField boardTextField;
 
+    // total width and height of the board
     private static final double boardWidth = BOARD_WIDTH*Tile_Size;
     private static final double boardHeight = BOARD_HEIGHT*Tile_Size;
 
+    // The start of the board in the x-direction (ie: x = 0)
     private static final double START_X = VIEWER_WIDTH / 2 - boardWidth / 2;
 
     // The start of the board in the y-direction (ie: y = 0)
@@ -164,7 +168,7 @@ public class Viewer extends Application {
 
     }
 
-    private void makeAssam(Assam assam) {
+    public void makeAssam(Assam assam) {
         double x = assam.getAbsolutePosition().getX();
         double y = assam.getAbsolutePosition().getY();
 
