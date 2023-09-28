@@ -38,7 +38,7 @@ Pei Ling LAM: completed task 12 - 14 and amended some other classes - 25-27 Aug
 
 ## Mid-Semester Break
 
-Zexin Tang: 
+Zexin Tang: Working on Task 10 (not commit) - 7 Sep
 
 Yaohui Hou: Worked on Task 7(not commit yet) - 10 Sep
             Amended Task 4 - 16 Sep
@@ -57,12 +57,39 @@ Task Distribution:
 * Yaohui Hou: Coin, Game, Players, Direction
 * Pei Ling Lam: Assam, Board, RugTile, Color
 
+ZeXin Tang: 
+* create test plan - 20 Sep
+* create unit tests - 24 Sep
+
+YaoHui HOU: create test plan and unit tests - 24 Sep
+
 Pei Ling LAM: 
 * Work on test plan of the classes Assam, Board, RugTile, and Color - 20 Sep
 * Modify on test plan of the classes Assam, Board, RugTile, and Color - 22 Sep
 * Create the unit tests for the methods in Assam, Board, RugTile, and Color - 22 Sep
 
 ## Week 8
+
+Everyone: discuss and distribute the code review for D2E - 26 Sep
+
+Task Distribution:
+* ZeXin Tang: Review code written by Pei Ling Lam
+* Yaohui HOU: Review code written by ZeXin Tang
+* Pei Ling Lam: Review code written by Yaohui HOU
+* Everyone: Continue work on the tasks in Marrakech.java
+
+ZeXin Tang
+* Completed Task 10 and working on Task 11 - 25 Sep
+* Continue working on Task 11 - 26 Sep
+* Reviewed codes - 27 Sep
+
+Yaohui Hou
+* Working on Task 7 and 15 (add a start page to the game and draw board) - 27 Sep
+
+Pei Ling Lam
+* Help on Task 7 and 15 (draw die and create buttons) - 28 Sep
+* Review codes - 28 Sep
+* Create and build game.jar - 28 Sep
 
 ## Week 9
 

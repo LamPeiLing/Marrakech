@@ -86,27 +86,27 @@ public class Viewer extends Application {
     private void makeMosaicTrack() {
         for (int x=0; x < BOARD_WIDTH; x++) {
             for (int y = 0; y < BOARD_HEIGHT; y++) {
-                if (x % 2 == 0 && y == 0) {
-                    Circle mosaic = new Circle(START_X + BOARD_BORDER + BOARD_TILE_SHADOW_GAP + (x * Tile_Size) + Tile_Size / 1.5,
-                            START_Y - BOARD_BORDER * 2 - BOARD_TILE_SHADOW_GAP * 2 + (y * Tile_Size) + Tile_Size / 2, Tile_Size - BOARD_BORDER);
-                    mosaic.setFill(Color.web("FFBF00"));
-                    root.getChildren().add(mosaic);
-                }else if (x % 2 == 0 && y == 6) {
-                    Circle mosaic = new Circle(START_X + BOARD_BORDER + BOARD_TILE_SHADOW_GAP + (x * Tile_Size) - Tile_Size / 4,
-                            START_Y + BOARD_BORDER * 2 + BOARD_TILE_SHADOW_GAP * 2 + (y * Tile_Size) + Tile_Size / 2, Tile_Size - BOARD_BORDER);
-                    mosaic.setFill(Color.web("FFBF00"));
-                    root.getChildren().add(mosaic);
-                } else if (y % 2 != 0 && x == 0) {
-                    Circle mosaic = new Circle(START_X + BOARD_BORDER + BOARD_TILE_SHADOW_GAP + (x * Tile_Size) - Tile_Size / 4,
-                            START_Y - BOARD_BORDER * 2 - BOARD_TILE_SHADOW_GAP * 2 + (y * Tile_Size) + Tile_Size / 2, Tile_Size - BOARD_BORDER);
-                    mosaic.setFill(Color.web("FFBF00"));
-                    root.getChildren().add(mosaic);
-                } else if (y % 2 != 0 && x == 6) {
-                    Circle mosaic = new Circle(START_X + BOARD_BORDER + BOARD_TILE_SHADOW_GAP + (x * Tile_Size) + Tile_Size / 1.5,
-                            START_Y + BOARD_BORDER * 2 + BOARD_TILE_SHADOW_GAP * 2 + (y * Tile_Size) + Tile_Size / 2, Tile_Size - BOARD_BORDER);
-                    mosaic.setFill(Color.web("FFBF00"));
-                    root.getChildren().add(mosaic);
+
+                Circle mosaic = new Circle();
+
+                if (x % 2 == 0 && y == 0) { // initialize the top track
+                    mosaic.setCenterX(START_X + BOARD_BORDER + BOARD_TILE_SHADOW_GAP + (x * Tile_Size) + Tile_Size / 1.5);
+                    mosaic.setCenterY(START_Y - BOARD_BORDER * 2 - BOARD_TILE_SHADOW_GAP * 2 + (y * Tile_Size) + Tile_Size / 2);
+                }else if (x % 2 == 0 && y == 6) { // initialize the bottom track
+                    mosaic.setCenterX(START_X + BOARD_BORDER + BOARD_TILE_SHADOW_GAP + (x * Tile_Size) - Tile_Size / 4);
+                    mosaic.setCenterY(START_Y + BOARD_BORDER * 2 + BOARD_TILE_SHADOW_GAP * 2 + (y * Tile_Size) + Tile_Size / 2);
+                } else if (y % 2 != 0 && x == 0) { // initialize the left track
+                    mosaic.setCenterX(START_X + BOARD_BORDER + BOARD_TILE_SHADOW_GAP + (x * Tile_Size) - Tile_Size / 4);
+                    mosaic.setCenterY(START_Y - BOARD_BORDER * 2 - BOARD_TILE_SHADOW_GAP * 2 + (y * Tile_Size) + Tile_Size / 2);
+                } else if (y % 2 != 0 && x == 6) { // initialize the right track
+                    mosaic.setCenterX(START_X + BOARD_BORDER + BOARD_TILE_SHADOW_GAP + (x * Tile_Size) + Tile_Size / 1.5);
+                    mosaic.setCenterY(START_Y + BOARD_BORDER * 2 + BOARD_TILE_SHADOW_GAP * 2 + (y * Tile_Size) + Tile_Size / 2);
                 }
+
+                mosaic.setRadius(Tile_Size - BOARD_BORDER);
+
+                mosaic.setFill(Color.web("FFBF00"));
+                root.getChildren().add(mosaic);
             }
         }
     }
