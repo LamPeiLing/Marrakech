@@ -1,6 +1,6 @@
 package comp1110.ass2.gui;
 
-import comp1110.ass2.Marrakech;
+import comp1110.ass2.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,11 +12,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Game extends Application {
 
@@ -28,7 +30,7 @@ public class Game extends Application {
      Distance to leave from a button to the right - used for setting up
      all the buttons at the bottom of the window.
      */
-    private static final double BUTTON_BUFFER = 200.0;
+    private static final double BUTTON_BUFFER = 100.0;
 
     // The width of the board (left to right)
     public final static int BOARD_WIDTH = 7;
@@ -62,8 +64,17 @@ public class Game extends Application {
     private static final Group board = new Group();
     private static final Group mosaicTrack = new Group();
     private static final Group rugs = new Group();
+    private static final Group assamGroup = new Group();
     private static final Group die = new Group();
     private static final Group controls = new Group();
+
+    /**
+     * global variables
+     */
+    private int playerNum; // number of players
+
+    private int dieNum; // number of dot on the die
+    private Assam assam = new Assam(); // to control assam regarding the position and direction
 
     /**
      * @author u7754892 Yaohui Hou
@@ -72,13 +83,15 @@ public class Game extends Application {
     class GameInterface{
         public GameInterface(Stage stage){
             Pane root = new Pane();
-            makeMosaicTrack();
-            makeBoard();
-            makeDie();
             makeControls();
+            makeBoard();
+            makeMosaicTrack();
+            initializeAssam();
+            createDie(Marrakech.rollDie());
             stage.setScene(new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT));
             root.getChildren().add(mosaicTrack);
             root.getChildren().add(board);
+            root.getChildren().add(assamGroup);
             root.getChildren().add(die);
             root.getChildren().add(controls);
             stage.show();
@@ -265,7 +278,143 @@ public class Game extends Application {
      * @author u7754637 Pei Ling Lam
      */
     private void makeDie() {
-        createDie(Marrakech.rollDie());
+        dieNum = Marrakech.rollDie();
+        createDie(dieNum);
+        moveAssam();
+
+    }
+
+    private void createPlayers() {
+
+    }
+
+//    private void drawRugs() {
+//        Rectangle rug = new Rectangle(
+//                x,
+//                y + j,
+//                Tile_Size * 2 - BOARD_TILE_SHADOW_GAP,
+//                Tile_Size - BOARD_TILE_SHADOW_GAP);
+//        rug.setFill(setPlayerColour(playersList.get(i).getColor()));
+//        rug.setStrokeWidth(0.5);
+//        rug.setStroke(Color.BLACK);
+//        root.getChildren().add(rug);
+//    }
+
+    /**
+     * method that set the colour of the node from players color
+     * @param color color of the players from enum created in ass2 package
+     * @return color type from JavaFx.scene.paint
+     *
+     * @author u7754637 Pei Ling Lam
+     */
+    private Color setPlayerColour(comp1110.ass2.Color color) {
+        switch (color) {
+            case RED:
+                return Color.RED;
+
+            case PURPLE:
+                return Color.PURPLE;
+
+            case CYAN:
+                return Color.CYAN;
+
+            case YELLOW:
+                return Color.YELLOW;
+        }
+        return Color.TRANSPARENT;
+    }
+
+    /**
+     * initialize assam when the new game starts
+     * position set to the middle of the board
+     * direction set to facing downwards
+     *
+     * @author u7754637 Pei Ling Lam
+     */
+    private void initializeAssam() {
+        assam.setAbsolutePosition(new IntPair(3,3));
+        assam.setCurrentDirection(Direction.SOUTH);
+        makeAssam();
+    }
+
+    /**
+     * update assam direction whenever the button is pressed by rotating 90 degrees clockwise
+     *
+     * @author u7754637 Pei Ling Lam
+     */
+    private void rotateAssam() {
+        assam = assam.StringToAssam(Marrakech.rotateAssam(assam.AssamToString(), 90));
+        assamGroup.getChildren().clear();
+        makeAssam();
+    }
+
+    /**
+     * update assam position when a die is rolled
+     *
+     * @author u7754637 Pei Ling Lam
+     */
+    private void moveAssam() {
+        assam = assam.StringToAssam(Marrakech.moveAssam(assam.AssamToString(), dieNum));
+        assamGroup.getChildren().clear();
+        makeAssam();
+    }
+
+    /**
+     * draw assam according to the position and direction
+     *
+     * @author u7754637 Pei Ling Lam
+     */
+    private void makeAssam() {
+        double x = assam.getAbsolutePosition().getX();
+        double y = assam.getAbsolutePosition().getY();
+
+        double centreX = START_X + (x * Tile_Size) + Tile_Size / 2;
+        double centreY = START_Y + (y * Tile_Size) + Tile_Size / 2;
+        double radius = Tile_Size / 3;
+        double triangleSide = 5.0;
+
+        Circle assamCircle = new Circle(centreX, centreY, radius);
+        assamCircle.setFill(Color.web("C41E3A"));
+        assamGroup.getChildren().add(assamCircle);
+
+        Polygon direction = new Polygon();
+        switch (assam.getCurrentDirection()) {
+            case EAST:
+                direction.getPoints().addAll(
+                        centreX + triangleSide + radius, centreY,
+                        centreX + radius, centreY + triangleSide / 2,
+                        centreX + radius, centreY - triangleSide / 2
+                );
+                break;
+
+            case WEST:
+                direction.getPoints().addAll(
+                        centreX - triangleSide - radius, centreY,
+                        centreX - radius, centreY + triangleSide / 2,
+                        centreX - radius, centreY - triangleSide / 2
+                );
+                break;
+
+            case SOUTH:
+                direction.getPoints().addAll(
+                        centreX, centreY + triangleSide + radius,
+                        centreX + triangleSide / 2, centreY + radius,
+                        centreX - triangleSide / 2, centreY + radius
+                );
+                break;
+
+            case NORTH:
+                direction.getPoints().addAll(
+                        centreX, centreY - triangleSide - radius,
+                        centreX + triangleSide / 2, centreY - radius,
+                        centreX - triangleSide / 2, centreY - radius
+                );
+                break;
+        }
+
+        direction.setFill(Color.web("C41E3A"));
+        assamGroup.getChildren().add(direction);
+
     }
 
     /**
@@ -286,7 +435,7 @@ public class Game extends Application {
     private void makeControls() {
         // Settings for a Button instance
         Button newGame = new Button();
-        newGame.setLayoutX(100);
+        newGame.setLayoutX(BUTTON_BUFFER);
         newGame.setLayoutY(WINDOW_HEIGHT - 100);
         newGame.setOnAction(event -> this.newGame());
         newGame.setStyle("-fx-font-size: 16px;");
@@ -294,12 +443,21 @@ public class Game extends Application {
         this.controls.getChildren().add(newGame);
 
         Button rollDie = new Button();
-        rollDie.setLayoutX(WINDOW_WIDTH - BUTTON_BUFFER);
+        rollDie.setLayoutX(newGame.getLayoutX() + BUTTON_BUFFER + 50);
         rollDie.setLayoutY(WINDOW_HEIGHT - 100);
-        rollDie.setOnAction(event -> this.makeDie()); // Lambda expression
+        rollDie.setOnAction(event -> this.makeDie());
         rollDie.setStyle("-fx-font-size: 16px;");
         rollDie.setText("Roll Die");
         this.controls.getChildren().add(rollDie);
+
+        Button rotateAssam = new Button();
+        rotateAssam.setLayoutX(rollDie.getLayoutX() + BUTTON_BUFFER);
+        rotateAssam.setLayoutY(WINDOW_HEIGHT - 100);
+        rotateAssam.setOnAction(event -> this.rotateAssam()); // Lambda expression
+        rotateAssam.setStyle("-fx-font-size: 16px;");
+        rotateAssam.setText("Rotate Assam");
+        this.controls.getChildren().add(rotateAssam);
+
     }
 
 
@@ -333,7 +491,7 @@ public class Game extends Application {
         startButton.setStyle("-fx-font-size: 16px;");
         startButton.setOnAction(e -> {
             String selectedPlayerNum = playerNumChoice.getValue();
-            int playerNum = Integer.parseInt(selectedPlayerNum.split(" ")[0]); // get the number of players
+            playerNum = Integer.parseInt(selectedPlayerNum.split(" ")[0]); // get the number of players
             System.out.println("Starting a " + playerNum + "-player game...");
 
             GameInterface gameScreen = new GameInterface(stage);
