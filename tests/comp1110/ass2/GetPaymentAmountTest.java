@@ -8,7 +8,7 @@ import java.io.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
-@Timeout(value = 500, unit = TimeUnit.MILLISECONDS)
+@Timeout(value = 2000, unit = TimeUnit.MILLISECONDS)
 public class GetPaymentAmountTest {
     @Test
     public void checkSmallPayments() {

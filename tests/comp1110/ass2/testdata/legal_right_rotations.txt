@@ -1,4 +1,2 @@
-A23W@90@A23N@This test checks a case where Assam is legally rotated right with input: A23W
-A33N@90@A33E@This test checks a case where Assam is legally rotated right with input: A33N
-A11S@90@A11W@This test checks a case where Assam is legally rotated right with input: A11S
-A33N@90@A33E@This test checks a case where Assam is legally rotated right with input: A33N
+A31N@90@A31E@This test checks a case where Assam is legally rotated right with input: A31N
+A42W@90@A42N@This test checks a case where Assam is legally rotated right with input: A42W

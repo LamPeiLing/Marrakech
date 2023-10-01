@@ -5248,3 +5248,4 @@ A01W@3@A20E@Expected moving Assam A01W 3 spaces to yield new Assam A20E
 A26S@2@A15N@Expected moving Assam A26S 2 spaces to yield new Assam A15N
 A15W@3@A14E@Expected moving Assam A15W 3 spaces to yield new Assam A14E
 A16S@3@A24N@Expected moving Assam A16S 3 spaces to yield new Assam A24N
+A61E@3@A42W@This test checks a case where part of Assam's movement takes him off the board with input A61E, and die result 3

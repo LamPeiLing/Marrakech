@@ -9557,3 +9557,6 @@ A25S@1@A26S@Expected moving Assam A25S 1 spaces to yield new Assam A26S
 A14S@2@A16S@Expected moving Assam A14S 2 spaces to yield new Assam A16S
 A24E@2@A44E@Expected moving Assam A24E 2 spaces to yield new Assam A44E
 A44N@3@A41N@Expected moving Assam A44N 3 spaces to yield new Assam A41N
+A33N@2@A31N@This test checks a case where Assam's movement is wholly on the board with input: A33N and die result: 2
+A31E@3@A61E@This test checks a case where Assam's movement is wholly on the board with input: A31E and die result: 3
+A42N@2@A40N@This test checks a case where Assam's movement is wholly on the board with input: A42N and die result: 2
