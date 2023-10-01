@@ -94,8 +94,9 @@ Pei Ling Lam:
 ## Week 9
 
 Pei Ling Lam:
-* add authorship to all methods for everyone
-* Fix task 4 and task 12
+* add authorship to all methods for everyone - 2 Oct
+* Fix task 4 and task 12 - 2 Oct
+* Created playable assam in task 7 and 15 - 2 Oct
 
 ## Week 10
 
