@@ -95,6 +95,7 @@ Pei Ling Lam:
 
 Pei Ling Lam:
 * add authorship to all methods for everyone
+* Fix task 4 and task 12
 
 ## Week 10
 

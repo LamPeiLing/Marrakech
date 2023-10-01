@@ -1,5 +1,7 @@
 package comp1110.ass2;
 
+import comp1110.ass2.gui.Viewer;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,19 +28,40 @@ public class Marrakech {
      * @return true if the rug is valid, and false otherwise.
      *
      * @author u7754892 Yaohui Hou
+     * @author u7754637 Pei Ling Lam (supporting author)
      */
     public static boolean isRugValid(String gameString, String rug) {
-        char colour = rug.charAt(0);
-        int position1 = Character.getNumericValue(rug.charAt(3));
-        int position2 = Character.getNumericValue(rug.charAt(4));
-        int position3 = Character.getNumericValue(rug.charAt(5));
-        int position4 = Character.getNumericValue(rug.charAt(6));
-        if(rug.length() != 7){
+        Game game = new Game();
+        game = game.StringToGame(gameString);
+
+
+        Rug rug1 = new Rug();
+        rug1 = rug1.StringToRug(rug);
+
+        if(rug.length() != 7) {
             return false;
-        }else if(colour != 'r' && colour != 'c' && colour != 'p' && colour != 'y'){
-            return false;
-        }else return position1 <= 6 && position2 <= 6 && position3 <= 6 && position4 <= 6;
-        // FIXME: Task 4
+        }
+
+        // check whether the colour exists
+        if(rug1.getColor() == null) return false;
+
+        // check whether rug has fully covered another rug
+        for (int i = 0; i < game.getBoard().getBoardPosition().size(); i++) {
+            if(game.getBoard().getBoardPosition().get(i) != null) {
+                if (rug1.getRugID() == game.getBoard().getBoardPosition().get(i).getId() && rug1.getColor() == game.getBoard().getBoardPosition().get(i).getColor()) {
+                    return false;
+                }
+            }
+        }
+
+        // check whether the rug has gone off the board
+        for (int i = 0; i < rug1.getRelativePositions().length; i++) {
+            if(rug1.getRelativePositions()[i].getX() > Viewer.BOARD_WIDTH - 1 || rug1.getRelativePositions()[i].getY() > Viewer.BOARD_HEIGHT - 1) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 
@@ -62,8 +85,6 @@ public class Marrakech {
         int[] die = new int[]{1, 2, 2, 3, 3, 4};
         int index = (int)(Math.random() * die.length);
         return die[index];
-        // FIXME: Task 6
-        //return -1;
     }
 
     /**
@@ -98,8 +119,6 @@ public class Marrakech {
 
         return isFinished;
     }
-
-    // FIXME: Task 8
 
     /**
      * Implement Assam's rotation.
@@ -162,7 +181,6 @@ public class Marrakech {
 
         // Return the updated Assam state with the new direction
         return currentAssam.substring(0, currentAssam.length() - 1) + direction;
-        // FIXME: Task 9
     }
 
 
@@ -231,15 +249,11 @@ public class Marrakech {
         // check if the rug place under assam
         for (int i = 0; i < rug1.getRelativePositions().length; i++) {
             if (rug1.getRelativePositions()[i].getX() == game.getAssam().getAbsolutePosition().getX() && rug1.getRelativePositions()[i].getY() == game.getAssam().getAbsolutePosition().getY())
-                return false;//teacher's test problem This is an important rule check for the game,
-            // normally a carpet should not be placed below Assam's position as this may be against the rules of the game. If the code returns true,
-            // it means that the carpet is validly placed below Assam's position, otherwise it ends up returning false if no carpet is placed below Assam's position.
+                return false;
         }
 
         return true;
     }
-    // FIXME: Task 10
-
 
     /**
      * Determine the amount of payment required should another player land on a square.
@@ -394,11 +408,11 @@ public class Marrakech {
         Game game = new Game();
         game = game.StringToGame(gameState);
 
+        // check whether the game is over
         if(!isGameOver(gameState)) {
-            return 'n';
-        } else {
+            return 'n'; // when the game is still ongoing
+        } else { // when the game has over
             //get number of visible rugs of each color
-            //TODO: create a method to count visible rugs on board
             int[] p_rugScore = new int[game.getPlayersList().size()];
             for(int i = 0; i < game.getPlayersList().size(); i++) {
                 for (RugTile rugTile: game.getBoard().getBoardPosition()) {
@@ -421,15 +435,17 @@ public class Marrakech {
             }
 
             // check whether there are two players with same highest score
+            // if there are two players with same highest score, the one has more dirhams wins the game
             for (Players player: game.getPlayersList()) {
                 if(player.getColor() != winner.getColor() && player.getScores().getTotalScore() == max_score) {
-                    return 't';
+                    if(player.getNumDirham() > winner.getNumDirham()) {
+                        winner = player;
+                    }
                 }
             }
             return winner.getColor().value;
 
         }
-        // FIXME: Task 12
     }
 
     /**
@@ -516,7 +532,6 @@ public class Marrakech {
             }
         }
 
-        // FIXME: Task 13
         //update position to Assam class at the end
         return assam.AssamToString();
     }
@@ -559,7 +574,7 @@ public class Marrakech {
             }
             return game.GameToString();
         }
-        // FIXME: Task 14
+
         return currentGame;
     }
 
