@@ -78,20 +78,23 @@ Task Distribution:
 * Pei Ling Lam: Review code written by Yaohui HOU
 * Everyone: Continue work on the tasks in Marrakech.java
 
-ZeXin Tang
+ZeXin Tang:
 * Completed Task 10 and working on Task 11 - 25 Sep
 * Continue working on Task 11 - 26 Sep
 * Reviewed codes - 27 Sep
 
-Yaohui Hou
+Yaohui Hou:
 * Working on Task 7 and 15 (add a start page to the game and draw board) - 27 Sep
 
-Pei Ling Lam
+Pei Ling Lam:
 * Help on Task 7 and 15 (draw die and create buttons) - 28 Sep
 * Review codes - 28 Sep
 * Create and build game.jar - 28 Sep
 
 ## Week 9
+
+Pei Ling Lam:
+* add authorship to all methods for everyone
 
 ## Week 10
 

@@ -3,6 +3,12 @@ package comp1110.ass2;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * class that handle the full game string and control of other classes
+ *
+ * @author u7754892 Yaohui Hou
+ * @author u7754637 Pei Ling Lam (supporting author)
+ */
 public class Game {
 
     private List<Players> playersList = new ArrayList<>();
@@ -46,12 +52,12 @@ public class Game {
         return assam;
     }
 
-    public void Start(){
 
-    }
-
-
-
+    /**
+     * method that state whether string is over
+     * @return string that specify whether the game is over
+     * @author u7754892 Yaohui Hou
+     */
     public String Over(){
         String currentGame = null;
         if(Marrakech.isGameOver(currentGame)){
@@ -63,6 +69,8 @@ public class Game {
     /**
      * Convert Game type to String
      * @return String representation of current game state
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public String GameToString() {
         String gameState = "";
@@ -81,6 +89,8 @@ public class Game {
      * Convert game string representation to Game class type
      * @param gameState get the string representation of current game state
      * @return Game class type data
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public Game StringToGame(String gameState) {
         String boardRug = gameState.substring(gameState.length()-147);
@@ -142,4 +152,3 @@ public class Game {
     }
 
 }
-//player,assam/rug

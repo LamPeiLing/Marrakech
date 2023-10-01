@@ -24,6 +24,8 @@ public class Marrakech {
      * @param gameString A String representing the current state of the game as per the README
      * @param rug A String representing the rug you are checking
      * @return true if the rug is valid, and false otherwise.
+     *
+     * @author u7754892 Yaohui Hou
      */
     public static boolean isRugValid(String gameString, String rug) {
         char colour = rug.charAt(0);
@@ -53,6 +55,8 @@ public class Marrakech {
      * a die where the distribution of results from 1 to 4 is not even, with a 2 or 3
      * being twice as likely to be returned as a 1 or 4.
      * @return The result of the roll of the die meeting the criteria above
+     *
+     * @author u7754892 Yaohui Hou
      */
     public static int rollDie() {
         int[] die = new int[]{1, 2, 2, 3, 3, 4};
@@ -74,6 +78,9 @@ public class Marrakech {
      * Determine whether a game of Marrakech is over.
      * @param currentGame A String representation of the current state of the game.
      * @return true if the game is over, or false otherwise.
+     *
+     * @author u7770276 ZeXin Tang
+     * @author u7754637 Pei Ling Lam (supporting author)
      */
     public static boolean isGameOver(String currentGame) {
         Game game = new Game();
@@ -106,6 +113,8 @@ public class Marrakech {
      *                 current orientation, 90 would be turning him to the right, etc.
      * @return A String representing Assam's state after the rotation, or the input currentAssam if the requested
      * rotation is illegal.
+     *
+     * @author u7770276 ZeXin Tang
      */
     public static String rotateAssam(String currentAssam, int rotation) {
         // Assuming the last character in currentAssam represents Assam's facing direction
@@ -167,6 +176,9 @@ public class Marrakech {
      * @param gameState A game string representing the current state of the game
      * @param rug A rug string representing the candidate rug which you must check the validity of.
      * @return true if the placement is valid, and false otherwise.
+     *
+     * @author u7770276 ZeXin Tang
+     * @author u7754637 Pei Ling Lam (supporting author)
      */
 
     public static boolean isPlacementValid(String gameState, String rug) {
@@ -219,7 +231,7 @@ public class Marrakech {
         // check if the rug place under assam
         for (int i = 0; i < rug1.getRelativePositions().length; i++) {
             if (rug1.getRelativePositions()[i].getX() == game.getAssam().getAbsolutePosition().getX() && rug1.getRelativePositions()[i].getY() == game.getAssam().getAbsolutePosition().getY())
-                return true;//teacher's test problem This is an important rule check for the game,
+                return false;//teacher's test problem This is an important rule check for the game,
             // normally a carpet should not be placed below Assam's position as this may be against the rules of the game. If the code returns true,
             // it means that the carpet is validly placed below Assam's position, otherwise it ends up returning false if no carpet is placed below Assam's position.
         }
@@ -238,6 +250,8 @@ public class Marrakech {
      * share an entire edge -- diagonals do not count.
      * @param  //String representation of the current state of the game.
      * @return The amount of payment due, as an integer.
+     *
+     * @author u7770276 ZeXin Tang
      */
     public static int getPaymentAmount(String gameString) {
         // Create a new Game object and parse the gameString
@@ -297,6 +311,8 @@ public class Marrakech {
      * @param y The y-coordinate of the current square.
      * @param visited A boolean array to keep track of visited squares.
      * @return The number of connected squares of the same color.
+     *
+     * @author u7770276 ZeXin Tang
      */
     private static int dfsHelper(List<RugTile> board, Color color, int x, int y, boolean[][] visited) {
         int boardSize = 7;
@@ -371,6 +387,8 @@ public class Marrakech {
      * score and number of dirhams, then the game is a tie.
      * @param gameState A String representation of the current state of the game
      * @return A char representing the winner of the game as described above.
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public static char getWinner(String gameState) {
         Game game = new Game();
@@ -424,6 +442,8 @@ public class Marrakech {
      * @param currentAssam A string representation of Assam's current state.
      * @param dieResult The result of the die, which determines the number of squares Assam will move.
      * @return A String representing Assam's state after the movement.
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public static String moveAssam(String currentAssam, int dieResult){
         Assam assam = new Assam();
@@ -511,6 +531,8 @@ public class Marrakech {
      * @param rug A String representation of the rug that is to be placed.
      * @return A new game string representing the game following the successful placement of this rug if it is valid,
      * or the input currentGame unchanged otherwise.
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public static String makePlacement(String currentGame, String rug) {
         Game game = new Game();

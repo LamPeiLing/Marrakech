@@ -23,6 +23,7 @@ public class IntPair {
 
     /**
      * Constructor that does not do anything
+     * @author u7754637 Pei Ling Lam
      */
     public IntPair(){}
 
@@ -30,6 +31,8 @@ public class IntPair {
      * Constructor that initialize intPair by x and y coordinate
      * @param x x coordinate
      * @param y y coordinate
+     *
+     * @author u7770276 ZeXin Tang
      */
     public IntPair(int x, int y) {
         this.x = x;
@@ -93,6 +96,8 @@ public class IntPair {
      * convert string to IntPair
      * @param stringPosition takes a string with length of 2 that represents x and y
      * @return with the IntPair data type
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public IntPair StringToIntPair(String stringPosition) {
         int x = Integer.parseInt(stringPosition.substring(0, 1));
@@ -101,6 +106,13 @@ public class IntPair {
         return position;
     }
 
+    /**
+     * convert IntPair to String
+     * @param position IntPair type
+     * @return string of IntPair
+     *
+     * @author u7754637 Pei Ling Lam
+     */
     public String IntPairToString(IntPair position) {
         return String.valueOf(position.getX()) + String.valueOf(position.getY());
     }

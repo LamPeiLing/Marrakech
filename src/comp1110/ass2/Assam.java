@@ -3,6 +3,11 @@ package comp1110.ass2;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * class that handles everything regarding Asssam
+ *
+ * @author u7754637 Pei Ling Lam
+ */
 public class Assam {
     private IntPair absolutePosition; // current position of Assam on the board
     private Direction currentDirection; // current direction of Assam is facing
@@ -11,6 +16,8 @@ public class Assam {
     /**
      * Constructor that initialize the position of Assam when a new game starts
      * @param position the position of the middle of the board
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public Assam(IntPair position) {
         this.absolutePosition = position;
@@ -18,6 +25,7 @@ public class Assam {
 
     /**
      * Constructor that does not do anything
+     * @author u7754637 Pei Ling Lam
      */
     public Assam() {}
 
@@ -28,6 +36,8 @@ public class Assam {
     /**
      * get the current position of Assam
      * @return the absolute position on the board
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public IntPair getAbsolutePosition() {
         return this.absolutePosition;
@@ -40,6 +50,8 @@ public class Assam {
     /**
      * get the direction where Assam is facing currently
      * @return the current direction
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public Direction getCurrentDirection() {
         return this.currentDirection;
@@ -49,6 +61,8 @@ public class Assam {
      * check if Assam is already at the border of the board
      * use absolutePosition to check
      * @return true if already at the border of the board, false otherwise
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public boolean isBorder() {
         if(absolutePosition.getX() == 0 || absolutePosition.getX() == 6 || absolutePosition.getY() == 0 || absolutePosition.getY() == 6) {
@@ -60,6 +74,8 @@ public class Assam {
     /**
      * check if Assam is safe to move forward a step according to its direction
      * @return false if his next step is out of the board, true otherwise
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public boolean isMovementSafe() {
         switch (this.currentDirection) {
@@ -93,6 +109,8 @@ public class Assam {
     /**
      * method to find the adjacent position of Assam
      * @return a list of adjacent position IntPair
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public List<IntPair> adjacentEdge () {
         List<IntPair> adjacents = new ArrayList<>();
@@ -152,6 +170,8 @@ public class Assam {
     /**
      * Convert Assam class type to String
      * @return string value
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public String AssamToString() {
         String stringAssam = "A";
@@ -164,6 +184,8 @@ public class Assam {
      * convert String to Assam class type
      * @param stringAssam string value of assam
      * @return Assam class type value
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public Assam StringToAssam(String stringAssam) {
         Assam assam = new Assam();

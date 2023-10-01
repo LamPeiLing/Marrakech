@@ -14,6 +14,7 @@ public class Board {
     /**
      * Constructor
      * does nothing at this moment
+     * @author u7754637 Pei Ling Lam
      */
     public Board(){}
 
@@ -32,6 +33,8 @@ public class Board {
     /**
      * update the rug tile at a specific position
      * @param rugTile new rug tile that is going to replace the old one
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public void updateRugTile(RugTile rugTile) {
 
@@ -51,6 +54,8 @@ public class Board {
      * method that find the rug tile given a specific position
      * @param position the position that we need for the rug tile
      * @return target rug tile
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public RugTile getRugTileOnPosition (IntPair position) {
         for (RugTile rugTile: boardPosition) {
@@ -65,6 +70,8 @@ public class Board {
     /**
      * Convert Board type to its string representation
      * @return string representation of Board class
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public String BoardToString() {
         String boardString = "B";
@@ -81,6 +88,8 @@ public class Board {
      * Convert String representation to Board class
      * @param boardString string representation of board
      * @return Board class data
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public Board StringToBoard(String boardString) {
         List<RugTile> rugPositions = new ArrayList<>();

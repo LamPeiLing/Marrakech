@@ -24,6 +24,9 @@ import comp1110.ass2.Game;
 
 import java.util.List;
 
+/**
+ * @author u7754637 Pei Ling Lam
+ */
 public class Viewer extends Application {
 
     // The width and height of the window
@@ -64,6 +67,8 @@ public class Viewer extends Application {
      * Draw a placement in the window, removing any previously drawn placements
      *
      * @param state an array of two strings, representing the current game state
+     *
+     * @author u7754637 Pei Ling Lam
      */
     void displayState(String state) {
         // FIXME Task 5: implement the simple state viewer
@@ -82,6 +87,7 @@ public class Viewer extends Application {
 
     /**
      * creating the mosaic track around the board to handle if Assam moved out of the board
+     * @author u7754637 Pei Ling Lam
      */
     private void makeMosaicTrack() {
         for (int x=0; x < BOARD_WIDTH; x++) {
@@ -113,6 +119,7 @@ public class Viewer extends Application {
 
     /**
      * creating background board
+     * @author u7754637 Pei Ling Lam
      */
     private void makeBoard() {
         // creating rectangle to represent the blue background of the board
@@ -146,6 +153,7 @@ public class Viewer extends Application {
     /**
      * method that show the rugs on the board
      * @param board
+     * @author u7754637 Pei Ling Lam
      */
     private void makeRug(Board board) {
         for(int i = 0; i < board.getBoardPosition().size(); i++) {
@@ -168,6 +176,12 @@ public class Viewer extends Application {
 
     }
 
+    /**
+     * method that draws assam and his facing direction
+     * @param assam string of assam representation
+     *
+     * @author u7754637 Pei Ling Lam
+     */
     public void makeAssam(Assam assam) {
         double x = assam.getAbsolutePosition().getX();
         double y = assam.getAbsolutePosition().getY();
@@ -224,6 +238,8 @@ public class Viewer extends Application {
     /**
      * method that show the view of rugs and dirhams of each player
      * @param playersList list of the players
+     *
+     * @author u7754637 Pei Ling Lam
      */
     private void makePlayers(List<Players> playersList) {
 
@@ -309,6 +325,8 @@ public class Viewer extends Application {
     /**
      * method that labels the number of rugs and dirhams of each player
      * @param playersList list of the players
+     *
+     * @author u7754637 Pei Ling Lam
      */
     private void makePlayerLabel(List<Players> playersList) {
         double labelX = VIEWER_WIDTH - 200;
@@ -344,6 +362,8 @@ public class Viewer extends Application {
      * method that set the colour of the node from players color
      * @param color color of the players from enum created in ass2 package
      * @return color type from JavaFx.scene.paint
+     *
+     * @author u7754637 Pei Ling Lam
      */
     private Color setPlayerColour(comp1110.ass2.Color color) {
         switch (color) {

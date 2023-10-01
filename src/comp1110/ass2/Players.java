@@ -1,5 +1,9 @@
 package comp1110.ass2;
 
+/**
+ * @author u7754892 Yaohui Hou
+ * @author u7754637 Pei Ling Lam (supporting author)
+ */
 public class Players {
 
     //Integers that define the number of coins every player have during the game
@@ -35,13 +39,27 @@ public class Players {
 
     /**
      * Constructor that does not initialize anything
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public Players() {}
 
+    /**
+     * method that get coins owned by players
+     * @return number of coins
+     *
+     * @author u7754892 Yaohui Hou
+     */
     public int getCurrentNumOfCoin_5(){
         return currentNumOfCoin_5;
     }
 
+    /**
+     * method that get coins owned by players
+     * @return number of coins
+     *
+     * @author u7754892 Yaohui Hou
+     */
     public int getCurrentNumOfCoin_1(){
         return currentNumOfCoin_1;
     }
@@ -100,7 +118,12 @@ public class Players {
     }
 
 
-    // convert Players to String
+    /**
+     * convert Players to String
+     * @return Players type
+     *
+     * @author u7754637 Pei Ling Lam
+     */
     public String PlayerToString() {
         String stringPlayer = "P";
 
@@ -131,6 +154,13 @@ public class Players {
         return stringPlayer;
     }
 
+    /**
+     * convert string to Players
+     * @param stringPlayer string of player representation
+     * @return Players type of the string
+     *
+     * @author u7754637 Pei Ling Lam
+     */
     // convert String to Players
     public Players StringToPlayer(String stringPlayer) {
         // get rug color of player

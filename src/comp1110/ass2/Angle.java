@@ -2,6 +2,7 @@ package comp1110.ass2;
 
 /**
  * Enum to represent angles in degrees
+ * @author u7770276 ZeXin Tang
  */
 public enum Angle {
     DEG_0(0),          // Represents 0 degrees
@@ -28,6 +29,8 @@ public enum Angle {
      *
      * @param value Angle value in degrees
      * @return Corresponding angle or null
+     *
+     * @author u7770276 ZeXin Tang
      */
     public static Angle getAngleFromValue(int value) {
         assert value >= 0;
@@ -49,6 +52,8 @@ public enum Angle {
      *
      * @param other The other angle
      * @return New angle that is the sum of both
+     *
+     * @author u7770276 ZeXin Tang
      */
     public Angle add(Angle other) {
         int sum = this.value + other.value;
@@ -68,6 +73,8 @@ public enum Angle {
      * Converts Angle enum to a string for printing.
      *
      * @return String representation of the angle
+     *
+     * @author u7770276 ZeXin Tang
      */
     @Override
     public String toString() {

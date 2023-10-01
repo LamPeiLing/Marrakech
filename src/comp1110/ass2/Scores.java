@@ -1,5 +1,10 @@
 package comp1110.ass2;
 
+/**
+ * class that scores the players to find the winner of the game
+ *
+ * @author u7754637 Pei Ling Lam
+ */
 public class Scores {
 
     private int dirhamScore; // total points for the coin
@@ -50,6 +55,8 @@ public class Scores {
      * update the coin score by checking whether it is getting coins from other players or give coins to other players
      * @param score the score to update
      * @param isGet true if get from other players, false otherwise
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public void updateDirhamScore(int score, boolean isGet) {
         if(isGet) this.dirhamScore += score;
@@ -61,6 +68,8 @@ public class Scores {
      * if player put rug on the board, +2 points
      * if overlapped by others, -1 point (since only can be overlapped half rug at a point)
      * @param isOverlap true if overlapped, false if player put the rug
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public void updateRugScore(boolean isOverlap) {
         if(isOverlap) this.rugScore --;

@@ -64,7 +64,12 @@ public class Game extends Application {
     private static final Group rugs = new Group();
     private static final Group die = new Group();
     private static final Group controls = new Group();
-     class GameInterface{
+
+    /**
+     * @author u7754892 Yaohui Hou
+     * @author u7754637 Pei Ling Lam (supporting author)
+     */
+    class GameInterface{
         public GameInterface(Stage stage){
             Pane root = new Pane();
             makeMosaicTrack();
@@ -81,6 +86,9 @@ public class Game extends Application {
     }
 
 
+    /**
+     * @author u7754892 Yaohui Hou
+     */
     private void makeBoard() {
         // creating rectangle to represent the blue background of the board
         Rectangle boardBack = new Rectangle(
@@ -112,6 +120,7 @@ public class Game extends Application {
 
     /**
      * creating the mosaic track around the board to handle if Assam moved out of the board
+     * @author u7754892 Yaohui Hou
      */
     private void makeMosaicTrack() {
         for (int x = 0; x < BOARD_WIDTH; x++) {
@@ -144,6 +153,8 @@ public class Game extends Application {
     /**
      * This method draws the die everytime a die is rolled
      * @param n number of dot on the face
+     *
+     * @author u7754637 Pei Ling Lam
      */
     private void createDie(int n) {
         // create square of the die
@@ -250,6 +261,8 @@ public class Game extends Application {
 
     /**
      * method to update a die after being rolled
+     *
+     * @author u7754637 Pei Ling Lam
      */
     private void makeDie() {
         createDie(Marrakech.rollDie());
@@ -258,11 +271,18 @@ public class Game extends Application {
     /**
      * clear the rugs on the board
      * initialize the rugs and dirhams to players again
+     *
+     * @author u7754637 Pei Ling Lam
      */
     private void newGame() {
 
     }
 
+    /**
+     * method that control of buttons
+     *
+     * @author u7754637 Pei Ling Lam
+     */
     private void makeControls() {
         // Settings for a Button instance
         Button newGame = new Button();
@@ -283,6 +303,16 @@ public class Game extends Application {
     }
 
 
+    /**
+     *
+     * @param stage the primary stage for this application, onto which
+     * the application scene can be set.
+     * Applications may create other stages, if needed, but they will not be
+     * primary stages.
+     * @throws Exception
+     *
+     * @author u7754892 Yaohui Hou
+     */
     @Override
     public void start(Stage stage) throws Exception {
         // FIXME Task 7 and 15

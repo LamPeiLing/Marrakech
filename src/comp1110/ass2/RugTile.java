@@ -1,5 +1,9 @@
 package comp1110.ass2;
 
+/**
+ * class that handles one segment of rug on the board
+ * @author u7754637 Pei Ling Lam
+ */
 public class RugTile {
     private Color color;  // Color of the rug
     private IntPair absolutePosition; // absolute position of a rug segment on board
@@ -8,6 +12,8 @@ public class RugTile {
 
     /**
      * Constructor that does nothing
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public RugTile() {}
 
@@ -16,6 +22,8 @@ public class RugTile {
      * This is a rug segment on the board
      * @param color color of rug
      * @param absolutePosition position of rug on the board
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public RugTile(Color color, IntPair absolutePosition, int id) {
         this.color = color;
@@ -50,6 +58,8 @@ public class RugTile {
     /**
      * Convert RugTile type to its string representation
      * @return String of rug tile
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public String RugTileToString() {
         String rugString = "";
@@ -73,6 +83,8 @@ public class RugTile {
      * Convert String to one segment of rug
      * @param rugString string representation of a segment of rug
      * @return rug segment
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public RugTile StringToRugTile(String rugString, int x, int y) {
         if(rugString.charAt(0) == Color.RED.value) {

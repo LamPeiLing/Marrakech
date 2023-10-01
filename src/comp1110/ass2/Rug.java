@@ -2,6 +2,8 @@ package comp1110.ass2;
 
 /**
  * Class that defines a rug in the Marrakech game.
+ * @author u7770276 ZeXin Tang
+ * @author u7754637 Pei Ling Lam (supporting author)
  */
 public class Rug {
     private Color color;  // Color of the rug
@@ -13,6 +15,8 @@ public class Rug {
      * Constructor: creates a new instance of the Rug class.
      * @param color Color of the rug (one of the color constants)
      * @param relativePositions Relative positions of the rug segments
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public Rug(Color color, int id, IntPair[] relativePositions) {
         this.color = color;
@@ -23,6 +27,8 @@ public class Rug {
     /**
      * Constructor that does nothing
      * Declare Rug
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public Rug(){}
 
@@ -59,6 +65,8 @@ public class Rug {
      * Get the number of rugs based on the number of players.
      * @param numPlayers Number of players in the game
      * @return Number of rugs for the given number of players
+     *
+     * @author u7770276 ZeXin Tang
      */
     public static int getRugNumber(int numPlayers) {
         if (numPlayers == 3) {
@@ -74,6 +82,8 @@ public class Rug {
      * Overrides the equals method to compare two rug objects for equality.
      * @param o Other object to compare
      * @return True if the objects are equal, false otherwise
+     *
+     * @author u7770276 ZeXin Tang
      */
     @Override
     public boolean equals(Object o) {
@@ -98,6 +108,8 @@ public class Rug {
      * Convert string representation of rug to Rug class type
      * @param rugString string representation of rug
      * @return rug as Rug class type
+     *
+     * @author u7754637 Pei Ling Lam
      */
     public Rug StringToRug(String rugString) {
 
