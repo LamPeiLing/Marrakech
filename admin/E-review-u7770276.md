@@ -195,21 +195,17 @@ private Direction currentDirection; // current direction of Assam is facing
 
 ### Comments 
 
-This code defines a Java class named "Assam" to represent a character or object in the game. The following is an evaluation of this code:
+This code creates a Java class called "Assam" to stand in for a gaming character or item. This code's evaluation is as follows:
 
-1. Code structure and naming: The structure of the code is relatively clear, with appropriate comments to explain the roles of individual methods and variables. The naming is also relatively expressive, e.g., meaningful variable and method names are used, which contributes to the readability and maintenance of the code.
+1. Code organization and naming: The code is organized in a reasonably obvious manner, and relevant comments are included to describe the functions of the various methods and variables. Additionally, the naming is rather expressive; for example, relevant variable and method names are employed, which improves the code's readability and maintenance.
 
-2. Class members: The class contains two private member variables, `absolutePosition` and `currentDirection`, which represent the position and direction of Assam, respectively. This is a reasonable design to encapsulate the state information of Assam inside the class and provide appropriate access methods.
+2. Class members: The class has two private member variables called "absolutePosition" and "currentDirection" that, respectively, describe Assam's position and orientation. This is a reasonable design that provides adequate access methods and encapsulates the state information of Assam inside the class.
 
-3. Constructors: The class has two constructors, one of which accepts a position parameter to initialise the position of the Assam, while the other constructor is empty. This provides some flexibility, but may also result in the need to manually set the position and orientation of an Assam object after it has been created, and further consideration may need to be given to how to optimise the design of the constructor.
+3. Constructors: There are two constructors in the class, one of which takes a position parameter to initialize the position of the Assam and the other of which is empty. This offers considerable flexibility, but it may also necessitate manually setting the position and orientation of an Assam object after it has been formed, necessitating extra thought about how to optimize the constructor's design.
 
-4. Method implementation: The class contains a number of methods to manipulate and query the state of an Assam. The functionality of these methods is relatively clear, and they are properly annotated to explain what they do. For example, the `isBorder` method is used to check if the Assam is on the border of the game board, the `isMovementSafe` method is used to check if it is safe to move one step, the `adjacentEdge` method is used to get a list of adjacent positions, etc.
+4. Method implementation: A number of methods are included in the class to manipulate and query an Assam's state. These methods' functionality is quite obvious, and they are appropriately documented to describe what they do. The 'isBorder' method, for instance, is used to determine whether the Assam is on the game board's boundary, the 'isMovementSafe' method determines whether it is safe to move one step, the 'adjacentEdge' method returns a list of adjacent positions, etc.
 
-5. Type conversion methods: The class also provides two methods `AssamToString` and `StringToAssam` for converting Assam objects to strings and from strings back to Assam objects. These methods may be useful in game logic, but further improvements could be considered to ensure correctness and robustness.
+5. Type conversion methods: The class additionally offers the 'AssamToString' and 'StringToAssam' methods for changing Assam objects into strings and back from strings to Assam objects. These techniques might be helpful in game logic, however other advancements might be thought about to guarantee accuracy and robustness.
 
-Overall, the code looks good, but could be further optimised and improved, especially when dealing with conversions between strings and objects. Additionally, it is important to ensure that the code will work and be maintained in real game use cases.
-*** Translated with www.DeepL.com/Translator (free version) ***
-
-
-
+The code appears to be excellent overall, but it could still be optimized and improved, especially when it comes to object and string conversions. Furthermore, it is crucial to guarantee that the code will function and be maintained in real-world game use situations.
 
