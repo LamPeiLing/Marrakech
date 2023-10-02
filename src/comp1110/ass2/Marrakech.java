@@ -201,13 +201,11 @@ public class Marrakech {
 
     public static boolean isPlacementValid(String gameState, String rug) {
 
-        Game game = new Game();
-        game = game.StringToGame(gameState);
+        Game game = new Game().StringToGame(gameState);
 
         if (rug.length() != 7) return false;
 
-        Rug rug1 = new Rug();
-        rug1 = rug1.StringToRug(rug);
+        Rug rug1 = new Rug().StringToRug(rug);
 
         IntPair rugTile1 = rug1.getRelativePositions()[0];
         IntPair rugTile2 = rug1.getRelativePositions()[1];
@@ -278,14 +276,11 @@ public class Marrakech {
 
         Color rugColor = board.get(assam.getAbsolutePosition().getX() * boardSize + assam.getAbsolutePosition().getY()).getColor();
 
-        int payment = 0;
+        int payment;
 
         // Create a boolean array to keep track of visited squares
         boolean[][] visited = new boolean[boardSize][boardSize];
 
-        // Define four possible directions (up, down, left, right)
-        int[] dx = { -1, 1, 0, 0 };
-        int[] dy = { 0, 0, -1, 1 };
 
         // Perform a depth-first search to find connected squares of the same color
         payment = dfs(board, rugColor, assam.getAbsolutePosition().getX(), assam.getAbsolutePosition().getY(), visited, boardSize);
