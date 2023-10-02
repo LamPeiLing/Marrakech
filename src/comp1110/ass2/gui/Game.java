@@ -12,11 +12,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -65,16 +69,25 @@ public class Game extends Application {
     private static final Group mosaicTrack = new Group();
     private static final Group rugs = new Group();
     private static final Group assamGroup = new Group();
+    private static final Group playersGroup = new Group();
     private static final Group die = new Group();
     private static final Group controls = new Group();
 
-    /**
-     * global variables
+    /*
+    global variables
      */
     private int playerNum; // number of players
 
     private int dieNum; // number of dot on the die
     private Assam assam = new Assam(); // to control assam regarding the position and direction
+
+    private List<Players> playersList = new ArrayList<>();
+
+    /*
+    global variables regarding the rules of the game
+     */
+    private static final int INITIAL_DIRHAMS = 30; // initial value of the number of dirhams for each player
+    private static final int INITIAL_RUGS = 15; // initial value of the number of rugs for each player
 
     /**
      * @author u7754892 Yaohui Hou
@@ -88,10 +101,12 @@ public class Game extends Application {
             makeMosaicTrack();
             initializeAssam();
             createDie(Marrakech.rollDie());
+            initializePlayers();
             stage.setScene(new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT));
             root.getChildren().add(mosaicTrack);
             root.getChildren().add(board);
             root.getChildren().add(assamGroup);
+            root.getChildren().add(playersGroup);
             root.getChildren().add(die);
             root.getChildren().add(controls);
             stage.show();
@@ -284,21 +299,142 @@ public class Game extends Application {
 
     }
 
-    private void createPlayers() {
+    /**
+     * method that initialize the players by drawing dirhams and rugs when starting a new game
+     *
+     * @author u7754637 Pei Ling Lam
+     */
+    private void initializePlayers() {
+        for (int i = 0; i < playerNum; i++) {
+            Players player = new Players(INITIAL_DIRHAMS, INITIAL_RUGS, true);
+            double x,y;
 
+            if(i == 0) {
+                player.setColor(comp1110.ass2.Color.CYAN);
+            } else if(i == 1)  {
+                player.setColor(comp1110.ass2.Color.YELLOW);
+            } else if (i == 2) {
+                player.setColor(comp1110.ass2.Color.PURPLE);
+            } else {
+                player.setColor(comp1110.ass2.Color.RED);
+            }
+
+            playersList.add(player);
+
+            //create dirham
+            for (int j = 0; j < INITIAL_DIRHAMS; j++) {
+                if(i == 0) {
+                    x = START_X - BOARD_TILE_SHADOW_GAP - Tile_Size * 3 + j + 2;
+                    y = START_Y + (Tile_Size * 7 / 2) - Tile_Size - Tile_Size/2;
+                } else if(i == 1)  {
+                    x = START_X - BOARD_TILE_SHADOW_GAP + Tile_Size * 8 + j + 2;
+                    y = START_Y + (Tile_Size * 7 / 2) - Tile_Size - Tile_Size/2;
+                } else if (i == 2) {
+                    x = START_X + (Tile_Size * 7 / 2) - Tile_Size + j + Tile_Size * 2.5;
+                    y = START_Y - BOARD_TILE_SHADOW_GAP - Tile_Size * 2.5 + Tile_Size / 2;
+                } else {
+                    x = START_X + (Tile_Size * 7 / 2) - Tile_Size + j + Tile_Size * 2.5;
+                    y = START_Y - BOARD_TILE_SHADOW_GAP + Tile_Size * 8 + Tile_Size / 2;
+                }
+                drawDirham(x, y);
+            }
+
+            // create rugs
+            for (int j = 0; j < INITIAL_RUGS; j++) {
+                if(i == 0) {
+                    x = START_X - BOARD_TILE_SHADOW_GAP - Tile_Size * 3.5 + j;
+                    y = START_Y + (Tile_Size * 7 / 2) - Tile_Size;
+                } else if(i == 1)  {
+                    x = START_X - BOARD_TILE_SHADOW_GAP + Tile_Size * 8 + j;
+                    y = START_Y + (Tile_Size * 7 / 2) - Tile_Size;
+                } else if (i == 2) {
+                    x = START_X + (Tile_Size * 7 / 2) - Tile_Size;
+                    y = START_Y - BOARD_TILE_SHADOW_GAP - Tile_Size * 2.5 + j;
+                } else {
+                    x = START_X + (Tile_Size * 7 / 2) - Tile_Size;
+                    y = START_Y - BOARD_TILE_SHADOW_GAP + Tile_Size * 8 + j;
+                }
+
+                drawRug(player, x, y);
+            }
+        }
+
+        makePlayerLabel();
     }
 
-//    private void drawRugs() {
-//        Rectangle rug = new Rectangle(
-//                x,
-//                y + j,
-//                Tile_Size * 2 - BOARD_TILE_SHADOW_GAP,
-//                Tile_Size - BOARD_TILE_SHADOW_GAP);
-//        rug.setFill(setPlayerColour(playersList.get(i).getColor()));
-//        rug.setStrokeWidth(0.5);
-//        rug.setStroke(Color.BLACK);
-//        root.getChildren().add(rug);
-//    }
+    /**
+     * method to draw one piece of rug
+     * @param player current player to get the color
+     * @param x x-coordinate of the rug on screen
+     * @param y y-coordinate of the rug on screen
+     *
+     * @author u7754637 Pei Ling Lam
+     */
+    private void drawRug(Players player, double x, double y) {
+        Rectangle rug = new Rectangle(
+                x,
+                y ,
+                Tile_Size * 2 - BOARD_TILE_SHADOW_GAP,
+                Tile_Size - BOARD_TILE_SHADOW_GAP);
+        rug.setFill(setPlayerColour(player.getColor()));
+        rug.setStrokeWidth(0.5);
+        rug.setStroke(Color.BLACK);
+        playersGroup.getChildren().add(rug);
+    }
+
+    /**
+     * method to draw one piece of dirham
+     * @param x x-coordinate of the dirham on screen
+     * @param y y-coordinate of the dirham on screen
+     *
+     * @author u7754637 Pei Ling Lam
+     */
+    private void drawDirham(double x, double y) {
+        Circle dirham = new Circle(
+                x,
+                y,
+                Tile_Size / 5);
+        dirham.setFill(Color.web("D4AF37"));
+        dirham.setStrokeWidth(0.5);
+        dirham.setStroke(Color.BLACK);
+        playersGroup.getChildren().add(dirham);
+    }
+
+    /**
+     * method that labels the number of rugs and dirhams of each player
+     *
+     * @author u7754637 Pei Ling Lam
+     */
+    private void makePlayerLabel() {
+        double labelX = WINDOW_WIDTH - 200;
+        double labelY = 10;
+        double labelStrokeWidth = 10;
+        double radius = 5;
+
+        Rectangle labelBox = new Rectangle(labelX, labelY, 195, 80);
+        labelBox.setFill(Color.BLACK);
+        playersGroup.getChildren().add(labelBox);
+
+        for (int i = 0; i < playersList.size(); i++) {
+            Circle playerColour = new Circle(labelX + labelStrokeWidth, labelY + labelStrokeWidth * 1.5 + (i * 15), radius);
+            playerColour.setFill(setPlayerColour(playersList.get(i).getColor()));
+            playersGroup.getChildren().add(playerColour);
+
+            // cross out the players if they are out of the game
+            if(!playersList.get(i).isInGame()) {
+                Line line = new Line(labelX + labelStrokeWidth - radius * 2, labelY + labelStrokeWidth * 1.5 + (i * 15), labelX + 190, labelY + labelStrokeWidth * 1.5 + (i * 15));
+                line.setStroke(Color.RED);
+                line.setStrokeWidth(2);
+                line.setFill(Color.RED);
+                playersGroup.getChildren().add(line);
+            }
+
+            Text playerDetails = new Text(labelX + labelStrokeWidth + radius, labelY + labelStrokeWidth * 2 + (i * 15), "Player " + (i + 1) + "  | Rugs: " + playersList.get(i).getNumRug() + "  | Dirhams: " + playersList.get(i).getNumDirham());
+            playerDetails.setFont(Font.font(12));
+            playerDetails.setFill(Color.WHITE);
+            playersGroup.getChildren().add(playerDetails);
+        }
+    }
 
     /**
      * method that set the colour of the node from players color
@@ -436,7 +572,7 @@ public class Game extends Application {
         // Settings for a Button instance
         Button newGame = new Button();
         newGame.setLayoutX(BUTTON_BUFFER);
-        newGame.setLayoutY(WINDOW_HEIGHT - 100);
+        newGame.setLayoutY(WINDOW_HEIGHT - 70);
         newGame.setOnAction(event -> this.newGame());
         newGame.setStyle("-fx-font-size: 16px;");
         newGame.setText("New Game");
@@ -444,7 +580,7 @@ public class Game extends Application {
 
         Button rollDie = new Button();
         rollDie.setLayoutX(newGame.getLayoutX() + BUTTON_BUFFER + 50);
-        rollDie.setLayoutY(WINDOW_HEIGHT - 100);
+        rollDie.setLayoutY(WINDOW_HEIGHT - 70);
         rollDie.setOnAction(event -> this.makeDie());
         rollDie.setStyle("-fx-font-size: 16px;");
         rollDie.setText("Roll Die");
@@ -452,7 +588,7 @@ public class Game extends Application {
 
         Button rotateAssam = new Button();
         rotateAssam.setLayoutX(rollDie.getLayoutX() + BUTTON_BUFFER);
-        rotateAssam.setLayoutY(WINDOW_HEIGHT - 100);
+        rotateAssam.setLayoutY(WINDOW_HEIGHT - 70);
         rotateAssam.setOnAction(event -> this.rotateAssam()); // Lambda expression
         rotateAssam.setStyle("-fx-font-size: 16px;");
         rotateAssam.setText("Rotate Assam");

@@ -29,12 +29,14 @@ public class Players {
      * Constructor that initialize a player when a new game starts
      * @param numDirham initial number of dirham
      * @param numRug initial number of rugs
-     * @param color color of the rugs
+     * @param inGame boolean to check whether player is in or out the game
+     *
+     * @author u7754637 Pei Ling Lam
      */
-    public Players(int numDirham, int numRug, Color color) {
-        this.color = color;
+    public Players(int numDirham, int numRug, boolean inGame) {
         this.numDirham = numDirham;
         this.numRug = numRug;
+        this.isInGame = inGame;
     }
 
     /**
