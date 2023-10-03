@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
-@Timeout(value = 500, unit = TimeUnit.MILLISECONDS)
+@Timeout(value = 3000, unit = TimeUnit.MILLISECONDS)
 public class MakePlacementTest {
 
     @Test

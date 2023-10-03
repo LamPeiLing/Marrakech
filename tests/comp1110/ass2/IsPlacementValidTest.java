@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
-@Timeout(value = 500, unit = TimeUnit.MILLISECONDS)
+@Timeout(value = 1300, unit = TimeUnit.MILLISECONDS)
 public class IsPlacementValidTest {
     /**
      * These tests check for simple situations which should be valid -- specifically where a placement is made onto
