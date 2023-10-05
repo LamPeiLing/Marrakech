@@ -93,11 +93,15 @@ Pei Ling Lam:
 
 ## Week 9
 
+Yaohui Hou:
+* Review codes - 2 Oct
+
 Pei Ling Lam:
 * add authorship to all methods for everyone - 2 Oct
 * Fix task 4 and task 12 - 2 Oct
 * Created playable assam in task 7 and 15 - 2 Oct
 * Initialize players in task 7 and 15 (not draggable rugs) - 3 Oct
+* Implement draggable rugs - 4-5 Oct
 
 ## Week 10
 

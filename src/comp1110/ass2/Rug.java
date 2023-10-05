@@ -1,5 +1,8 @@
 package comp1110.ass2;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Class that defines a rug in the Marrakech game.
  * @author u7770276 ZeXin Tang
@@ -60,7 +63,6 @@ public class Rug {
         return relativePositions;
     }
 
-
     /**
      * Get the number of rugs based on the number of players.
      * @param numPlayers Number of players in the game
@@ -102,6 +104,26 @@ public class Rug {
     @Override
     public String toString() {
         return null;
+    }
+
+    /**
+     * convert Rug to String representation
+     * @return string representation of rug
+     *
+     * @author u7754637 Pei Ling Lam
+     */
+    public String RugToString() {
+        String rugString="";
+        rugString += this.color.value;
+        if(String.valueOf(this.rugID).length() == 1) {
+            rugString += "0";
+        }
+        rugString += String.valueOf(this.rugID);
+        for (IntPair positions: this.relativePositions) {
+            rugString += positions.IntPairToString(positions);
+        }
+
+        return rugString;
     }
 
     /**

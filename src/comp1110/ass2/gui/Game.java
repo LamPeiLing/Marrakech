@@ -6,8 +6,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -19,10 +21,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.util.Objects;
 
 public class Game extends Application {
 
@@ -65,7 +66,7 @@ public class Game extends Application {
     all the groups for scene
      */
     private static final Group root = new Group();
-    private static final Group board = new Group();
+    private static final Group boardGroup = new Group();
     private static final Group mosaicTrack = new Group();
     private static final Group rugs = new Group();
     private static final Group assamGroup = new Group();
@@ -81,7 +82,9 @@ public class Game extends Application {
     private int dieNum; // number of dot on the die
     private Assam assam = new Assam(); // to control assam regarding the position and direction
 
-    private List<Players> playersList = new ArrayList<>();
+    private Board board = new Board();
+
+    private comp1110.ass2.Game game = new comp1110.ass2.Game();
 
     /*
     global variables regarding the rules of the game
@@ -99,17 +102,192 @@ public class Game extends Application {
             makeControls();
             makeBoard();
             makeMosaicTrack();
+            initializeRugsOnBoard();
             initializeAssam();
             createDie(Marrakech.rollDie());
             initializePlayers();
             stage.setScene(new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT));
             root.getChildren().add(mosaicTrack);
-            root.getChildren().add(board);
+            root.getChildren().add(boardGroup);
+            root.getChildren().add(rugs);
             root.getChildren().add(assamGroup);
             root.getChildren().add(playersGroup);
             root.getChildren().add(die);
             root.getChildren().add(controls);
             stage.show();
+        }
+    }
+
+    /**
+     * A DraggableRug Object is a Rectangle that represents rugs that can move everywhere
+     *
+     * @author u7754637 Pei Ling Lam
+     */
+    class DraggableRug extends Rectangle {
+        final Rug rug;  // the corresponding rug
+
+        String tempGame; // temporary game string that compares with global variable game
+
+        double mouseX,mouseY; // these coordinates are useful for drag-and-drop
+
+        Angle tempAngle; // the angle of the gui piece (different from the backend when rotating)
+
+        IntPair[] positions = new IntPair[2];
+
+
+        /*
+        Piece's last position
+        */
+        double lastX, lastY;
+        double x, y; // position of rug on the screen
+
+        double width, height; // width and height of the rug
+
+        public DraggableRug(Rug rug, double x, double y) {
+            super(x, y, Tile_Size * 2 - BOARD_TILE_SHADOW_GAP, Tile_Size - BOARD_TILE_SHADOW_GAP);
+            this.width = Tile_Size * 2 - BOARD_TILE_SHADOW_GAP;
+            this.height = Tile_Size - BOARD_TILE_SHADOW_GAP;
+            this.rug = rug;
+            this.tempAngle = Angle.DEG_0;
+            this.x = x;
+            this.y = y;
+
+            // set initial position when the rugs are not on the board yet
+            positions[0] = new IntPair(0,0);
+            positions[1] = new IntPair(0,0);
+            rug.setRelativePositions(positions);
+
+
+            // draw the draggable rugs
+            this.setLayoutX(x);
+            this.setLayoutY(y);
+            setFill(setPlayerColour(rug.getColor()));
+            setStrokeWidth(0.5);
+            setStroke(Color.BLACK);
+
+
+            /*
+             Event handler for if the user presses the mouse on this
+             specific piece.
+             */
+            this.setOnMousePressed(event -> {
+
+                // Set these values to prepare for drag-and-drop
+                this.mouseX = event.getSceneX();
+                this.mouseY = event.getSceneY();
+
+                playersGroup.setOnKeyPressed(keyEvent -> {
+                    // rotate if the 'r' key is pressed
+                    if (keyEvent.getCode().equals(KeyCode.R)) {
+                        //TODO fix this
+                        tempAngle = Angle.getAngleFromValue((tempAngle.value+90) % 360);
+                        double tmp = this.width;
+                        this.width = this.height;
+                        this.height = tmp;
+                        setLayoutX(x);
+                        setLayoutY(y);
+                        this.setWidth(this.width);
+                        this.setHeight(this.height);
+                    }
+                });
+            });
+
+            /*
+             Event handler for if the user drags the mouse over this
+             specific piece.
+             */
+            this.setOnMouseDragged(event -> {
+
+                /*
+                 Move the piece by the difference in mouse position
+                 since the last drag.
+                 */
+                double diffX = event.getSceneX() - mouseX;
+                double diffY = event.getSceneY() - mouseY;
+                this.setLayoutX(this.getLayoutX() + diffX);
+                this.setLayoutY(this.getLayoutY() + diffY);
+
+                /*
+                 Update `mouseX` and `mouseY` and repeat the process.
+                 */
+                this.mouseX = event.getSceneX();
+                this.mouseY = event.getSceneY();
+            });
+
+
+             /*
+             Event handler for if the user releases the left mouse button over this
+             specific piece.
+             */
+            this.setOnMouseReleased(event -> {
+
+                calculateRugPosition();
+                rug.setRelativePositions(positions);
+
+                tempGame = Marrakech.makePlacement(game.GameToString(), rug.RugToString());
+                if(Objects.equals(tempGame, game.GameToString())) {
+                    this.snapToLast();
+                } else {
+                    game = game.StringToGame(tempGame);
+                    board = game.getBoard();
+                    int amount = Marrakech.getPaymentAmount(game.GameToString());
+                    //TODO update dirhams
+                    //TODO update players scores
+                    rugs.getChildren().clear();
+                    makeRug();
+                    playersGroup.getChildren().clear();
+                    makePlayers();
+                    makePlayerLabel();
+
+                    // checking if the current game state is a solution to the problem
+                    if (Marrakech.isGameOver(game.GameToString())) {
+                        char winner = Marrakech.getWinner(game.GameToString());
+                        Alert solved = new Alert(Alert.AlertType.INFORMATION);
+                        solved.setTitle("Congratulations!");
+                        solved.setHeaderText(winner + " is the winner!");
+                        solved.setContentText("Scores: "); //TODO show winner scores
+                        solved.show();
+                    }
+                }
+            });
+
+            this.snapToLast();
+        }
+
+
+        /**
+         * @return the closest position on the board to where this piece
+         *         is currently positioned
+         */
+        public IntPair getSnapPosition() {
+            int x = (int) Math.round((this.getLayoutX() + this.x - START_X - BOARD_TILE_SHADOW_GAP/2)  / Tile_Size);
+            int y = (int) Math.round((this.getLayoutY() + this.y - START_Y - BOARD_TILE_SHADOW_GAP/2) / Tile_Size);
+            return new IntPair(x, y);
+        }
+
+        public void calculateRugPosition() {
+            positions[0] = getSnapPosition();
+            switch (tempAngle) {
+                case DEG_0:
+                case DEG_180:
+                    positions[1].setX(getSnapPosition().getX() + 1);
+                    positions[1].setY(getSnapPosition().getY());
+                    break;
+
+                case DEG_90:
+                case DEG_270:
+                    positions[1].setX(getSnapPosition().getX());
+                    positions[1].setY(getSnapPosition().getY() + 1);
+            }
+        }
+
+
+        /**
+         * Snaps this piece back to its last position which must be valid
+         */
+        public void snapToLast() {
+            this.setLayoutX(this.lastX);
+            this.setLayoutY(this.lastY);
         }
     }
 
@@ -128,7 +306,7 @@ public class Game extends Application {
         boardBack.setArcHeight(30.0d);
         boardBack.setArcWidth(30.0d);
         // adding the rectangle to the board group
-        board.getChildren().add(boardBack);
+        boardGroup.getChildren().add(boardBack);
 
         for (int x = 0; x < BOARD_WIDTH; x++) {
             for (int y = 0; y < BOARD_HEIGHT; y++) {
@@ -141,7 +319,7 @@ public class Game extends Application {
                 tileShadow.setStrokeWidth(2);
                 tileShadow.setStroke(Color.GREY);
                 tileShadow.setOpacity(0.5);
-                board.getChildren().add(tileShadow);
+                boardGroup.getChildren().add(tileShadow);
             }
         }
     }
@@ -176,6 +354,46 @@ public class Game extends Application {
                 }
             }
         }
+    }
+
+    /**
+     * method that initialize the board that has no rugs on it
+     *
+     * @author u7754637 Pei Ling Lam
+     */
+    private void initializeRugsOnBoard() {
+        List<RugTile> rugTiles = new ArrayList<>();
+        for (int i = 0; i < BOARD_HEIGHT*BOARD_WIDTH; i++) {
+            rugTiles.add(new RugTile());
+        }
+        board.setBoardPosition(rugTiles);
+        game.setBoard(board);
+    }
+
+    /**
+     * method that show the rugs on the board
+     *
+     * @author u7754637 Pei Ling Lam
+     */
+    private void makeRug() {
+        for(int i = 0; i < board.getBoardPosition().size(); i++) {
+            if(board.getBoardPosition().get(i).getAbsolutePosition() != null) {
+                double x = board.getBoardPosition().get(i).getAbsolutePosition().getX();
+                double y = board.getBoardPosition().get(i).getAbsolutePosition().getY();
+                Rectangle rugTile = new Rectangle(
+                        START_X + (x * Tile_Size) + (BOARD_TILE_SHADOW_GAP / 2),
+                        START_Y + (y * Tile_Size) + (BOARD_TILE_SHADOW_GAP / 2),
+                        Tile_Size - BOARD_TILE_SHADOW_GAP,
+                        Tile_Size - BOARD_TILE_SHADOW_GAP);
+
+                rugTile.setFill(setPlayerColour(board.getBoardPosition().get(i).getColor()));
+                rugTile.setStrokeWidth(2);
+                rugTile.setStroke(Color.GREY);
+                rugTile.setOpacity(0.5);
+                rugs.getChildren().add(rugTile);
+            }
+        }
+
     }
 
     /**
@@ -296,7 +514,6 @@ public class Game extends Application {
         dieNum = Marrakech.rollDie();
         createDie(dieNum);
         moveAssam();
-
     }
 
     /**
@@ -305,13 +522,14 @@ public class Game extends Application {
      * @author u7754637 Pei Ling Lam
      */
     private void initializePlayers() {
+        List<Players> playersList = new ArrayList<>();
+
         for (int i = 0; i < playerNum; i++) {
             Players player = new Players(INITIAL_DIRHAMS, INITIAL_RUGS, true);
-            double x,y;
 
-            if(i == 0) {
+            if (i == 0) {
                 player.setColor(comp1110.ass2.Color.CYAN);
-            } else if(i == 1)  {
+            } else if (i == 1) {
                 player.setColor(comp1110.ass2.Color.YELLOW);
             } else if (i == 2) {
                 player.setColor(comp1110.ass2.Color.PURPLE);
@@ -320,9 +538,23 @@ public class Game extends Application {
             }
 
             playersList.add(player);
+        }
+        game.setPlayersList(playersList);
+        makePlayers();
+    }
+
+
+    /**
+     * method that draw rugs and dirhams of the players according to game string
+     *
+     * @author u7754637 Pei Ling Lam
+     */
+    private void makePlayers() {
+        for (int i = 0; i < playerNum; i++) {
+            double x,y;
 
             //create dirham
-            for (int j = 0; j < INITIAL_DIRHAMS; j++) {
+            for (int j = 0; j < game.getPlayersList().get(i).getNumDirham(); j++) {
                 if(i == 0) {
                     x = START_X - BOARD_TILE_SHADOW_GAP - Tile_Size * 3 + j + 2;
                     y = START_Y + (Tile_Size * 7 / 2) - Tile_Size - Tile_Size/2;
@@ -340,7 +572,7 @@ public class Game extends Application {
             }
 
             // create rugs
-            for (int j = 0; j < INITIAL_RUGS; j++) {
+            for (int j = 0; j < game.getPlayersList().get(i).getNumRug(); j++) {
                 if(i == 0) {
                     x = START_X - BOARD_TILE_SHADOW_GAP - Tile_Size * 3.5 + j;
                     y = START_Y + (Tile_Size * 7 / 2) - Tile_Size;
@@ -355,7 +587,13 @@ public class Game extends Application {
                     y = START_Y - BOARD_TILE_SHADOW_GAP + Tile_Size * 8 + j;
                 }
 
-                drawRug(player, x, y);
+                Rug rug = new Rug(game.getPlayersList().get(i).getColor(), j, new IntPair[2]);
+
+                if(j == game.getPlayersList().get(i).getNumRug() - 1) {
+                    drawDraggableRug(rug, x, y);
+                } else {
+                    drawRug(rug, x, y);
+                }
             }
         }
 
@@ -364,22 +602,35 @@ public class Game extends Application {
 
     /**
      * method to draw one piece of rug
-     * @param player current player to get the color
+     * @param r current rug to get colour
      * @param x x-coordinate of the rug on screen
      * @param y y-coordinate of the rug on screen
      *
      * @author u7754637 Pei Ling Lam
      */
-    private void drawRug(Players player, double x, double y) {
+    private void drawRug(Rug r, double x, double y) {
         Rectangle rug = new Rectangle(
                 x,
                 y ,
                 Tile_Size * 2 - BOARD_TILE_SHADOW_GAP,
                 Tile_Size - BOARD_TILE_SHADOW_GAP);
-        rug.setFill(setPlayerColour(player.getColor()));
+        rug.setFill(setPlayerColour(r.getColor()));
         rug.setStrokeWidth(0.5);
         rug.setStroke(Color.BLACK);
         playersGroup.getChildren().add(rug);
+    }
+
+    /**
+     * method to draw draggable rugs
+     * @param rug current rug
+     * @param x x-coordinate on screen
+     * @param y y-coordinate on screen
+     *
+     * @author u7754637 Pei Ling Lam
+     */
+    private void drawDraggableRug(Rug rug, double x, double y) {
+        DraggableRug draggableRug = new DraggableRug(rug,  x,  y);
+        playersGroup.getChildren().add(draggableRug);
     }
 
     /**
@@ -415,13 +666,13 @@ public class Game extends Application {
         labelBox.setFill(Color.BLACK);
         playersGroup.getChildren().add(labelBox);
 
-        for (int i = 0; i < playersList.size(); i++) {
+        for (int i = 0; i < game.getPlayersList().size(); i++) {
             Circle playerColour = new Circle(labelX + labelStrokeWidth, labelY + labelStrokeWidth * 1.5 + (i * 15), radius);
-            playerColour.setFill(setPlayerColour(playersList.get(i).getColor()));
+            playerColour.setFill(setPlayerColour(game.getPlayersList().get(i).getColor()));
             playersGroup.getChildren().add(playerColour);
 
             // cross out the players if they are out of the game
-            if(!playersList.get(i).isInGame()) {
+            if(!game.getPlayersList().get(i).isInGame()) {
                 Line line = new Line(labelX + labelStrokeWidth - radius * 2, labelY + labelStrokeWidth * 1.5 + (i * 15), labelX + 190, labelY + labelStrokeWidth * 1.5 + (i * 15));
                 line.setStroke(Color.RED);
                 line.setStrokeWidth(2);
@@ -429,7 +680,7 @@ public class Game extends Application {
                 playersGroup.getChildren().add(line);
             }
 
-            Text playerDetails = new Text(labelX + labelStrokeWidth + radius, labelY + labelStrokeWidth * 2 + (i * 15), "Player " + (i + 1) + "  | Rugs: " + playersList.get(i).getNumRug() + "  | Dirhams: " + playersList.get(i).getNumDirham());
+            Text playerDetails = new Text(labelX + labelStrokeWidth + radius, labelY + labelStrokeWidth * 2 + (i * 15), "Player " + (i + 1) + "  | Rugs: " + game.getPlayersList().get(i).getNumRug() + "  | Dirhams: " + game.getPlayersList().get(i).getNumDirham());
             playerDetails.setFont(Font.font(12));
             playerDetails.setFill(Color.WHITE);
             playersGroup.getChildren().add(playerDetails);
@@ -443,7 +694,7 @@ public class Game extends Application {
      *
      * @author u7754637 Pei Ling Lam
      */
-    private Color setPlayerColour(comp1110.ass2.Color color) {
+    public Color setPlayerColour(comp1110.ass2.Color color) {
         switch (color) {
             case RED:
                 return Color.RED;
@@ -493,6 +744,7 @@ public class Game extends Application {
         assam = assam.StringToAssam(Marrakech.moveAssam(assam.AssamToString(), dieNum));
         assamGroup.getChildren().clear();
         makeAssam();
+//        game.setAssam(assam);
     }
 
     /**
@@ -550,7 +802,7 @@ public class Game extends Application {
 
         direction.setFill(Color.web("C41E3A"));
         assamGroup.getChildren().add(direction);
-
+        game.setAssam(assam);
     }
 
     /**

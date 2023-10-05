@@ -8,8 +8,6 @@ public class Board {
     private final int BOARD_HEIGHT = 7;
     private final int BOARD_WIDTH = 7;
 
-    public static final int BOARD_SIZE = 7 * 7;
-
 
     /**
      * Constructor
@@ -17,10 +15,6 @@ public class Board {
      * @author u7754637 Pei Ling Lam
      */
     public Board(){}
-
-    public List<RugTile> getBoardState() {
-        return getBoardPosition();
-    }
 
     public void setBoardPosition(List<RugTile> boardPosition) {
         this.boardPosition = boardPosition;
