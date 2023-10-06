@@ -73,6 +73,7 @@ public class Game extends Application {
     private static final Group playersGroup = new Group();
     private static final Group die = new Group();
     private static final Group controls = new Group();
+    private Stage prevStage;
 
     /*
     global variables
@@ -85,6 +86,11 @@ public class Game extends Application {
     private Board board = new Board();
 
     private comp1110.ass2.Game game = new comp1110.ass2.Game();
+
+    private int currPlayer;
+
+    private Button rotateLeftAssam;
+    private Button rotateRightAssam;
 
     /*
     global variables regarding the rules of the game
@@ -134,6 +140,8 @@ public class Game extends Application {
 
         IntPair[] positions = new IntPair[2];
 
+        boolean outOfBound = false;
+
 
         /*
         Piece's last position
@@ -176,18 +184,13 @@ public class Game extends Application {
                 this.mouseX = event.getSceneX();
                 this.mouseY = event.getSceneY();
 
-                playersGroup.setOnKeyPressed(keyEvent -> {
+                this.requestFocus();
+
+                this.setOnKeyPressed(keyEvent -> {
                     // rotate if the 'r' key is pressed
                     if (keyEvent.getCode().equals(KeyCode.R)) {
-                        //TODO fix this
                         tempAngle = Angle.getAngleFromValue((tempAngle.value+90) % 360);
-                        double tmp = this.width;
-                        this.width = this.height;
-                        this.height = tmp;
-                        setLayoutX(x);
-                        setLayoutY(y);
-                        this.setWidth(this.width);
-                        this.setHeight(this.height);
+                        this.setRotate(tempAngle.value);
                     }
                 });
             });
@@ -222,31 +225,112 @@ public class Game extends Application {
             this.setOnMouseReleased(event -> {
 
                 calculateRugPosition();
-                rug.setRelativePositions(positions);
 
-                tempGame = Marrakech.makePlacement(game.GameToString(), rug.RugToString());
-                if(Objects.equals(tempGame, game.GameToString())) {
+                // check whether the rug is out of bound
+                for (IntPair p: positions) {
+                    if(p.getX() < 0 || p.getX() > BOARD_WIDTH - 1 || p.getY() < 0 || p.getY() > BOARD_HEIGHT - 1) {
+                        outOfBound = true;
+                    }
+                }
+
+                // to avoid crashing in terminal
+                if(outOfBound) {
+                    // set rectangle back to horizontal if rotated become vertical
+                    if(tempAngle == Angle.DEG_90 || tempAngle == Angle.DEG_270) {
+                        this.setRotate(180);
+                    }
                     this.snapToLast();
+                    outOfBound = false;
                 } else {
-                    game = game.StringToGame(tempGame);
-                    board = game.getBoard();
-                    int amount = Marrakech.getPaymentAmount(game.GameToString());
-                    //TODO update dirhams
-                    //TODO update players scores
-                    rugs.getChildren().clear();
-                    makeRug();
-                    playersGroup.getChildren().clear();
-                    makePlayers();
-                    makePlayerLabel();
 
-                    // checking if the current game state is a solution to the problem
-                    if (Marrakech.isGameOver(game.GameToString())) {
-                        char winner = Marrakech.getWinner(game.GameToString());
-                        Alert solved = new Alert(Alert.AlertType.INFORMATION);
-                        solved.setTitle("Congratulations!");
-                        solved.setHeaderText(winner + " is the winner!");
-                        solved.setContentText("Scores: "); //TODO show winner scores
-                        solved.show();
+                    rug.setRelativePositions(positions);
+
+                    // check whether current game is same as the state after making placement
+                    tempGame = Marrakech.makePlacement(game.GameToString(), rug.RugToString());
+                    if (Objects.equals(tempGame, game.GameToString())) {
+                        // set rectangle back to horizontal if rotated become vertical
+                        if(tempAngle == Angle.DEG_90 || tempAngle == Angle.DEG_270) {
+                            this.setRotate(180);
+                        }
+                        this.snapToLast();
+                    } else {
+                        game = game.StringToGame(tempGame); // update game state
+
+                        Players current_player = game.getPlayersList().get(currPlayer);
+
+                        // get the color to find player
+                        RugTile rugTile1 = board.getRugTileOnPosition(rug.getRelativePositions()[0]);
+                        RugTile rugTile2 = board.getRugTileOnPosition(rug.getRelativePositions()[1]);
+
+                        if (rugTile1 != null && rugTile1.getColor() != current_player.getColor()) {
+                            Players playerPayTo = game.findPlayerFromColor(rugTile1.getColor());
+                            if (playerPayTo != null && playerPayTo.isInGame()) {
+                                int amount = 1;
+
+                                // check whether current player has enough dirhams to pay
+                                if (current_player.getNumDirham() < 1) { // if not enough dirhams
+                                    current_player.updateNumDirham(current_player.getNumDirham(), true);
+                                    playerPayTo.updateNumDirham(current_player.getNumDirham(), false);
+                                    current_player.setIsInGame(false);
+                                } else { // if enough dirhams
+                                    current_player.updateNumDirham(amount, true);
+                                    playerPayTo.updateNumDirham(amount, false);
+                                }
+
+                                //update players in game
+                                game.updatePlayer(current_player);
+                                game.updatePlayer(playerPayTo);
+                            }
+                        }
+
+                        if (rugTile2 != null && rugTile2.getColor() != current_player.getColor()) {
+                            Players playerPayTo = game.findPlayerFromColor(rugTile2.getColor());
+
+                            if (playerPayTo != null && playerPayTo.isInGame()) {
+                                int amount = 1;
+
+                                // check whether current player has enough dirhams to pay
+                                if (current_player.getNumDirham() < 1) { // if not enough dirhams
+                                    current_player.updateNumDirham(current_player.getNumDirham(), true);
+                                    playerPayTo.updateNumDirham(current_player.getNumDirham(), false);
+                                    playerPayTo.getScores().updateRugScore(true);
+                                    current_player.setIsInGame(false);
+                                    informPlayerOut(getPlayerNum(current_player.getColor().value));
+                                } else { // if enough dirhams
+                                    current_player.updateNumDirham(amount, true);
+                                    playerPayTo.updateNumDirham(amount, false);
+                                    playerPayTo.getScores().updateRugScore(true);
+                                }
+
+                                //update players in game
+                                game.updatePlayer(current_player);
+                                game.updatePlayer(playerPayTo);
+                            }
+                        }
+
+                        board = game.getBoard(); // update board state
+                        updateNextPlayer(); // next player
+                        updateGameInfo(); // update game state
+
+                        // checking if the current game state is a solution to the problem
+                        if (Marrakech.isGameOver(game.GameToString())) {
+                            char winner = Marrakech.getWinner(game.GameToString());
+                            Alert solved = new Alert(Alert.AlertType.INFORMATION);
+                            if (winner == 'n') {
+                                solved.setHeaderText("Game has not finished yet!");
+                                solved.setContentText("Please continue the game.");
+                            } else if (winner == 't') {
+                                solved.setHeaderText("There is no winner!");
+                                solved.setContentText("More than one players share the same total score and number of Dirhams!");
+                            } else {
+                                solved.setTitle("Congratulations!");
+                                solved.setHeaderText("Player " + getPlayerNum(winner) + " is the winner!");
+                                comp1110.ass2.Color color = comp1110.ass2.Color.RED; // simply put a color to initialize
+                                solved.setContentText("Scores: " + game.findPlayerFromColor(color.getColorFromValue(winner)).getScores().getTotalScore());
+                            }
+                            solved.show();
+                        }
+
                     }
                 }
             });
@@ -290,7 +374,6 @@ public class Game extends Application {
             this.setLayoutY(this.lastY);
         }
     }
-
 
     /**
      * @author u7754892 Yaohui Hou
@@ -514,6 +597,138 @@ public class Game extends Application {
         dieNum = Marrakech.rollDie();
         createDie(dieNum);
         moveAssam();
+        rotateRightAssam.setDisable(false);
+        rotateLeftAssam.setDisable(false);
+    }
+
+    /**
+     * initialize assam when the new game starts
+     * position set to the middle of the board
+     * direction set to facing downwards
+     *
+     * @author u7754637 Pei Ling Lam
+     */
+    private void initializeAssam() {
+        assam.setAbsolutePosition(new IntPair(3,3));
+        assam.setCurrentDirection(Direction.SOUTH);
+        makeAssam();
+    }
+
+    /**
+     * update assam direction whenever the button is pressed by rotating 90 degrees clockwise
+     *
+     * @author u7754637 Pei Ling Lam
+     */
+    private void rotateLeftAssam() {
+        assam = assam.StringToAssam(Marrakech.rotateAssam(assam.AssamToString(), -90));
+        assamGroup.getChildren().clear();
+        makeAssam();
+        rotateRightAssam.setDisable(true);
+        rotateLeftAssam.setDisable(true);
+    }
+
+    private void rotateRightAssam() {
+        assam = assam.StringToAssam(Marrakech.rotateAssam(assam.AssamToString(), 90));
+        assamGroup.getChildren().clear();
+        makeAssam();
+        rotateRightAssam.setDisable(true);
+        rotateLeftAssam.setDisable(true);
+    }
+
+    /**
+     * update assam position when a die is rolled
+     *
+     * @author u7754637 Pei Ling Lam
+     */
+    private void moveAssam() {
+        assam = assam.StringToAssam(Marrakech.moveAssam(assam.AssamToString(), dieNum));
+        assamGroup.getChildren().clear();
+        makeAssam();
+        Players current_player = game.getPlayersList().get(currPlayer);
+
+        // get the color to find player
+        RugTile rugTile = board.getRugTileOnPosition(assam.getAbsolutePosition());
+        if(rugTile != null) {
+            Players playerPayTo = game.findPlayerFromColor(rugTile.getColor());
+
+            if (playerPayTo != null && playerPayTo.isInGame()) {
+                int amount = Marrakech.getPaymentAmount(game.GameToString());
+
+                // check whether current player has enough dirhams to pay
+                if (current_player.getNumDirham() < amount) { // if not enough dirhams
+                    current_player.updateNumDirham(current_player.getNumDirham(), true);
+                    playerPayTo.updateNumDirham(current_player.getNumDirham(), false);
+                    current_player.setIsInGame(false);
+                    informPlayerOut(getPlayerNum(current_player.getColor().value));
+                } else { // if enough dirhams
+                    current_player.updateNumDirham(amount, true);
+                    playerPayTo.updateNumDirham(amount, false);
+                }
+
+                //update players in game
+                game.updatePlayer(current_player);
+                game.updatePlayer(playerPayTo);
+                updateGameInfo();
+            }
+        }
+    }
+
+    /**
+     * draw assam according to the position and direction
+     *
+     * @author u7754637 Pei Ling Lam
+     */
+    private void makeAssam() {
+        double x = assam.getAbsolutePosition().getX();
+        double y = assam.getAbsolutePosition().getY();
+
+        double centreX = START_X + (x * Tile_Size) + Tile_Size / 2;
+        double centreY = START_Y + (y * Tile_Size) + Tile_Size / 2;
+        double radius = Tile_Size / 3;
+        double triangleSide = 5.0;
+
+        Circle assamCircle = new Circle(centreX, centreY, radius);
+        assamCircle.setFill(Color.web("C41E3A"));
+        assamGroup.getChildren().add(assamCircle);
+
+        Polygon direction = new Polygon();
+        switch (assam.getCurrentDirection()) {
+            case EAST:
+                direction.getPoints().addAll(
+                        centreX + triangleSide + radius, centreY,
+                        centreX + radius, centreY + triangleSide / 2,
+                        centreX + radius, centreY - triangleSide / 2
+                );
+                break;
+
+            case WEST:
+                direction.getPoints().addAll(
+                        centreX - triangleSide - radius, centreY,
+                        centreX - radius, centreY + triangleSide / 2,
+                        centreX - radius, centreY - triangleSide / 2
+                );
+                break;
+
+            case SOUTH:
+                direction.getPoints().addAll(
+                        centreX, centreY + triangleSide + radius,
+                        centreX + triangleSide / 2, centreY + radius,
+                        centreX - triangleSide / 2, centreY + radius
+                );
+                break;
+
+            case NORTH:
+                direction.getPoints().addAll(
+                        centreX, centreY - triangleSide - radius,
+                        centreX + triangleSide / 2, centreY - radius,
+                        centreX - triangleSide / 2, centreY - radius
+                );
+                break;
+        }
+
+        direction.setFill(Color.web("C41E3A"));
+        assamGroup.getChildren().add(direction);
+        game.setAssam(assam);
     }
 
     /**
@@ -540,6 +755,7 @@ public class Game extends Application {
             playersList.add(player);
         }
         game.setPlayersList(playersList);
+        currPlayer = 0; // first player set to cyan
         makePlayers();
     }
 
@@ -589,7 +805,9 @@ public class Game extends Application {
 
                 Rug rug = new Rug(game.getPlayersList().get(i).getColor(), j, new IntPair[2]);
 
-                if(j == game.getPlayersList().get(i).getNumRug() - 1) {
+                // rug can only move when it is the player's turn
+                // only the last piece of rug can move
+                if(i == currPlayer && j == game.getPlayersList().get(i).getNumRug() - 1) {
                     drawDraggableRug(rug, x, y);
                 } else {
                     drawRug(rug, x, y);
@@ -712,106 +930,71 @@ public class Game extends Application {
     }
 
     /**
-     * initialize assam when the new game starts
-     * position set to the middle of the board
-     * direction set to facing downwards
+     * method that update the rugs on the board, players' remaining dirham and rugs, and the label
      *
      * @author u7754637 Pei Ling Lam
      */
-    private void initializeAssam() {
-        assam.setAbsolutePosition(new IntPair(3,3));
-        assam.setCurrentDirection(Direction.SOUTH);
-        makeAssam();
+    private void updateGameInfo() {
+        rugs.getChildren().clear();
+        makeRug();
+        playersGroup.getChildren().clear();
+        makePlayers();
+        makePlayerLabel();
     }
 
     /**
-     * update assam direction whenever the button is pressed by rotating 90 degrees clockwise
+     * method that update the turn of current player
      *
      * @author u7754637 Pei Ling Lam
      */
-    private void rotateAssam() {
-        assam = assam.StringToAssam(Marrakech.rotateAssam(assam.AssamToString(), 90));
-        assamGroup.getChildren().clear();
-        makeAssam();
+    private void updateNextPlayer() {
+        currPlayer++;
+        if(currPlayer == playerNum) {
+            currPlayer = 0;
+        }
+        if(!game.getPlayersList().get(currPlayer).isInGame()) {
+            updateNextPlayer();
+        }
     }
 
-    /**
-     * update assam position when a die is rolled
-     *
-     * @author u7754637 Pei Ling Lam
-     */
-    private void moveAssam() {
-        assam = assam.StringToAssam(Marrakech.moveAssam(assam.AssamToString(), dieNum));
-        assamGroup.getChildren().clear();
-        makeAssam();
-//        game.setAssam(assam);
-    }
+    private int getPlayerNum(char c) {
+        switch (c) {
+            case 'c':
+                return 0;
 
-    /**
-     * draw assam according to the position and direction
-     *
-     * @author u7754637 Pei Ling Lam
-     */
-    private void makeAssam() {
-        double x = assam.getAbsolutePosition().getX();
-        double y = assam.getAbsolutePosition().getY();
+            case 'y':
+                return 1;
 
-        double centreX = START_X + (x * Tile_Size) + Tile_Size / 2;
-        double centreY = START_Y + (y * Tile_Size) + Tile_Size / 2;
-        double radius = Tile_Size / 3;
-        double triangleSide = 5.0;
+            case 'p':
+                return 2;
 
-        Circle assamCircle = new Circle(centreX, centreY, radius);
-        assamCircle.setFill(Color.web("C41E3A"));
-        assamGroup.getChildren().add(assamCircle);
-
-        Polygon direction = new Polygon();
-        switch (assam.getCurrentDirection()) {
-            case EAST:
-                direction.getPoints().addAll(
-                        centreX + triangleSide + radius, centreY,
-                        centreX + radius, centreY + triangleSide / 2,
-                        centreX + radius, centreY - triangleSide / 2
-                );
-                break;
-
-            case WEST:
-                direction.getPoints().addAll(
-                        centreX - triangleSide - radius, centreY,
-                        centreX - radius, centreY + triangleSide / 2,
-                        centreX - radius, centreY - triangleSide / 2
-                );
-                break;
-
-            case SOUTH:
-                direction.getPoints().addAll(
-                        centreX, centreY + triangleSide + radius,
-                        centreX + triangleSide / 2, centreY + radius,
-                        centreX - triangleSide / 2, centreY + radius
-                );
-                break;
-
-            case NORTH:
-                direction.getPoints().addAll(
-                        centreX, centreY - triangleSide - radius,
-                        centreX + triangleSide / 2, centreY - radius,
-                        centreX - triangleSide / 2, centreY - radius
-                );
-                break;
+            case 'r':
+                return 3;
         }
 
-        direction.setFill(Color.web("C41E3A"));
-        assamGroup.getChildren().add(direction);
-        game.setAssam(assam);
+        return 0;
     }
 
     /**
-     * clear the rugs on the board
-     * initialize the rugs and dirhams to players again
+     * method to show that which player is out the game
+     * @param i player number
+     */
+    private void informPlayerOut(int i) {
+        Alert out = new Alert(Alert.AlertType.INFORMATION);
+        out.setTitle("Attention!");
+        out.setHeaderText("Player " + i + " is out!");
+        out.show();
+    }
+
+    /**
+     * clear the previous stage and start a new stage
      *
      * @author u7754637 Pei Ling Lam
      */
-    private void newGame() {
+    private void newGame() throws Exception {
+        prevStage.close();
+        Stage currStage = new Stage();
+        start(currStage);
 
     }
 
@@ -825,26 +1008,40 @@ public class Game extends Application {
         Button newGame = new Button();
         newGame.setLayoutX(BUTTON_BUFFER);
         newGame.setLayoutY(WINDOW_HEIGHT - 70);
-        newGame.setOnAction(event -> this.newGame());
+        newGame.setOnAction(event -> {
+            try {
+                this.newGame();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
         newGame.setStyle("-fx-font-size: 16px;");
         newGame.setText("New Game");
         this.controls.getChildren().add(newGame);
 
+        rotateLeftAssam = new Button();
+        rotateLeftAssam.setLayoutX(newGame.getLayoutX() + BUTTON_BUFFER + 50);
+        rotateLeftAssam.setLayoutY(WINDOW_HEIGHT - 70);
+        rotateLeftAssam.setOnAction(event -> this.rotateLeftAssam());
+        rotateLeftAssam.setStyle("-fx-font-size: 16px;");
+        rotateLeftAssam.setText("Rotate Assam (Left)");
+        this.controls.getChildren().add(rotateLeftAssam);
+
+        rotateRightAssam = new Button();
+        rotateRightAssam.setLayoutX(rotateLeftAssam.getLayoutX() + BUTTON_BUFFER * 2);
+        rotateRightAssam.setLayoutY(WINDOW_HEIGHT - 70);
+        rotateRightAssam.setOnAction(event -> this.rotateRightAssam());
+        rotateRightAssam.setStyle("-fx-font-size: 16px;");
+        rotateRightAssam.setText("Rotate Assam (Right)");
+        this.controls.getChildren().add(rotateRightAssam);
+
         Button rollDie = new Button();
-        rollDie.setLayoutX(newGame.getLayoutX() + BUTTON_BUFFER + 50);
+        rollDie.setLayoutX(rotateRightAssam.getLayoutX() + BUTTON_BUFFER * 2);
         rollDie.setLayoutY(WINDOW_HEIGHT - 70);
         rollDie.setOnAction(event -> this.makeDie());
         rollDie.setStyle("-fx-font-size: 16px;");
         rollDie.setText("Roll Die");
         this.controls.getChildren().add(rollDie);
-
-        Button rotateAssam = new Button();
-        rotateAssam.setLayoutX(rollDie.getLayoutX() + BUTTON_BUFFER);
-        rotateAssam.setLayoutY(WINDOW_HEIGHT - 70);
-        rotateAssam.setOnAction(event -> this.rotateAssam()); // Lambda expression
-        rotateAssam.setStyle("-fx-font-size: 16px;");
-        rotateAssam.setText("Rotate Assam");
-        this.controls.getChildren().add(rotateAssam);
 
     }
 
@@ -861,7 +1058,6 @@ public class Game extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
-        // FIXME Task 7 and 15
         stage.setTitle("Marrakech");
 
         VBox startPage = new VBox(10);
@@ -894,6 +1090,8 @@ public class Game extends Application {
 
         startPage.getChildren().addAll(playerNumChoice, startButton, cancelButton);
         Scene scene = new Scene(startPage, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+        prevStage = stage;
 
         stage.setScene(scene);
         stage.show();

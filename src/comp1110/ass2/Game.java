@@ -67,6 +67,38 @@ public class Game {
     }
 
     /**
+     * method to find corresponding player given color
+     * @param color color of the player to find
+     * @return player
+     *
+     * @author u7754637 Pei Ling Lam
+     */
+    public Players findPlayerFromColor(Color color) {
+        if(color == null) return null;
+
+        for (Players p : playersList) {
+            if(p.getColor() == color){
+                return p;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * method that update information of single player only to the game state
+     * @param player player that need to be updated
+     *
+     * @author u7754637 Pei Ling Lam
+     */
+    public void updatePlayer(Players player) {
+        for (int i = 0; i < playersList.size(); i++) {
+            if(playersList.get(i).getColor() == player.getColor()) {
+                playersList.set(i, player);
+            }
+        }
+    }
+
+    /**
      * Convert Game type to String
      * @return String representation of current game state
      *
@@ -106,11 +138,9 @@ public class Game {
                 string_p4 = gameState.substring(24, 32);
             } else {
                 string_assam = gameState.substring(24, 28);
-                System.out.println("assam: "+string_assam);
             }
         } else {
             string_assam = gameState.substring(16, 20);
-            System.out.println("assam: "+string_assam);
         }
         if(string_assam.length() == 0) {
             string_assam = gameState.substring(32, 36);

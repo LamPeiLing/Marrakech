@@ -69,12 +69,8 @@ public class Players {
 
 
 
-    public void setIsInGame(char representation) {
-        if(representation == 'i') {
-            isInGame = true;
-        } else  {
-            isInGame = false;
-        }
+    public void setIsInGame(boolean isInGame) {
+       this.isInGame = isInGame;
     }
 
     public boolean isInGame() {
@@ -115,8 +111,34 @@ public class Players {
         return scores;
     }
 
+
+    /**
+     * method to update the number of remaining rug everytime a rug is placed
+     * also update the score of the rug
+     *
+     * @author u7754637 Pei Ling Lam
+     */
     public void updateNumRug() {
         this.numRug--;
+        scores.updateRugScore(false);
+    }
+
+    /**
+     * update number of dirhams of the player
+     * update also the score of dirhams
+     * @param n value that should be added or subtracted
+     * @param isSubtract true if pay to someone else, false if get paid
+     *
+     * @author u7754637 Pei Ling Lam
+     */
+    public void updateNumDirham(int n, boolean isSubtract) {
+        if(isSubtract) {
+            this.numDirham -= n;
+            scores.updateDirhamScore(n,!isSubtract);
+        } else {
+            this.numDirham += n;
+            scores.updateDirhamScore(n, !isSubtract);
+        }
     }
 
 
@@ -180,7 +202,11 @@ public class Players {
 
         setNumDirham(Integer.parseInt(stringPlayer.substring(2,5)));
         setNumRug(Integer.parseInt(stringPlayer.substring(5,7)));
-        setIsInGame(stringPlayer.charAt(7));
+        if(stringPlayer.charAt(7) == 'i') {
+            setIsInGame(true);
+        } else {
+            setIsInGame(false);
+        }
 
         return this;
     }

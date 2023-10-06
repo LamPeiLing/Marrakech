@@ -102,6 +102,7 @@ Pei Ling Lam:
 * Created playable assam in task 7 and 15 - 2 Oct
 * Initialize players in task 7 and 15 (not draggable rugs) - 3 Oct
 * Implement draggable rugs - 4-5 Oct
+* Implement game rules to the game, rotate of rug, and fix task 12 according to game rules - 6 Oct
 
 ## Week 10
 

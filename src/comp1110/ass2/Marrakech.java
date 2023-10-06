@@ -431,10 +431,13 @@ public class Marrakech {
 
             // check whether there are two players with same highest score
             // if there are two players with same highest score, the one has more dirhams wins the game
+            // if there are 2 players with same highest score and same number of dirhams, then it's a tie
             for (Players player: game.getPlayersList()) {
                 if(player.getColor() != winner.getColor() && player.getScores().getTotalScore() == max_score) {
                     if(player.getNumDirham() > winner.getNumDirham()) {
                         winner = player;
+                    } else {
+                        return 't';
                     }
                 }
             }

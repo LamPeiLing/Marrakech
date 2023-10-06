@@ -9,7 +9,7 @@ class PlayersTest {
     @Test
     void setIsInGame() {
         Players player = new Players();
-        player.setIsInGame('i');
+        player.setIsInGame(true);
         assertEquals(true, player.isInGame());
     }
 
@@ -19,7 +19,7 @@ class PlayersTest {
         player.setColor(Color.RED);
         player.setNumDirham(10);
         player.setNumRug(6);
-        player.setIsInGame('i');
+        player.setIsInGame(true);
         assertEquals("Pr01006i", player.PlayerToString());
     }
 
