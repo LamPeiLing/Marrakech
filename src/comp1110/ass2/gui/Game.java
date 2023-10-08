@@ -875,12 +875,12 @@ public class Game extends Application {
      * @author u7754637 Pei Ling Lam
      */
     private void makePlayerLabel() {
-        double labelX = WINDOW_WIDTH - 200;
+        double labelX = WINDOW_WIDTH - 250;
         double labelY = 10;
         double labelStrokeWidth = 10;
         double radius = 5;
 
-        Rectangle labelBox = new Rectangle(labelX, labelY, 195, 80);
+        Rectangle labelBox = new Rectangle(labelX, labelY, 200, 80);
         labelBox.setFill(Color.BLACK);
         playersGroup.getChildren().add(labelBox);
 

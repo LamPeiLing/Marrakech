@@ -329,11 +329,11 @@ public class Viewer extends Application {
      * @author u7754637 Pei Ling Lam
      */
     private void makePlayerLabel(List<Players> playersList) {
-        double labelX = VIEWER_WIDTH - 200;
+        double labelX = VIEWER_WIDTH - 250;
         double labelY = 10;
         double labelStrokeWidth = 10;
         double radius = 5;
-        Rectangle labelBox = new Rectangle(labelX, labelY, 190, 80);
+        Rectangle labelBox = new Rectangle(labelX, labelY, 200, 80);
         labelBox.setFill(Color.BLACK);
         root.getChildren().add(labelBox);
 
