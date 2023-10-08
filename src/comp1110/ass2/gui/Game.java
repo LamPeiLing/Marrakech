@@ -880,7 +880,7 @@ public class Game extends Application {
         double labelStrokeWidth = 10;
         double radius = 5;
 
-        Rectangle labelBox = new Rectangle(labelX, labelY, 200, 80);
+        Rectangle labelBox = new Rectangle(labelX, labelY, 230, 80);
         labelBox.setFill(Color.BLACK);
         playersGroup.getChildren().add(labelBox);
 
