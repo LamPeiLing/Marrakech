@@ -994,6 +994,13 @@ public class Game extends Application {
     private void newGame() throws Exception {
         prevStage.close();
         Stage currStage = new Stage();
+        playersGroup.getChildren().clear();
+        assamGroup.getChildren().clear();
+        rugs.getChildren().clear();
+        boardGroup.getChildren().clear();
+        playersGroup.getChildren().clear();
+        root.getChildren().clear();
+        GameInterface gameInterface = new GameInterface(currStage);
         start(currStage);
 
     }
