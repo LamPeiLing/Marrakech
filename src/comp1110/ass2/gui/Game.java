@@ -238,6 +238,7 @@ public class Game extends Application {
                     // set rectangle back to horizontal if rotated become vertical
                     if(tempAngle == Angle.DEG_90 || tempAngle == Angle.DEG_270) {
                         this.setRotate(180);
+                        tempAngle = Angle.DEG_0;
                     }
                     this.snapToLast();
                     outOfBound = false;
@@ -251,6 +252,7 @@ public class Game extends Application {
                         // set rectangle back to horizontal if rotated become vertical
                         if(tempAngle == Angle.DEG_90 || tempAngle == Angle.DEG_270) {
                             this.setRotate(180);
+                            tempAngle = Angle.DEG_0;
                         }
                         this.snapToLast();
                     } else {
