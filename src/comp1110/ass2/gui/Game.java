@@ -238,7 +238,6 @@ public class Game extends Application {
                     // set rectangle back to horizontal if rotated become vertical
                     if(tempAngle == Angle.DEG_90 || tempAngle == Angle.DEG_270) {
                         this.setRotate(180);
-                        tempAngle = Angle.DEG_0;
                     }
                     this.snapToLast();
                     outOfBound = false;
@@ -252,7 +251,6 @@ public class Game extends Application {
                         // set rectangle back to horizontal if rotated become vertical
                         if(tempAngle == Angle.DEG_90 || tempAngle == Angle.DEG_270) {
                             this.setRotate(180);
-                            tempAngle = Angle.DEG_0;
                         }
                         this.snapToLast();
                     } else {
@@ -346,24 +344,26 @@ public class Game extends Application {
          *         is currently positioned
          */
         public IntPair getSnapPosition() {
-            int x = (int) Math.round((this.getLayoutX() + this.x - START_X - BOARD_TILE_SHADOW_GAP/2)  / Tile_Size);
-            int y = (int) Math.round((this.getLayoutY() + this.y - START_Y - BOARD_TILE_SHADOW_GAP/2) / Tile_Size);
+            int x = (int) Math.round((this.getLayoutX() + this.x - START_X)  / Tile_Size);
+            int y = (int) Math.round((this.getLayoutY() + this.y - START_Y) / Tile_Size);
             return new IntPair(x, y);
         }
 
         public void calculateRugPosition() {
-            positions[0] = getSnapPosition();
             switch (tempAngle) {
                 case DEG_0:
                 case DEG_180:
+                    positions[0] = getSnapPosition();
                     positions[1].setX(getSnapPosition().getX() + 1);
                     positions[1].setY(getSnapPosition().getY());
                     break;
 
                 case DEG_90:
                 case DEG_270:
-                    positions[1].setX(getSnapPosition().getX());
-                    positions[1].setY(getSnapPosition().getY() + 1);
+                    positions[0].setX(getSnapPosition().getX());
+                    positions[0].setY(getSnapPosition().getY() - 1);
+                    positions[1] = getSnapPosition();
+                    break;
             }
         }
 
@@ -374,6 +374,11 @@ public class Game extends Application {
         public void snapToLast() {
             this.setLayoutX(this.lastX);
             this.setLayoutY(this.lastY);
+
+            // reset the temporary angle and position
+            tempAngle = Angle.DEG_0;
+            positions[0] = new IntPair(0,0);
+            positions[1] = new IntPair(0,0);
         }
     }
 
