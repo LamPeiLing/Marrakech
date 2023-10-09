@@ -37,6 +37,7 @@ In the game of Marrakech, two to four merchants in a crowded Marrakech souk comp
 ### The Board and Players
 
 Marrakech is played on a 7x7 board, with a minimum of 2 and a maximum of 4 players. 
+Marrakech is played on a 7x7 board, with a minimum of 2 and a maximum of 4 players. 
 
 Each player starts the game with 15 rugs, which they will place on the board over the course of the game. Each rug is 2 squares long and one square wide (i.e they cover two squares on the board in a straight line).
 Each player also has 30 dirhams (the currency in use in this game, and also in Morocco -- don't try and use the money from this game on a real-life trip to Morocco, though). The market owner, Assam, is also represented by a piece on the board, which moves as described below.
