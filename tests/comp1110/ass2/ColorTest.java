@@ -73,4 +73,22 @@ public class ColorTest {
             Assertions.assertEquals(splitLine[1], String.valueOf(color), splitLine[2]);
         }
     }
+
+    /**
+     * method to test the function of getting type of color from its char value
+     */
+    @Test
+    public void checkGetColorFromValue() {
+        BufferedReader fr;
+        fr = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("testdata/get_color_from_value.txt")));
+        Stream<String> testLines = fr.lines();
+
+        for (String line : testLines.toList()) {
+            String[] splitLine = line.split("@");
+            Color color = Color.RED; // simply initialize to any color because cannot initialize as null
+
+            // For this test, there's two arguments needed to the function
+            Assertions.assertEquals(splitLine[1], String.valueOf(color.getColorFromValue(splitLine[0].charAt(0))), splitLine[2]);
+        }
+    }
 }
