@@ -1080,7 +1080,7 @@ public class Game extends Application {
 
         // Create a ChoiceBox to choose the number of players
         ChoiceBox<String> playerNumChoice = new ChoiceBox<>();
-        playerNumChoice.getItems().addAll("2 Players", "3 Players", "4 Players");
+        playerNumChoice.getItems().addAll("2 Players", "3 Players", "4 Players", "4 players, including 1 computer player");
         playerNumChoice.setValue("4 Players");
         playerNumChoice.setStyle("-fx-font-size: 16px;");
 
