@@ -2,6 +2,8 @@ package comp1110.ass2.gui;
 
 import comp1110.ass2.*;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -79,6 +81,7 @@ public class Game extends Application {
     global variables
      */
     private int playerNum; // number of players
+    private int computerPlayerNum; // number of computer players
 
     private int dieNum; // number of dot on the die
     private Assam assam = new Assam(); // to control assam regarding the position and direction
@@ -1069,6 +1072,7 @@ public class Game extends Application {
      * @throws Exception
      *
      * @author u7754892 Yaohui Hou
+     * @author u7754637 Pei Ling Lam (supporting author)
      */
     @Override
     public void start(Stage stage) throws Exception {
@@ -1080,16 +1084,42 @@ public class Game extends Application {
 
         // Create a ChoiceBox to choose the number of players
         ChoiceBox<String> playerNumChoice = new ChoiceBox<>();
-        playerNumChoice.getItems().addAll("2 Players", "3 Players", "4 Players", "4 players, including 1 computer player");
+        playerNumChoice.getItems().addAll("2 Players", "3 Players", "4 Players");
         playerNumChoice.setValue("4 Players");
         playerNumChoice.setStyle("-fx-font-size: 16px;");
+
+        ChoiceBox<String> computerPlayerChoice = new ChoiceBox<>();
+        // initialize the choiceBox in case users did not choose a new choice and remain 4 players
+        playerNum = Integer.parseInt(playerNumChoice.getValue().split(" ")[0]);
+        for (int i = 0; i < playerNum; i++) {
+            // user can choose one or more computer players
+            computerPlayerChoice.getItems().add(i + " Computer players + " +  (playerNum-i) + " Human Players");
+        }
+        computerPlayerChoice.setValue("0 Computer players + " + playerNumChoice.getValue().split(" ")[0] + " Human Players");
+
+        // update the computerPlayerChoice choice box whenever user change the number of players
+        playerNumChoice.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                playerNum = Integer.parseInt(newValue.split(" ")[0]);
+                computerPlayerChoice.getItems().clear();
+                for (int i = 0; i < playerNum; i++) {
+                    // user can choose one or more computer players
+                    computerPlayerChoice.getItems().add(i + " Computer players + " +  (playerNum-i) + " Human Players");
+                }
+                computerPlayerChoice.setValue("0 Computer players + " + playerNum + " Human Players");
+            }
+        });
+
+        computerPlayerChoice.setStyle("-fx-font-size: 16px;");
+
 
         // Create start button. Click it then start game
         Button startButton = new Button("Start Game");
         startButton.setStyle("-fx-font-size: 16px;");
         startButton.setOnAction(e -> {
-            String selectedPlayerNum = playerNumChoice.getValue();
-            playerNum = Integer.parseInt(selectedPlayerNum.split(" ")[0]); // get the number of players
+            playerNum = Integer.parseInt(playerNumChoice.getValue().split(" ")[0]); // get the number of players
+            computerPlayerNum = Integer.parseInt(computerPlayerChoice.getValue().split(" ")[0]);
             System.out.println("Starting a " + playerNum + "-player game...");
 
             GameInterface gameScreen = new GameInterface(stage);
@@ -1102,7 +1132,7 @@ public class Game extends Application {
             stage.close();
         });
 
-        startPage.getChildren().addAll(playerNumChoice, startButton, cancelButton);
+        startPage.getChildren().addAll(playerNumChoice, computerPlayerChoice, startButton, cancelButton);
         Scene scene = new Scene(startPage, WINDOW_WIDTH, WINDOW_HEIGHT);
 
         prevStage = stage;
