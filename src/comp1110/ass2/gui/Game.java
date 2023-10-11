@@ -92,6 +92,8 @@ public class Game extends Application {
 
     private int currPlayer;
 
+    private Rug currRug = new Rug();
+
     private Button rotateLeftAssam;
     private Button rotateRightAssam;
 
@@ -259,80 +261,7 @@ public class Game extends Application {
                     } else {
                         game = game.StringToGame(tempGame); // update game state
 
-                        Players current_player = game.getPlayersList().get(currPlayer);
-
-                        // get the color to find player
-                        RugTile rugTile1 = board.getRugTileOnPosition(rug.getRelativePositions()[0]);
-                        RugTile rugTile2 = board.getRugTileOnPosition(rug.getRelativePositions()[1]);
-
-                        if (rugTile1 != null && rugTile1.getColor() != current_player.getColor()) {
-                            Players playerPayTo = game.findPlayerFromColor(rugTile1.getColor());
-                            if (playerPayTo != null && playerPayTo.isInGame()) {
-                                int amount = 1;
-
-                                // check whether current player has enough dirhams to pay
-                                if (current_player.getNumDirham() < 1) { // if not enough dirhams
-                                    current_player.updateNumDirham(current_player.getNumDirham(), true);
-                                    playerPayTo.updateNumDirham(current_player.getNumDirham(), false);
-                                    current_player.setIsInGame(false);
-                                } else { // if enough dirhams
-                                    current_player.updateNumDirham(amount, true);
-                                    playerPayTo.updateNumDirham(amount, false);
-                                }
-
-                                //update players in game
-                                game.updatePlayer(current_player);
-                                game.updatePlayer(playerPayTo);
-                            }
-                        }
-
-                        if (rugTile2 != null && rugTile2.getColor() != current_player.getColor()) {
-                            Players playerPayTo = game.findPlayerFromColor(rugTile2.getColor());
-
-                            if (playerPayTo != null && playerPayTo.isInGame()) {
-                                int amount = 1;
-
-                                // check whether current player has enough dirhams to pay
-                                if (current_player.getNumDirham() < 1) { // if not enough dirhams
-                                    current_player.updateNumDirham(current_player.getNumDirham(), true);
-                                    playerPayTo.updateNumDirham(current_player.getNumDirham(), false);
-                                    playerPayTo.getScores().updateRugScore(true);
-                                    current_player.setIsInGame(false);
-                                    informPlayerOut(getPlayerNum(current_player.getColor().value));
-                                } else { // if enough dirhams
-                                    current_player.updateNumDirham(amount, true);
-                                    playerPayTo.updateNumDirham(amount, false);
-                                    playerPayTo.getScores().updateRugScore(true);
-                                }
-
-                                //update players in game
-                                game.updatePlayer(current_player);
-                                game.updatePlayer(playerPayTo);
-                            }
-                        }
-
-                        board = game.getBoard(); // update board state
-                        updateNextPlayer(); // next player
-                        updateGameInfo(); // update game state
-
-                        // checking if the current game state is a solution to the problem
-                        if (Marrakech.isGameOver(game.GameToString())) {
-                            char winner = Marrakech.getWinner(game.GameToString());
-                            Alert solved = new Alert(Alert.AlertType.INFORMATION);
-                            if (winner == 'n') {
-                                solved.setHeaderText("Game has not finished yet!");
-                                solved.setContentText("Please continue the game.");
-                            } else if (winner == 't') {
-                                solved.setHeaderText("There is no winner!");
-                                solved.setContentText("More than one players share the same total score and number of Dirhams!");
-                            } else {
-                                solved.setTitle("Congratulations!");
-                                solved.setHeaderText("Player " + getPlayerNum(winner) + " is the winner!");
-                                comp1110.ass2.Color color = comp1110.ass2.Color.RED; // simply put a color to initialize
-                                solved.setContentText("Scores: " + game.findPlayerFromColor(color.getColorFromValue(winner)).getScores().getTotalScore());
-                            }
-                            solved.show();
-                        }
+                        afterPlacingRug(rug);
 
                     }
                 }
@@ -776,6 +705,7 @@ public class Game extends Application {
      * @author u7754637 Pei Ling Lam
      */
     private void makePlayers() {
+
         for (int i = 0; i < playerNum; i++) {
             double x,y;
 
@@ -812,15 +742,14 @@ public class Game extends Application {
                     x = START_X + (Tile_Size * 7 / 2) - Tile_Size;
                     y = START_Y - BOARD_TILE_SHADOW_GAP + Tile_Size * 8 + j;
                 }
-
-                Rug rug = new Rug(game.getPlayersList().get(i).getColor(), j, new IntPair[2]);
+                currRug = new Rug(game.getPlayersList().get(i).getColor(), j, new IntPair[2]);
 
                 // rug can only move when it is the player's turn
                 // only the last piece of rug can move
                 if(i == currPlayer && j == game.getPlayersList().get(i).getNumRug() - 1) {
-                    drawDraggableRug(rug, x, y);
+                    drawDraggableRug(currRug, x, y);
                 } else {
-                    drawRug(rug, x, y);
+                    drawRug(currRug, x, y);
                 }
             }
         }
@@ -940,6 +869,98 @@ public class Game extends Application {
     }
 
     /**
+     * method that check payment between players, update UI, check whether is game over....
+     * @param rug current rug of current players
+     *
+     * @author u7754637 Pei Ling Lam
+     */
+    private void afterPlacingRug(Rug rug) {
+        Players current_player = game.getPlayersList().get(currPlayer);
+
+        // get the color to find player
+        RugTile rugTile1 = board.getRugTileOnPosition(rug.getRelativePositions()[0]);
+        RugTile rugTile2 = board.getRugTileOnPosition(rug.getRelativePositions()[1]);
+
+        if (rugTile1 != null && rugTile1.getColor() != current_player.getColor()) {
+            Players playerPayTo = game.findPlayerFromColor(rugTile1.getColor());
+            if (playerPayTo != null && playerPayTo.isInGame()) {
+                int amount = 1;
+
+                // check whether current player has enough dirhams to pay
+                if (current_player.getNumDirham() < 1) { // if not enough dirhams
+                    current_player.updateNumDirham(current_player.getNumDirham(), true);
+                    playerPayTo.updateNumDirham(current_player.getNumDirham(), false);
+                    current_player.setIsInGame(false);
+                } else { // if enough dirhams
+                    current_player.updateNumDirham(amount, true);
+                    playerPayTo.updateNumDirham(amount, false);
+                }
+
+                //update players in game
+                game.updatePlayer(current_player);
+                game.updatePlayer(playerPayTo);
+            }
+        }
+
+        if (rugTile2 != null && rugTile2.getColor() != current_player.getColor()) {
+            Players playerPayTo = game.findPlayerFromColor(rugTile2.getColor());
+
+            if (playerPayTo != null && playerPayTo.isInGame()) {
+                int amount = 1;
+
+                // check whether current player has enough dirhams to pay
+                if (current_player.getNumDirham() < 1) { // if not enough dirhams
+                    current_player.updateNumDirham(current_player.getNumDirham(), true);
+                    playerPayTo.updateNumDirham(current_player.getNumDirham(), false);
+                    playerPayTo.getScores().updateRugScore(true);
+                    current_player.setIsInGame(false);
+                    informPlayerOut(getPlayerNum(current_player.getColor().value));
+                } else { // if enough dirhams
+                    current_player.updateNumDirham(amount, true);
+                    playerPayTo.updateNumDirham(amount, false);
+                    playerPayTo.getScores().updateRugScore(true);
+                }
+
+                //update players in game
+                game.updatePlayer(current_player);
+                game.updatePlayer(playerPayTo);
+            }
+        }
+
+        board = game.getBoard(); // update board state
+        updateNextPlayer(); // next player
+        updateGameInfo(); // update game state
+
+        // checking if the current game state is a solution to the problem
+        if (Marrakech.isGameOver(game.GameToString())) {
+            char winner = Marrakech.getWinner(game.GameToString());
+            Alert solved = new Alert(Alert.AlertType.INFORMATION);
+            if (winner == 'n') {
+                solved.setHeaderText("Game has not finished yet!");
+                solved.setContentText("Please continue the game.");
+            } else if (winner == 't') {
+                solved.setHeaderText("There is no winner!");
+                solved.setContentText("More than one players share the same total score and number of Dirhams!");
+            } else {
+                solved.setTitle("Congratulations!");
+                solved.setHeaderText("Player " + getPlayerNum(winner) + " is the winner!");
+                comp1110.ass2.Color color = comp1110.ass2.Color.RED; // simply put a color to initialize
+                solved.setContentText("Scores: " + game.findPlayerFromColor(color.getColorFromValue(winner)).getScores().getTotalScore());
+            }
+            solved.show();
+        }
+
+        // place the rug if it is computer player's turn
+        // computer players are set to the last to move
+        for (int k = 0; k <= computerPlayerNum; k++) {
+            if(currPlayer == playerNum - k) {
+                computerPlayerMovement(currRug);
+                break;
+            }
+        }
+    }
+
+    /**
      * method that update the rugs on the board, players' remaining dirham and rugs, and the label
      *
      * @author u7754637 Pei Ling Lam
@@ -967,6 +988,13 @@ public class Game extends Application {
         }
     }
 
+    /**
+     * method to get player number from color value
+     * @param c color value
+     * @return corresponding player number
+     *
+     * @author u7754637 Pei Ling Lam
+     */
     private int getPlayerNum(char c) {
         switch (c) {
             case 'c':
@@ -994,6 +1022,38 @@ public class Game extends Application {
         out.setTitle("Attention!");
         out.setHeaderText("Player " + i + " is out!");
         out.show();
+    }
+
+    /**
+     * method that control the computer player to automatically place rug
+     * @param rug current rug state of current player
+     *
+     * @author u7754637 Pei Ling Lam
+     */
+    private void computerPlayerMovement(Rug rug) {
+        ComputerPlayer computerPlayer = new ComputerPlayer();
+
+        // rotate assam
+        // rotate to left if get 0
+        // rotate to right if get 1
+        // do nothing if get 2
+        if(computerPlayer.rotateAssamRandomly() == 0) {
+            this.rotateLeftAssam();
+        } else if(computerPlayer.rotateAssamRandomly() == 1) {
+            this.rotateRightAssam();
+        }
+
+        // roll die
+        this.makeDie();
+
+        // get all possible rug placement
+        List<Rug> possibleRug = computerPlayer.getPossiblePositions(game, rug);
+
+        // randomly select one rug from all possibilities and make rug placement
+        game = game.StringToGame(Marrakech.makePlacement(game.GameToString(), computerPlayer.dragRandomly(possibleRug).RugToString()));
+
+        // check the others (makePayment, isGameOver...) after placing the rug
+        afterPlacingRug(computerPlayer.dragRandomly(possibleRug));
     }
 
     /**

@@ -25,30 +25,28 @@ public class ComputerPlayer extends Players{
      *
      * @author Yaohui Hou
      */
-    public List<String> getPossiblePositions(String currentGame, String rug) {
-        List<String> possiblePositions = new ArrayList<>();
-        Game game = new Game().StringToGame(currentGame);
-        Rug rug1 = new Rug().StringToRug(rug);
-        int x = game.getAssam().getAbsolutePosition().getX();
-        int y = game.getAssam().getAbsolutePosition().getY();
-        int[] dx = {-1, 1, 0, 0};
-        int[] dy = {0, 0, -1, 1};
-        for (int i = 0; i < 4; i++) {
-            int new_x = x + dx[i];
-            int new_y = y + dy[i];
-            for (int j = 0; j < 4; j++) {
-                int new_new_x = new_x + dx[j];
-                int new_new_y = new_y + dy[j];
-                String rugPos = rug1.getColor() + String.valueOf(rug1.getRugID()) + new_x + new_y + new_new_x + new_new_y;
-                possiblePositions.add(rugPos);
-            }
+    public List<Rug> getPossiblePositions(Game currentGame, Rug rug) {
+        List<Rug> possiblePositions = new ArrayList<>();
+        List<IntPair> p = currentGame.getAssam().adjacentEdge();
+
+        for (IntPair tmpp: p) {
+            IntPair[] posi = new IntPair[2];
+            posi[0] = new IntPair(0,0);
+            posi[1] = new IntPair(0,0);
+
+            // set horizontally
+            posi[0] = tmpp;
+            posi[1].setX(tmpp.getX() + 1);
+            posi[1].setY(tmpp.getY());
+            possiblePositions.add(new Rug(rug.getColor(), rug.getRugID(), posi));
+
+            // set vertically
+            posi[0] = tmpp;
+            posi[1].setX(tmpp.getX());
+            posi[1].setY(tmpp.getY() + 1);
+            possiblePositions.add(new Rug(rug.getColor(), rug.getRugID(), posi));
         }
 
-        for (String rugPos : possiblePositions) {
-            if (!Marrakech.isPlacementValid(currentGame, rugPos)) {
-                possiblePositions.remove(rugPos);
-            }
-        }
         return possiblePositions;
     }
 
@@ -59,11 +57,26 @@ public class ComputerPlayer extends Players{
      *
      * @author Yaohui Hou
      */
-    public String dragRandomly(List<String> possiblePositions){
-        Random random = new Random();
-        int randomIndex = random.nextInt(possiblePositions.size());
+    public Rug dragRandomly(List<Rug> possiblePositions){
+        int max = possiblePositions.size();
+        int min = 0;
+        int randomIndex = (int)Math.floor(Math.random() * (max - min + 1) + min);
 
         return possiblePositions.get(randomIndex);
+    }
+
+    /**
+     * method to decide whether assam is rotated randomly
+     * @return random number
+     *
+     * @author u7754637 Pei Ling Lam
+     */
+    public int rotateAssamRandomly() {
+        int max = 2;
+        int min = 0;
+        int rand = (int)Math.floor(Math.random() * (max - min + 1) + min);
+
+        return rand;
     }
 
 }

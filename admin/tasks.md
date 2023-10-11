@@ -106,4 +106,17 @@ Pei Ling Lam:
 
 ## Week 10
 
+Zexin Tang
+* created computerPlayer.java - 9 Oct
+
+Yaohui Hou:
+* added computer player UI - 10 Oct
+* wrote method to get possible rug positions in ComputerPlayer.java - 10 Oct
+
+Pei Ling Lam
+* modified computer player UI - 12 Oct
+* modified method to get possible rug positions in ComputerPlayer.java - 12 Oct
+* add method in ComputerPlayer.java to randomly rotate assam - 12 Oct
+* make computer player playable in gui/Game - 12 Oct
+
 ## Week 11
