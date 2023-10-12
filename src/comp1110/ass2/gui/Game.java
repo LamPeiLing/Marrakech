@@ -598,9 +598,15 @@ public class Game extends Application {
                     playerPayTo.updateNumDirham(current_player.getNumDirham(), false);
                     current_player.setIsInGame(false);
                     informPlayerOut(getPlayerNum(current_player.getColor().value));
+                    updateNextPlayer();
                 } else { // if enough dirhams
                     current_player.updateNumDirham(amount, true);
                     playerPayTo.updateNumDirham(amount, false);
+                    if(current_player.getNumDirham() == 0) {
+                        current_player.setIsInGame(false);
+                        informPlayerOut(getPlayerNum(current_player.getColor().value));
+                        updateNextPlayer();
+                    }
                 }
 
                 //update players in game
@@ -933,6 +939,10 @@ public class Game extends Application {
                     current_player.updateNumDirham(amount, true);
                     playerPayTo.updateNumDirham(amount, false);
                     playerPayTo.getScores().updateRugScore(true);
+                    if(current_player.getNumDirham() == 0) {
+                        current_player.setIsInGame(false);
+                        informPlayerOut(getPlayerNum(current_player.getColor().value));
+                    }
                 }
 
                 //update players in game

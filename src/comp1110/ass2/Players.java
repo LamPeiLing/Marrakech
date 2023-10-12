@@ -96,7 +96,6 @@ public class Players {
 
     public void setNumRug(int n) {
         this.numRug = n;
-        scores.setRugScore(n);
     }
 
     public int getNumRug() {
