@@ -26,42 +26,36 @@ public class ComputerPlayer extends Players{
      * @author Yaohui Hou
      */
     public List<Rug> getPossiblePositions(Game currentGame, Rug rug) {
-        List<Rug> possiblePositions = new ArrayList<>();
-        List<IntPair> p = currentGame.getAssam().adjacentEdge();
+        List<Rug> allPossiblePositions = new ArrayList<>();
+        List<IntPair> adjacentEdge = currentGame.getAssam().adjacentEdge();
         List<Rug> validRugs = new ArrayList<>();
 
-        for (IntPair tmpp: p) {
+        for (IntPair tmpp: adjacentEdge) {
+
+//            IntPair[] tempPosition = tmpadj
+//            allPossiblePositions.add(new Rug(rug.getColor(), rug.getRugID(), ));
+
             IntPair[] posi = new IntPair[2];
             posi[0] = new IntPair(0,0);
             posi[1] = new IntPair(0,0);
 
             // set horizontally
             // set for right of the adjacent
-            posi[0] = tmpp;
-            posi[1].setX(tmpp.getX() + 1);
-            posi[1].setY(tmpp.getY());
-            possiblePositions.add(new Rug(rug.getColor(), rug.getRugID(), posi));
-
+            allPossiblePositions.add(new Rug(rug.getColor(), rug.getRugID(), new IntPair[]{tmpp, new IntPair(tmpp.getX() + 1, tmpp.getY())}));
             // set for left of the adjacent
-            posi[1].setX(tmpp.getX() - 1);
-            possiblePositions.add(new Rug(rug.getColor(), rug.getRugID(), posi));
+            allPossiblePositions.add(new Rug(rug.getColor(), rug.getRugID(), new IntPair[]{new IntPair(tmpp.getX() - 1, tmpp.getY()), tmpp}));
 
             // set vertically
             // set for bottom of the adjacent
-            posi[0] = tmpp;
-            posi[1].setX(tmpp.getX());
-            posi[1].setY(tmpp.getY() + 1);
-            possiblePositions.add(new Rug(rug.getColor(), rug.getRugID(), posi));
-
+            allPossiblePositions.add(new Rug(rug.getColor(), rug.getRugID(), new IntPair[]{tmpp, new IntPair(tmpp.getX(), tmpp.getY() + 1)}));
             // set for up of the adjacent
-            posi[1].setY(tmpp.getY() - 1);
-            possiblePositions.add(new Rug(rug.getColor(), rug.getRugID(), posi));
+            allPossiblePositions.add(new Rug(rug.getColor(), rug.getRugID(), new IntPair[]{new IntPair(tmpp.getX(), tmpp.getY() - 1), tmpp}));
         }
 
         // make sure that the placement is valid
-        for (int i = 0; i < possiblePositions.size(); i++) {
-            if(Marrakech.isPlacementValid(currentGame.GameToString(), possiblePositions.get(i).RugToString())) {
-                validRugs.add(possiblePositions.get(i));
+        for (Rug r: allPossiblePositions) {
+            if (Marrakech.isPlacementValid(currentGame.GameToString(), r.RugToString()) && Marrakech.isRugValid(currentGame.GameToString(), r.RugToString())) {
+                validRugs.add(r);
             }
         }
 

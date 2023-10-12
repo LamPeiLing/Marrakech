@@ -94,6 +94,8 @@ public class Game extends Application {
 
     private Rug currRug = new Rug();
 
+    private List<Integer> computerPlayer = new ArrayList<>();
+
     private Button rotateLeftAssam;
     private Button rotateRightAssam;
 
@@ -742,14 +744,15 @@ public class Game extends Application {
                     x = START_X + (Tile_Size * 7 / 2) - Tile_Size;
                     y = START_Y - BOARD_TILE_SHADOW_GAP + Tile_Size * 8 + j;
                 }
-                currRug = new Rug(game.getPlayersList().get(i).getColor(), j, new IntPair[2]);
+                Rug rug = new Rug(game.getPlayersList().get(i).getColor(), j, new IntPair[2]);
 
                 // rug can only move when it is the player's turn
                 // only the last piece of rug can move
                 if(i == currPlayer && j == game.getPlayersList().get(i).getNumRug() - 1) {
-                    drawDraggableRug(currRug, x, y);
+                    drawDraggableRug(rug, x, y);
+                    currRug = rug;
                 } else {
-                    drawRug(currRug, x, y);
+                    drawRug(rug, x, y);
                 }
             }
         }
@@ -952,12 +955,9 @@ public class Game extends Application {
 
         // place the rug if it is computer player's turn
         // computer players are set to the last to move
-        for (int k = 0; k <= computerPlayerNum; k++) {
-            if(currPlayer == playerNum - k) {
-                computerPlayerMovement(currRug);
-                break;
-            }
-        }
+       if(computerPlayer.size() > 0 && computerPlayer.contains(currPlayer)) {
+           computerPlayerMovement(currRug);
+       }
     }
 
     /**
@@ -1070,6 +1070,7 @@ public class Game extends Application {
         boardGroup.getChildren().clear();
         playersGroup.getChildren().clear();
         root.getChildren().clear();
+        computerPlayer.clear();
         GameInterface gameInterface = new GameInterface(currStage);
         start(currStage);
 
@@ -1180,6 +1181,9 @@ public class Game extends Application {
         startButton.setOnAction(e -> {
             playerNum = Integer.parseInt(playerNumChoice.getValue().split(" ")[0]); // get the number of players
             computerPlayerNum = Integer.parseInt(computerPlayerChoice.getValue().split(" ")[0]);
+            for (int i = 1; i <= computerPlayerNum; i++) {
+                computerPlayer.add(playerNum-i);
+            }
             System.out.println("Starting a " + playerNum + "-player game...");
 
             GameInterface gameScreen = new GameInterface(stage);
