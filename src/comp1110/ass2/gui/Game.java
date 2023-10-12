@@ -15,10 +15,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -827,20 +824,34 @@ public class Game extends Application {
         playersGroup.getChildren().add(labelBox);
 
         for (int i = 0; i < game.getPlayersList().size(); i++) {
+
+            // add arrow to show it is which player's turn to place the rug
+            if(i == currPlayer) {
+                Polygon arrow = new Polygon(
+                        labelX - 8, labelY + labelStrokeWidth * 2 + (i * 15) - radius*2,
+                        labelX - 8, labelY + labelStrokeWidth * 2 + (i * 15),
+                        labelX - 3, labelY + labelStrokeWidth * 2 + (i * 15) - radius
+                );
+                arrow.setFill(Color.web("FFBF00"));
+                playersGroup.getChildren().add(arrow);
+            }
+
+
             Circle playerColour = new Circle(labelX + labelStrokeWidth, labelY + labelStrokeWidth * 1.5 + (i * 15), radius);
             playerColour.setFill(setPlayerColour(game.getPlayersList().get(i).getColor()));
             playersGroup.getChildren().add(playerColour);
 
             // cross out the players if they are out of the game
             if(!game.getPlayersList().get(i).isInGame()) {
-                Line line = new Line(labelX + labelStrokeWidth - radius * 2, labelY + labelStrokeWidth * 1.5 + (i * 15), labelX + 190, labelY + labelStrokeWidth * 1.5 + (i * 15));
+                Line line = new Line(labelX + labelStrokeWidth - radius * 2, labelY + labelStrokeWidth * 1.5 + (i * 15), labelX + 200, labelY + labelStrokeWidth * 1.5 + (i * 15));
                 line.setStroke(Color.RED);
                 line.setStrokeWidth(2);
                 line.setFill(Color.RED);
                 playersGroup.getChildren().add(line);
             }
 
-            Text playerDetails = new Text(labelX + labelStrokeWidth + radius, labelY + labelStrokeWidth * 2 + (i * 15), "Player " + (i + 1) + "  | Rugs: " + game.getPlayersList().get(i).getNumRug() + "  | Dirhams: " + game.getPlayersList().get(i).getNumDirham());
+            // "CP" is added at the back if the player is computer player
+            Text playerDetails = new Text(labelX + labelStrokeWidth + radius, labelY + labelStrokeWidth * 2 + (i * 15), "Player " + (i + 1) + "  | Rugs: " + game.getPlayersList().get(i).getNumRug() + "  | Dirhams: " + game.getPlayersList().get(i).getNumDirham() + (computerPlayer.contains(i) ? "  CP " : ""));
             playerDetails.setFont(Font.font(12));
             playerDetails.setFill(Color.WHITE);
             playersGroup.getChildren().add(playerDetails);
@@ -998,16 +1009,16 @@ public class Game extends Application {
     private int getPlayerNum(char c) {
         switch (c) {
             case 'c':
-                return 0;
-
-            case 'y':
                 return 1;
 
-            case 'p':
+            case 'y':
                 return 2;
 
-            case 'r':
+            case 'p':
                 return 3;
+
+            case 'r':
+                return 4;
         }
 
         return 0;
