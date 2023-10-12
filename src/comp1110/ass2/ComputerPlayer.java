@@ -28,6 +28,7 @@ public class ComputerPlayer extends Players{
     public List<Rug> getPossiblePositions(Game currentGame, Rug rug) {
         List<Rug> possiblePositions = new ArrayList<>();
         List<IntPair> p = currentGame.getAssam().adjacentEdge();
+        List<Rug> validRugs = new ArrayList<>();
 
         for (IntPair tmpp: p) {
             IntPair[] posi = new IntPair[2];
@@ -35,19 +36,36 @@ public class ComputerPlayer extends Players{
             posi[1] = new IntPair(0,0);
 
             // set horizontally
+            // set for right of the adjacent
             posi[0] = tmpp;
             posi[1].setX(tmpp.getX() + 1);
             posi[1].setY(tmpp.getY());
             possiblePositions.add(new Rug(rug.getColor(), rug.getRugID(), posi));
 
+            // set for left of the adjacent
+            posi[1].setX(tmpp.getX() - 1);
+            possiblePositions.add(new Rug(rug.getColor(), rug.getRugID(), posi));
+
             // set vertically
+            // set for bottom of the adjacent
             posi[0] = tmpp;
             posi[1].setX(tmpp.getX());
             posi[1].setY(tmpp.getY() + 1);
             possiblePositions.add(new Rug(rug.getColor(), rug.getRugID(), posi));
+
+            // set for up of the adjacent
+            posi[1].setY(tmpp.getY() - 1);
+            possiblePositions.add(new Rug(rug.getColor(), rug.getRugID(), posi));
         }
 
-        return possiblePositions;
+        // make sure that the placement is valid
+        for (int i = 0; i < possiblePositions.size(); i++) {
+            if(Marrakech.isPlacementValid(currentGame.GameToString(), possiblePositions.get(i).RugToString())) {
+                validRugs.add(possiblePositions.get(i));
+            }
+        }
+
+        return validRugs;
     }
 
     /**
@@ -58,7 +76,7 @@ public class ComputerPlayer extends Players{
      * @author Yaohui Hou
      */
     public Rug dragRandomly(List<Rug> possiblePositions){
-        int max = possiblePositions.size();
+        int max = possiblePositions.size() - 1;
         int min = 0;
         int randomIndex = (int)Math.floor(Math.random() * (max - min + 1) + min);
 
