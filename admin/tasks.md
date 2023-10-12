@@ -118,5 +118,6 @@ Pei Ling Lam
 * modified method to get possible rug positions in ComputerPlayer.java - 12 Oct
 * add method in ComputerPlayer.java to randomly rotate assam - 12 Oct
 * make computer player playable in gui/Game - 12 Oct
+* improve on the players label - 12 Oct
 
 ## Week 11

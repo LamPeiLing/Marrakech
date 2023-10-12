@@ -832,7 +832,7 @@ public class Game extends Application {
                         labelX - 8, labelY + labelStrokeWidth * 2 + (i * 15),
                         labelX - 3, labelY + labelStrokeWidth * 2 + (i * 15) - radius
                 );
-                arrow.setFill(Color.web("FFBF00"));
+                arrow.setFill(Color.BLACK);
                 playersGroup.getChildren().add(arrow);
             }
 
