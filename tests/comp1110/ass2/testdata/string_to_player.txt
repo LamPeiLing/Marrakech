@@ -1,0 +1,25 @@
+Pc02612i@CYAN@26@12@true@The player string Pc02612i is cyan, has 26 dirham, has 12 rugs, and is in game.
+Py03112i@YELLOW@31@12@true@The player string Py03112i is yellow, has 31 dirham, has 12 rugs, and is in game.
+Pp03612i@PURPLE@36@12@true@The player string Pp03612i is purple, has 36 dirham, has 12 rugs, and is in game.
+Pr02713i@RED@27@13@true@The player string Pr02713i is red, has 27 dirham, has 13 rugs, and is in game.
+Pc03310i@CYAN@33@10@true@The player string Pc03310i is cyan, has 33 dirham, has 10 rugs, and is in game.
+Py02110i@YELLOW@21@10@true@The player string Py02110i is yellow, has 21 dirham, has 10 rugs, and is in game.
+Pp03111i@PURPLE@31@11@true@The player string Pp03111i is purple, has 31 dirham, has 11 rugs, and is in game.
+Pr03511i@RED@35@11@true@The player string Pr03511i is red, has 35 dirham, has 11 rugs, and is in game.
+Pc05707i@CYAN@57@7@true@The player string Pc05707i is cyan, has 57 dirham, has 7 rugs, and is in game.
+Py00008o@YELLOW@0@8@false@The player string Py00008o is yellow, has 0 dirham, has 8 rugs, and is not in game.
+Pp02708i@PURPLE@27@8@true@The player string Pp02708i is purple, has 27 dirham, has 8 rugs, and is in game.
+Pr03608i@RED@36@8@true@The player string Pr03608i is red, has 36 dirham, has 8 rugs, and is in game.
+Pc05905i@CYAN@59@5@true@The player string Pc05905i is cyan, has 59 dirham, has 5 rugs, and is in game.
+Py00005o@YELLOW@0@5@false@The player string Py00005o is yellow, has 0 dirham, has 5 rugs, and is not in game.
+Pp04205i@PURPLE@42@5@true@The player string Pp04205i is purple, has 42 dirham, has 5 rugs, and is in game.
+Pr01905i@RED@19@5@true@The player string Pr01905i is red, has 19 dirham, has 5 rugs, and is in game.
+Pc06002i@CYAN@60@2@true@The player string Pc06002i is cyan, has 60 dirham, has 2 rugs, and is in game.
+Py00003o@YELLOW@0@3@false@The player string Py00003o is yellow, has 0 dirham, has 3 rugs, and is not in game.
+Pp04303i@PURPLE@43@3@true@The player string Pp04303i is purple, has 43 dirham, has 3 rugs, and is in game.
+Pr01703i@RED@17@3@true@The player string Pr01703i is red, has 17 dirham, has 3 rugs, and is in game.
+Pc03014i@CYAN@30@14@true@The player string Pc03014i is cyan, has 30 dirham, has 14 rugs, and is in game.
+Py03014i@YELLOW@30@14@true@The player string Py03014i is yellow, has 30 dirham, has 14 rugs, and is in game.
+Pp03014i@PURPLE@30@14@true@The player string Pp03014i is purple, has 30 dirham, has 14 rugs, and is in game.
+Pr03014i@RED@30@14@true@The player string Pr03014i is red, has 30 dirham, has 14 rugs, and is in game.
+Pc03810i@CYAN@38@10@true@The player string Pc03810i is cyan, has 38 dirham, has 10 rugs, and is in game.
