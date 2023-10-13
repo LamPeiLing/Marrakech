@@ -15,10 +15,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -93,6 +90,8 @@ public class Game extends Application {
     private int currPlayer;
 
     private Rug currRug = new Rug();
+
+    private List<Integer> computerPlayer = new ArrayList<>();
 
     private Button rotateLeftAssam;
     private Button rotateRightAssam;
@@ -599,9 +598,15 @@ public class Game extends Application {
                     playerPayTo.updateNumDirham(current_player.getNumDirham(), false);
                     current_player.setIsInGame(false);
                     informPlayerOut(getPlayerNum(current_player.getColor().value));
+                    updateNextPlayer();
                 } else { // if enough dirhams
                     current_player.updateNumDirham(amount, true);
                     playerPayTo.updateNumDirham(amount, false);
+                    if(current_player.getNumDirham() == 0) {
+                        current_player.setIsInGame(false);
+                        informPlayerOut(getPlayerNum(current_player.getColor().value));
+                        updateNextPlayer();
+                    }
                 }
 
                 //update players in game
@@ -742,14 +747,15 @@ public class Game extends Application {
                     x = START_X + (Tile_Size * 7 / 2) - Tile_Size;
                     y = START_Y - BOARD_TILE_SHADOW_GAP + Tile_Size * 8 + j;
                 }
-                currRug = new Rug(game.getPlayersList().get(i).getColor(), j, new IntPair[2]);
+                Rug rug = new Rug(game.getPlayersList().get(i).getColor(), j, new IntPair[2]);
 
                 // rug can only move when it is the player's turn
                 // only the last piece of rug can move
                 if(i == currPlayer && j == game.getPlayersList().get(i).getNumRug() - 1) {
-                    drawDraggableRug(currRug, x, y);
+                    drawDraggableRug(rug, x, y);
+                    currRug = rug;
                 } else {
-                    drawRug(currRug, x, y);
+                    drawRug(rug, x, y);
                 }
             }
         }
@@ -824,20 +830,34 @@ public class Game extends Application {
         playersGroup.getChildren().add(labelBox);
 
         for (int i = 0; i < game.getPlayersList().size(); i++) {
+
+            // add arrow to show it is which player's turn to place the rug
+            if(i == currPlayer) {
+                Polygon arrow = new Polygon(
+                        labelX - 8, labelY + labelStrokeWidth * 2 + (i * 15) - radius*2,
+                        labelX - 8, labelY + labelStrokeWidth * 2 + (i * 15),
+                        labelX - 3, labelY + labelStrokeWidth * 2 + (i * 15) - radius
+                );
+                arrow.setFill(Color.BLACK);
+                playersGroup.getChildren().add(arrow);
+            }
+
+
             Circle playerColour = new Circle(labelX + labelStrokeWidth, labelY + labelStrokeWidth * 1.5 + (i * 15), radius);
             playerColour.setFill(setPlayerColour(game.getPlayersList().get(i).getColor()));
             playersGroup.getChildren().add(playerColour);
 
             // cross out the players if they are out of the game
             if(!game.getPlayersList().get(i).isInGame()) {
-                Line line = new Line(labelX + labelStrokeWidth - radius * 2, labelY + labelStrokeWidth * 1.5 + (i * 15), labelX + 190, labelY + labelStrokeWidth * 1.5 + (i * 15));
+                Line line = new Line(labelX + labelStrokeWidth - radius * 2, labelY + labelStrokeWidth * 1.5 + (i * 15), labelX + 200, labelY + labelStrokeWidth * 1.5 + (i * 15));
                 line.setStroke(Color.RED);
                 line.setStrokeWidth(2);
                 line.setFill(Color.RED);
                 playersGroup.getChildren().add(line);
             }
 
-            Text playerDetails = new Text(labelX + labelStrokeWidth + radius, labelY + labelStrokeWidth * 2 + (i * 15), "Player " + (i + 1) + "  | Rugs: " + game.getPlayersList().get(i).getNumRug() + "  | Dirhams: " + game.getPlayersList().get(i).getNumDirham());
+            // "CP" is added at the back if the player is computer player
+            Text playerDetails = new Text(labelX + labelStrokeWidth + radius, labelY + labelStrokeWidth * 2 + (i * 15), "Player " + (i + 1) + "  | Rugs: " + game.getPlayersList().get(i).getNumRug() + "  | Dirhams: " + game.getPlayersList().get(i).getNumDirham() + (computerPlayer.contains(i) ? "  CP " : ""));
             playerDetails.setFont(Font.font(12));
             playerDetails.setFill(Color.WHITE);
             playersGroup.getChildren().add(playerDetails);
@@ -919,6 +939,10 @@ public class Game extends Application {
                     current_player.updateNumDirham(amount, true);
                     playerPayTo.updateNumDirham(amount, false);
                     playerPayTo.getScores().updateRugScore(true);
+                    if(current_player.getNumDirham() == 0) {
+                        current_player.setIsInGame(false);
+                        informPlayerOut(getPlayerNum(current_player.getColor().value));
+                    }
                 }
 
                 //update players in game
@@ -952,12 +976,9 @@ public class Game extends Application {
 
         // place the rug if it is computer player's turn
         // computer players are set to the last to move
-        for (int k = 0; k <= computerPlayerNum; k++) {
-            if(currPlayer == playerNum - k) {
-                computerPlayerMovement(currRug);
-                break;
-            }
-        }
+       if(computerPlayer.size() > 0 && computerPlayer.contains(currPlayer)) {
+           computerPlayerMovement(currRug);
+       }
     }
 
     /**
@@ -998,16 +1019,16 @@ public class Game extends Application {
     private int getPlayerNum(char c) {
         switch (c) {
             case 'c':
-                return 0;
-
-            case 'y':
                 return 1;
 
-            case 'p':
+            case 'y':
                 return 2;
 
-            case 'r':
+            case 'p':
                 return 3;
+
+            case 'r':
+                return 4;
         }
 
         return 0;
@@ -1070,6 +1091,7 @@ public class Game extends Application {
         boardGroup.getChildren().clear();
         playersGroup.getChildren().clear();
         root.getChildren().clear();
+        computerPlayer.clear();
         GameInterface gameInterface = new GameInterface(currStage);
         start(currStage);
 
@@ -1180,6 +1202,9 @@ public class Game extends Application {
         startButton.setOnAction(e -> {
             playerNum = Integer.parseInt(playerNumChoice.getValue().split(" ")[0]); // get the number of players
             computerPlayerNum = Integer.parseInt(computerPlayerChoice.getValue().split(" ")[0]);
+            for (int i = 1; i <= computerPlayerNum; i++) {
+                computerPlayer.add(playerNum-i);
+            }
             System.out.println("Starting a " + playerNum + "-player game...");
 
             GameInterface gameScreen = new GameInterface(stage);
