@@ -11,8 +11,6 @@ public class Scores {
 
     private int rugScore; // total points for the rug
 
-    private Coin coin = new Coin();
-
     /**
      * Constructor: count the score of each game state
      */

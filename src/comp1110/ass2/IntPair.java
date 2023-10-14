@@ -76,13 +76,6 @@ public class IntPair {
         return (dx == 1 && dy == 0) || (dx == 0 && dy == 1);
     }
 
-    // Check if this position is within a given range of another position
-    public boolean isWithinRange(IntPair other, int range) {
-        int dx = Math.abs(this.x - other.x);
-        int dy = Math.abs(this.y - other.y);
-        return dx <= range && dy <= range;
-    }
-
     // Calculate the vector to move from this position to another position
     public IntPair calculateVectorTo(IntPair other) {
         int dx = other.x - this.x;

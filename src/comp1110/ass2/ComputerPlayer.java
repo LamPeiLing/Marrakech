@@ -32,9 +32,6 @@ public class ComputerPlayer extends Players{
 
         for (IntPair tmpp: adjacentEdge) {
 
-//            IntPair[] tempPosition = tmpadj
-//            allPossiblePositions.add(new Rug(rug.getColor(), rug.getRugID(), ));
-
             IntPair[] posi = new IntPair[2];
             posi[0] = new IntPair(0,0);
             posi[1] = new IntPair(0,0);

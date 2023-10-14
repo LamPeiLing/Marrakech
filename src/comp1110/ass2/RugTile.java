@@ -31,6 +31,9 @@ public class RugTile {
         this.id = id;
     }
 
+    /*
+    setters and getters
+     */
     public void setColor(Color color) {
         this.color = color;
     }

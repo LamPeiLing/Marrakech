@@ -6,13 +6,6 @@ package comp1110.ass2;
  */
 public class Players {
 
-    //Integers that define the number of coins every player have during the game
-    private int currentNumOfCoin_5;
-    private int currentNumOfCoin_1;
-
-    // current position on the board
-    private IntPair absolutePosition;
-
     // color of rug the player owned
     private Color color;
 
@@ -46,28 +39,9 @@ public class Players {
      */
     public Players() {}
 
-    /**
-     * method that get coins owned by players
-     * @return number of coins
-     *
-     * @author u7754892 Yaohui Hou
+    /*
+    setters and getters
      */
-    public int getCurrentNumOfCoin_5(){
-        return currentNumOfCoin_5;
-    }
-
-    /**
-     * method that get coins owned by players
-     * @return number of coins
-     *
-     * @author u7754892 Yaohui Hou
-     */
-    public int getCurrentNumOfCoin_1(){
-        return currentNumOfCoin_1;
-    }
-
-
-
 
     public void setIsInGame(boolean isInGame) {
        this.isInGame = isInGame;
@@ -184,7 +158,6 @@ public class Players {
      *
      * @author u7754637 Pei Ling Lam
      */
-    // convert String to Players
     public Players StringToPlayer(String stringPlayer) {
         // get rug color of player
         if(stringPlayer.charAt(1) == 'c') {

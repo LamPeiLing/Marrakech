@@ -311,45 +311,6 @@ public class Marrakech {
     }
 
 
-
-    /**
-     * Depth-first search to count connected squares of the same color.
-     * @param board The game board represented as a list of RugTiles.
-     * @param color The color of the rug to count.
-     * @param x The x-coordinate of the current square.
-     * @param y The y-coordinate of the current square.
-     * @param visited A boolean array to keep track of visited squares.
-     * @return The number of connected squares of the same color.
-     *
-     * @author u7770276 ZeXin Tang
-     */
-    private static int dfsHelper(List<RugTile> board, Color color, int x, int y, boolean[][] visited) {
-        int boardSize = 7;
-
-        if (x < 0 || x >= boardSize || y < 0 || y >= boardSize || visited[x][y] || board.get(x * boardSize + y).getColor() != color) {
-            return 0;
-        }
-
-        visited[x][y] = true;
-        int connectedSquares = 1;
-
-        int[] dx = { -1, 1, 0, 0 };
-        int[] dy = { 0, 0, -1, 1 };
-
-        for (int i = 0; i < 4; i++) {
-            int newX = x + dx[i];
-            int newY = y + dy[i];
-            connectedSquares += dfsHelper(board, color, newX, newY, visited);
-        }
-
-        return connectedSquares;
-    }
-
-
-        // FIXME: Task 11
-
-
-
     /**
      * Determine the winner of a game of Marrakech.
      * For this task, you will be provided with a game state string and have to return a char representing the colour
@@ -479,7 +440,7 @@ public class Marrakech {
                         }
                         break;
                 }
-            } else {
+            } else { // assam is safe to move forward
                 switch (assam.getCurrentDirection()) {
                     case NORTH:
                         assam.setAbsolutePosition(new IntPair(assam.getAbsolutePosition().getX(), assam.getAbsolutePosition().getY() - 1));
@@ -529,9 +490,11 @@ public class Marrakech {
         if(isPlacementValid(currentGame, rug) && isRugValid(currentGame, rug)) {
             for (RugTile tile: rugTile) {
                 if(tile != null) {
-                    game.getBoard().updateRugTile(tile);
+                    game.getBoard().updateRugTile(tile); // update to new rug
                 }
             }
+
+            // update number of rugs of players
             for (Players player: game.getPlayersList()) {
                 if(player.getColor() == rug1.getColor()) {
                     player.updateNumRug();

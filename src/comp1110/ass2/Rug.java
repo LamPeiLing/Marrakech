@@ -1,8 +1,5 @@
 package comp1110.ass2;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Class that defines a rug in the Marrakech game.
  * @author u7770276 ZeXin Tang

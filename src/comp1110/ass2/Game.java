@@ -18,8 +18,6 @@ public class Game {
     private Assam assam = new Assam();
 
 
-
-
     /**
      * Constructor
      * do nothing at this moment
@@ -28,6 +26,9 @@ public class Game {
 
     }
 
+    /*
+    setters and getters
+     */
     public void setPlayersList(List<Players> playersList) {
         this.playersList = playersList;
     }
@@ -50,20 +51,6 @@ public class Game {
 
     public Assam getAssam() {
         return assam;
-    }
-
-
-    /**
-     * method that state whether string is over
-     * @return string that specify whether the game is over
-     * @author u7754892 Yaohui Hou
-     */
-    public String Over(){
-        String currentGame = null;
-        if(Marrakech.isGameOver(currentGame)){
-            return "Game Over.";
-        }
-        return null;
     }
 
     /**

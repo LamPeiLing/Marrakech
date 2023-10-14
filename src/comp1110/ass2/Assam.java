@@ -115,48 +115,48 @@ public class Assam {
     public List<IntPair> adjacentEdge () {
         List<IntPair> adjacents = new ArrayList<>();
 
-        if(!isBorder()) {
+        if(!isBorder()) { // if assam is in the middle, should have 4 adjecents
             adjacents.add(new IntPair(absolutePosition.getX() - 1, absolutePosition.getY()));
             adjacents.add(new IntPair(absolutePosition.getX() + 1, absolutePosition.getY()));
             adjacents.add(new IntPair(absolutePosition.getX(), absolutePosition.getY() - 1));
             adjacents.add(new IntPair(absolutePosition.getX(), absolutePosition.getY() + 1));
         } else {
-            if(getAbsolutePosition().getY() == 0) {
-                if(getAbsolutePosition().getX() == 0) {
+            if(getAbsolutePosition().getY() == 0) { // if assam is at top of the board
+                if(getAbsolutePosition().getX() == 0) { // if assam at top left corner
                     adjacents.add(new IntPair(absolutePosition.getX() + 1, absolutePosition.getY()));
-                } else if (getAbsolutePosition().getX() == 6) {
+                } else if (getAbsolutePosition().getX() == 6) { // if assam at top right corner
                     adjacents.add(new IntPair(absolutePosition.getX() - 1, absolutePosition.getY()));
-                } else {
+                } else { // if assam at the top border but not the corners
                     adjacents.add(new IntPair(absolutePosition.getX() - 1, absolutePosition.getY()));
                     adjacents.add(new IntPair(absolutePosition.getX() + 1, absolutePosition.getY()));
                 }
                 adjacents.add(new IntPair(absolutePosition.getX(), absolutePosition.getY() + 1));
-            } else if(getAbsolutePosition().getY() == 6) {
-                if(getAbsolutePosition().getX() == 0) {
+            } else if(getAbsolutePosition().getY() == 6) { // if assam is at bottom of the board
+                if(getAbsolutePosition().getX() == 0) { // if assam is at bottom left corner
                     adjacents.add(new IntPair(absolutePosition.getX() + 1, absolutePosition.getY()));
-                } else if (getAbsolutePosition().getX() == 6) {
+                } else if (getAbsolutePosition().getX() == 6) { // if assam is at bottom right corner
                     adjacents.add(new IntPair(absolutePosition.getX() - 1, absolutePosition.getY()));
-                } else {
+                } else { // if assam at bottom border but not the corners
                     adjacents.add(new IntPair(absolutePosition.getX() - 1, absolutePosition.getY()));
                     adjacents.add(new IntPair(absolutePosition.getX() + 1, absolutePosition.getY()));
                 }
                 adjacents.add(new IntPair(absolutePosition.getX(), absolutePosition.getY() - 1));
-            } else if (getAbsolutePosition().getX() == 0) {
-                if(getAbsolutePosition().getY() == 0) {
+            } else if (getAbsolutePosition().getX() == 0) { // if assam is at left side of the board
+                if(getAbsolutePosition().getY() == 0) { // if assam is at top left corner
                     adjacents.add(new IntPair(absolutePosition.getX(), absolutePosition.getY() + 1));
-                } else if (getAbsolutePosition().getY() == 6) {
+                } else if (getAbsolutePosition().getY() == 6) { // if assam is at bottom left corner
                     adjacents.add(new IntPair(absolutePosition.getX(), absolutePosition.getY() - 1));
-                } else {
+                } else {// if assam at left border but not the corners
                     adjacents.add(new IntPair(absolutePosition.getX(), absolutePosition.getY() - 1));
                     adjacents.add(new IntPair(absolutePosition.getX(), absolutePosition.getY() + 1));
                 }
                 adjacents.add(new IntPair(absolutePosition.getX() + 1, absolutePosition.getY()));
-            } else {
-                if(getAbsolutePosition().getY() == 0) {
+            } else { // if assam is at right side of the board
+                if(getAbsolutePosition().getY() == 0) { // if assam is at top right corner
                     adjacents.add(new IntPair(absolutePosition.getX(), absolutePosition.getY() + 1));
-                } else if (getAbsolutePosition().getY() == 6) {
+                } else if (getAbsolutePosition().getY() == 6) { // if assam is at bottom right corner
                     adjacents.add(new IntPair(absolutePosition.getX(), absolutePosition.getY() - 1));
-                } else {
+                } else { // if assam at right border but not the corners
                     adjacents.add(new IntPair(absolutePosition.getX(), absolutePosition.getY() - 1));
                     adjacents.add(new IntPair(absolutePosition.getX(), absolutePosition.getY() + 1));
                 }
