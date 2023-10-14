@@ -16,10 +16,10 @@ declaration: >-
 # I wish to submit the following methods as entirely my own (remove this if
 # you want to just submit classes):
 method:
-  -https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/Marrakech.java#L268-311
-  -https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/Marrakech.java#L138-268
-  -https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/Marrakech.java#L198-254
-  -https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/Rug.java#L84-124
+  - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/Marrakech.java#L268-311
+  - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/Marrakech.java#L138-268
+  - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/Marrakech.java#L198-254
+  - https://gitlab.cecs.anu.edu.au/u7770276/comp1110-ass2/-/blob/main/src/comp1110/ass2/Rug.java#L84-124
 
 
   # sign *your* name and uid here
