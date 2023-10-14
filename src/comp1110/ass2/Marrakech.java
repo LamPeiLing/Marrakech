@@ -346,39 +346,6 @@ public class Marrakech {
     }
 
 
-    // 解析Assam的颜色
-    private static Color parseAssamColor(String gameString) {
-        // 根据游戏状态字符串的格式解析Assam的颜色并返回
-        // 请根据实际格式实现
-        return Color.RED; // 示例
-    }
-
-    // 解析Assam的位置
-    private static IntPair parseAssamPosition(String gameString) {
-        // 根据游戏状态字符串的格式解析Assam的位置并返回
-        // 请根据实际格式实现
-        return new IntPair(3, 3); // 示例
-    }
-
-    // 深度优先搜索计算连接区域的大小
-    private static int dfshelper(List<RugTile> gameString, Color visited, int x, int y, boolean[][] targetColor, int boardSize) {
-        // 请实现深度优先搜索的逻辑
-        return 0; // 示例
-    }
-
-    // 判断坐标是否在游戏板内
-    private static boolean isValidPosition(int x, int y) {
-        // 根据实际游戏板的大小判断坐标是否合法
-        return x >= 0 && x < 7 && y >= 0 && y < 7;
-    }
-
-    // 判断指定位置的方格是否与目标颜色相同
-    private static boolean isSameColor(String gameString, int x, int y, Color targetColor) {
-        // 根据游戏状态字符串的格式判断指定位置的方格颜色是否与目标颜色相同
-        // 请根据实际格式实现
-        return true; // 示例
-    }
-
         // FIXME: Task 11
 
 
