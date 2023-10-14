@@ -106,6 +106,8 @@ Pei Ling Lam:
 
 ## Week 10
 
+Everyone: Record presentation video - 14 Oct
+
 Zexin Tang
 * created computerPlayer.java - 9 Oct
 
@@ -119,5 +121,7 @@ Pei Ling Lam
 * add method in ComputerPlayer.java to randomly rotate assam - 12 Oct
 * make computer player playable in gui/Game - 12 Oct
 * improve on the players label - 12 Oct
+* Create presentation ppt and record demo video - 12 Oct
+* Edit presentation video - 14 Oct
 
 ## Week 11

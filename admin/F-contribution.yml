@@ -10,19 +10,19 @@ declaration: >-
 # be 100 or 99 (33/33/33 is fine).  (Remove entries if you have fewer than three
 # members).
 contributions:
-  - uid: 
-    contribution: 
-  - uid:
-    contribution:
-  - uid:
-    contribution:
+  - uid: u7754892
+    contribution: 33
+  - uid:  u7754637
+    contribution: 33
+  - uid: u7770276
+    contribution: 33
 
 # Sign *your* name and uids here. (Remove entries if you have fewer
 # than three members)
 signatures:
-  - name:
-    uid:
-  - name:
-    uid:
-  - name:
-    uid:
+  - name: Yaohui HOU
+    uid: u7754892
+  - name: Pei Ling LAM
+    uid: u7754637
+  - name: Zexin TANG
+    uid: u7770276
